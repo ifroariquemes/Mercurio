@@ -1,0 +1,21 @@
+{
+    "lang": "en_US",
+    "database": {
+        "driver": "mysql",
+        "user": "root",
+        "password": "",
+        "dbname": "mercurio"
+    },
+    "build": {
+        "password": "1234",
+        "use_jquery": true,
+        "use_bootstrap": true,
+        "use_metro": true
+    },
+    "home": {
+        "gateway": "index",
+        "module": "index",
+        "control": "IndexControl",
+        "action": "ShowPage"
+    }
+}
