@@ -15,7 +15,7 @@ class ActivityController {
     }
 
     public static function add() {
-       global $_MyCookie; sleep(5);
+       global $_MyCookie; 
         $_MyCookie->LoadView('activity', 'Edit');
     }
 

@@ -271,7 +271,11 @@ CONTENT;
     public function GeneratePortableObjects() {
         if ($this->CheckPassword()) {
             $fHandle = opendir(BuildController::SourceViews);
-            array_map('unlink', glob(sprintf('%s/_po/*', BuildController::SourceLang)));
+            $dPO = sprintf('%s/_po', BuildController::SourceLang);
+            if (!file_exists($dPO)) {
+                mkdir($dPO);
+            }
+            array_map('unlink', glob($dPO . '/*'));
             while (($file = readdir($fHandle)) !== false) {
                 if ($file !== '.' && $file !== '..') {
                     if (count(scandir(sprintf('%s/%s', BuildController::SourceViews, $file))) > 2) {
