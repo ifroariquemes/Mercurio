@@ -20,7 +20,6 @@ $uid = uniqid();
                     <?php
                     foreach ($page as $event) :
                         $url = $_MyCookie->mountLink('administrator', 'event', 'edit', $event->getId());
-                        $urlInt = $_MyCookie->mountLink('administrator', 'activity', 'add', $event->getId());
                         ?>
                         <tr>          
                             <td>
@@ -30,8 +29,7 @@ $uid = uniqid();
                             <td><?php echo $event->getStartDate() ?></td>                            
                             <td><?php echo $event->getEndDate() ?></td>  
                             <td><?php echo count($event->getActivities()) ?></td>
-                            <td class="hidden-sm hidden-xs text-right">                                
-                                <a href="<?php echo $urlInt ?>" class="btn btn-primary"><i class="fa fa-paperclip"></i> <?php _e('New activity', 'event') ?></a>
+                            <td class="hidden-sm hidden-xs text-right">                                                                
                                 <a href="<?php echo $url ?>" class="btn btn-default"><i class="fa fa-pencil"></i></a>                                
                             </td>
                         </tr>

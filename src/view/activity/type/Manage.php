@@ -26,6 +26,6 @@
     </div>
 </div>
 <div class="modal-footer">                
-    <button type="button" class="btn btn-default" onclick="MyCookieJS.gotoPopup('mdActivityEdit')"><i class="fa fa-times"></i> <?php _e('Close', 'activity') ?></button>
-    <button type="button" class="btn btn-primary" onclick="MyCookieJS.showDynamicPopup('mdTypeEdit', 'activity/type/add')"><i class="fa fa-plus-circle"></i> <?php _e('Add type', 'activity') ?></button>
+    <button type="button" class="btn btn-default" onclick="tpe.close()"><i class="fa fa-times"></i> <?php _e('Close', 'activity') ?></button>
+    <button type="button" class="btn btn-primary" onclick="tpe.add()"><i class="fa fa-plus-circle"></i> <?php _e('Add type', 'activity') ?></button>
 </div> 

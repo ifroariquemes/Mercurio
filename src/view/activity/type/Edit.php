@@ -1,4 +1,4 @@
-<form id="FrmTypeEdit" onsubmit="submittype(event)">
+<form id="FrmTypeEdit" onsubmit="tpe.submit(event)">
     <div class="modal-header">    
         <h4 class="modal-title">Type</h4>
     </div>
@@ -21,10 +21,9 @@
     </div> 
 </form>
 <script type="text/javascript">
-    function submittype(e) {
-        e.preventDefault();
-        MyCookieJS.execute('activity/type/save', $('#FrmTypeEdit').serialize(), false, function() {
-            MyCookieJS.showDynamicPopup('mdTypeManage', 'activity/type/manage');
+    require(['jquery'], function($) {
+        $(function() {
+            $('#textNameType').focus();
         });
-    }
+    });
 </script>

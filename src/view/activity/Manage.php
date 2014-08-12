@@ -1,3 +1,4 @@
+<?php global $_MyCookie; ?>
 <div class="row" style="display: none" id="scr-2">
     <div class="col-lg-12">
         <h3 id="lbEventName">{Event name}</h3>
@@ -22,8 +23,8 @@
                         <tbody id="lstActivities">
                             <?php
                             if (!empty($data->getActivities())) {
-                                foreach ($data->getActivities() as $iAct => $activity) {
-                                    $_MyCookie->LoadView('activity', 'Manage.table', array('activity' => $activity, 'iAct' => $iAct));
+                                foreach ($data->getActivities() as $activity) {
+                                    $_MyCookie->LoadView('activity', 'Manage.table', array('activity' => $activity, 'iAct' => $activity->getId()));
                                 }
                             }
                             ?>
@@ -32,11 +33,6 @@
                 </form>
             </div>
         </div>                
-        <p class="text-right"><button class="btn btn-primary" onclick="addActivity()"><i class="fa fa-plus-circle"></i> Add activity</button></p>        
+        <p class="text-right"><button class="btn btn-primary" onclick="activity.add()"><i class="fa fa-plus-circle"></i> Add activity</button></p>        
     </div>
 </div>
-<script type="text/javascript">
-    function addActivity() {
-        MyCookieJS.showDynamicPopup('mdActivityEdit', 'activity/add');
-    }
-</script>

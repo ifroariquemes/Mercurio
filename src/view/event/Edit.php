@@ -26,13 +26,13 @@ $event = $data['event'];
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="dateStart"><?php _e('Starts', 'event') ?>:</label>                            
-                                    <input type="date" required="required" name="StartDate" id="dateStart" class="form-control" value="<?php echo $event->getStartDate() ?>">                            
+                                    <input type="date" required="required" name="StartDate" id="dateStart" class="form-control" value="<?php echo $event->getStartDateUS() ?>">                            
                                 </div>             
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="dateEnd"><?php _e('Ends', 'event') ?>:</label>                            
-                                    <input type="date" required="required" name="EndDate" id="dateEnd" class="form-control" value="<?php echo $event->getEndDate() ?>">                            
+                                    <input type="date" required="required" name="EndDate" id="dateEnd" class="form-control" value="<?php echo $event->getEndDateUS() ?>">                            
                                 </div>           
                             </div>
                         </div>
@@ -60,7 +60,7 @@ $event = $data['event'];
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="align-center">
         <div class="scr-1">
-            <a href="#" class="navbar-link" title="<?php _e('Next', 'event') ?>" onclick="evt.next(event)//submitEvent(event)">
+            <a href="#" class="navbar-link" title="<?php _e('Next', 'event') ?>" onclick="evt.submitEvent(event)">
                 <i class="fa fa-arrow-circle-o-right fa-4x"></i>
             </a>
         </div>
@@ -68,7 +68,7 @@ $event = $data['event'];
             <a href="#" class="navbar-link" title="<?php _e('Previous', 'event') ?>" onclick="evt.previous(event)">
                 <i class="fa fa-arrow-circle-o-left fa-4x"></i>
             </a> &nbsp;&nbsp;&nbsp;
-            <a href="#" class="navbar-link" title="<?php _e('Save', 'event') ?>">
+            <a href="#" class="navbar-link" title="<?php _e('Save', 'event') ?>" onclick="evt.submit(event)">
                 <i class="fa fa-save fa-4x"></i>
             </a>
         </div>

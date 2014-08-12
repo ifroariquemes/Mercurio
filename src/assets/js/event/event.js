@@ -36,7 +36,6 @@ function Event() {
 
     this.next = function(e) {
         e.preventDefault();
-        MyCookieJS.execute('event/partialSave', $('#FrmEventEdit').serialize());
         $('#lbEventName').html($('#textName').val());
         $('#scr-1').slideUp(400, function() {
             $('#scr-2').slideDown();
@@ -56,7 +55,7 @@ function Event() {
 
     this.submit = function(e) {
         e.preventDefault();
-        var msg = MyCookieJS.execute('event/save', $('#FrmEdit').serialize(), false);
+        var msg = MyCookieJS.execute('event/save', String.format('{0}&{1}', $('#FrmEventEdit').serialize(), $('#FrmActivities').serialize()), false);
         MyCookieJS.alert(msg, function() {
             MyCookieJS.goto('administrator/event');
         });

@@ -5,11 +5,10 @@ namespace controller\event;
 use model\event\Event;
 use model\organization\Organization;
 use lib\util\Pagination;
+use model\activity\Activity;
+use model\activity\type\Type;
 
 class EventController {
-
-    const SESSIONKEY_EVENT = 'EVENT';
-    const SESSIONKEY_ACTIVITIES = 'ACTIVITIES';
 
     public static function manage() {
         global $_MyCookie;
@@ -31,6 +30,7 @@ class EventController {
     public static function add() {
         global $_MyCookie;
         $_MyCookie->goBackTo('administrator', 'event');
+        $_SESSION[\controller\activity\ActivityController::SESSIONKEY_ACTIVITIES] = array();
         $event = new Event;
         $_MyCookie->LoadView('event', 'Edit', array('event' => $event, 'action' => __('Add', 'event')));
     }
@@ -38,28 +38,10 @@ class EventController {
     public static function edit() {
         global $_MyCookie;
         $_MyCookie->goBackTo('administrator', 'event');
+        $_SESSION[\controller\activity\ActivityController::SESSIONKEY_ACTIVITIES] = array();
         $event = Event::select('e')->where('e.id = ?1')
                         ->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getSingleResult();
         $_MyCookie->LoadView('event', 'Edit', array('action' => __('Edit', 'event'), 'event' => $event));
-    }
-
-    public static function partialSaveEvent() {
-        $_SESSION[EventController::SESSIONKEY_EVENT] = (empty(filter_input(INPUT_POST, 'id'))) ? new Event : Event::select('e')->where('e.id = ?1')
-                        ->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();
-        $_SESSION[EventController::SESSIONKEY_EVENT]
-                ->setName(filter_input(INPUT_POST, 'Name'))
-                ->setOrganization($organization)
-                ->setDescription(filter_input(INPUT_POST, 'Description'))
-                ->setStartDate(filter_input(INPUT_POST, 'StartDate'))
-                ->setEndDate(filter_input(INPUT_POST, 'EndDate'))
-                ->setAddress(filter_input(INPUT_POST, 'Address'));
-        if (!in_array('ACTIVITIES', array_keys($_SESSION)) || is_null($_SESSION[EventController::SESSIONKEY_ACTIVITIES])) {
-            $_SESSION[EventController::SESSIONKEY_ACTIVITIES] = array();
-        }
-    }
-
-    public static function partialSaveActivity() {
-        
     }
 
     public static function save() {
@@ -75,7 +57,20 @@ class EventController {
                 ->setEndDate(filter_input(INPUT_POST, 'EndDate'))
                 ->setAddress(filter_input(INPUT_POST, 'Address'))
                 ->save();
-        $_SESSION[EventController::SESSIONKEY_ACTIVITIES] = null;
+        foreach (filter_input(INPUT_POST, 'Activity', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY) as $act) {
+            $activity = (empty($act['Id'])) ? new Activity : Activity::select('a')->where('a.id = ?1')->setParameter(1, $act['Id'])->getQuery()->getSingleResult();
+            $type = Type::select('t')->where('t.id = ?1')->setParameter(1, $act['Type'])->getQuery()->getSingleResult();
+            $activity
+                    ->setName($act['Name'])
+                    ->setType($type)
+                    ->setDuration($act['Duration'])
+                    ->setSpeakers($act['Speakers'])
+                    ->setHasCertificate($act['HasCertificate'] === 'true')
+                    ->setHasSubmissions($act['HasSubmissions'] === 'true')
+                    ->setEvent($event)
+                    ->save();
+        }
+        $_SESSION[\controller\activity\ActivityController::SESSIONKEY_ACTIVITIES] = null;
         _e('Event saved successfully!', 'event');
     }
 

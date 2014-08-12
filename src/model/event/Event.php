@@ -62,9 +62,21 @@ class Event extends Object {
         }
     }
 
+    public function getStartDateUS() {
+        if (!empty($this->startDate)) {
+            return $this->startDate->format('Y-m-d');
+        }
+    }
+
     public function getEndDate() {
         if (!empty($this->endDate)) {
             return $this->endDate->format('d/m/Y');
+        }
+    }
+
+    public function getEndDateUS() {
+        if (!empty($this->endDate)) {
+            return $this->endDate->format('Y-m-d');
         }
     }
 

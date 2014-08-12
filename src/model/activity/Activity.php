@@ -29,13 +29,10 @@ class Activity extends Object {
      */
     private $type;
 
-    /** @Column(type="time") */
+    /** @Column(type="string") */
     private $duration;
 
-    /**
-     * @ManyToMany(targetEntity="model\user\User")
-     * @JoinTable(name="activity_speaker")
-     */
+    /** @Column(type="array") */
     private $speakers = array();
 
     /**
@@ -55,6 +52,10 @@ class Activity extends Object {
 
     /** @Column(type="boolean") */
     private $hasSubmissions;
+
+    public function __construct() {
+        $this->type = new type\Type;
+    }
 
     public function getId() {
         return $this->id;
@@ -145,9 +146,9 @@ class Activity extends Object {
         $this->hasSubmissions = $hasSubmissions;
         return $this;
     }
-    
-    public function addSpeaker(User $user) {
-        array_push($this->speakers, $user);
+
+    public function addSpeaker($name) {
+        array_push($this->speakers, $name);
     }
 
 }
