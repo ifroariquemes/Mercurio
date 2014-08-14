@@ -60,6 +60,15 @@ function Event() {
             MyCookieJS.goto('administrator/event');
         });
     };
+
+    this.register = function(e) {
+        e.preventDefault();
+        $('#FrmRegister input').attr('disabled', false);
+        var msg = MyCookieJS.execute('event/saveRegister', $('#FrmRegister').serialize(), false);
+        MyCookieJS.alert(msg, function() {
+            MyCookieJS.goto('administrator/event');
+        });
+    };
 }
 
 var evt = new Event();

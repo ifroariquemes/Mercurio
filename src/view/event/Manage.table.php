@@ -1,5 +1,6 @@
 <?php
 global $_MyCookie;
+global $_MyCookieUser;
 $uid = uniqid();
 ?>
 <div class="tab-content">  
@@ -19,7 +20,7 @@ $uid = uniqid();
                 <tbody>                                    
                     <?php
                     foreach ($page as $event) :
-                        $url = $_MyCookie->mountLink('administrator', 'event', 'edit', $event->getId());
+                        $url = controller\event\EventController::urlManage($event);
                         ?>
                         <tr>          
                             <td>
@@ -29,8 +30,16 @@ $uid = uniqid();
                             <td><?php echo $event->getStartDate() ?></td>                            
                             <td><?php echo $event->getEndDate() ?></td>  
                             <td><?php echo count($event->getActivities()) ?></td>
-                            <td class="hidden-sm hidden-xs text-right">                                                                
-                                <a href="<?php echo $url ?>" class="btn btn-default"><i class="fa fa-pencil"></i></a>                                
+                            <td class="hidden-sm hidden-xs text-right">                                                                                                
+                                <a href="<?php echo $url ?>" class="btn btn-default">
+                                    <?php if ($_MyCookieUser->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
+                                        <i class="fa fa-pencil"></i>
+                                    <?php elseif (!$event->getParticipants()->contains($_MyCookieUser)) : ?>
+                                        <i class="fa fa-sign-in"></i> <?php _e('Register', 'event') ?>
+                                    <?php else: ?>
+                                        <i class="fa fa-edit"></i> <?php _e('Update registration', 'event') ?>
+                                    <?php endif; ?>
+                                </a>                                
                             </td>
                         </tr>
                     <?php endforeach; ?>                                            
@@ -38,13 +47,15 @@ $uid = uniqid();
             </table>
         </div>   
     <?php endforeach; ?>     
-    <div class="text-center">
-        <ul class="pagination">                        
-            <?php foreach ($data as $index => $page) : ?>
-                <li class="<?php if ($index === 0) : ?>active<?php endif; ?>">
-                    <a href="#pag_<?php echo $uid . $index ?>" data-toggle="tab"><?php echo $index + 1 ?></a>
-                </li>
-            <?php endforeach; ?>                                                                    
-        </ul>
-    </div>
+    <?php if (count($data) > 1) : ?>
+        <div class="text-center">
+            <ul class="pagination">                        
+                <?php foreach ($data as $index => $page) : ?>
+                    <li class="<?php if ($index === 0) : ?>active<?php endif; ?>">
+                        <a href="#pag_<?php echo $uid . $index ?>" data-toggle="tab"><?php echo $index + 1 ?></a>
+                    </li>
+                <?php endforeach; ?>                                                                    
+            </ul>
+        </div>
+    <?php endif; ?>
 </div>

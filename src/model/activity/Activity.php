@@ -4,6 +4,7 @@ namespace model\activity;
 
 use lib\util\Object;
 use model\user\User;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity
@@ -32,6 +33,9 @@ class Activity extends Object {
     /** @Column(type="string") */
     private $duration;
 
+    /** @Column(type="text") */
+    private $description;
+
     /** @Column(type="array") */
     private $speakers = array();
 
@@ -45,7 +49,7 @@ class Activity extends Object {
      * @ManyToMany(targetEntity="model\user\User")
      * @JoinTable(name="activity_present")   
      */
-    private $present;
+    private $present = array();
 
     /** @Column(type="boolean") */
     private $hasCertificate;
@@ -53,8 +57,12 @@ class Activity extends Object {
     /** @Column(type="boolean") */
     private $hasSubmissions;
 
+    /** @Column(type="integer") */
+    private $vacancies;
+
     public function __construct() {
         $this->type = new type\Type;
+        $this->participants = new ArrayCollection;
     }
 
     public function getId() {
@@ -75,6 +83,15 @@ class Activity extends Object {
 
     public function getDuration() {
         return $this->duration;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+        return $this;
     }
 
     public function getSpeakers() {
@@ -149,6 +166,27 @@ class Activity extends Object {
 
     public function addSpeaker($name) {
         array_push($this->speakers, $name);
+    }
+
+    public function addParticipant(User $user) {
+        array_push($this->participants, $user);
+    }
+
+    public function getVacancies() {
+        return $this->vacancies;
+    }
+
+    public function setVacancies($vacancies) {
+        $this->vacancies = $vacancies;
+        return $this;
+    }
+
+    public function hasVacancy() {
+        return (empty($this->vacancies) || ($this->vacancies > count($this->participants)));
+    }
+
+    public function remainingVacancies() {
+        return (empty($this->vacancies)) ? __('Unlimited', 'activity') : $this->vacancies - count($this->participants);
     }
 
 }

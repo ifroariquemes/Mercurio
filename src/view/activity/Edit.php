@@ -25,20 +25,30 @@ $activity = $data['activity'];
                     </div>                                
                 </div>
             </div>
+            <div class="form-group">
+                <label for="textDescription"><?php _e('Description', 'activity') ?></label>
+                <textarea class="form-control" name="Description" id="textDescription"><?php echo $activity->getDescription() ?></textarea>
+            </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="checkCertificate"><?php _e('Has Certificate?', 'activity') ?></label>
                         <input type="checkbox" name="Certificate" id="checkCertificate" value="true"
                                <?php if ($activity->getHasCertificate()) : ?>checked="checked"<?php endif; ?>>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="checkSubmissions"><?php _e('Has Submissions?', 'activity') ?></label>
                         <input type="checkbox" name="Submissions" id="checkSubmissions" value="true"
                                <?php if ($activity->getHasSubmissions()) : ?>checked="checked"<?php endif; ?>>
                     </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="textVacancies"><?php _e('Vacancies', 'activity') ?>:</label>
+                        <input type="number" name="Vacancies" id="textVacancies" class="form-control" value="<?php echo $activity->getVacancies() ?>">
+                    </div>                                
                 </div>
             </div>
             <div class="panel panel-primary">

@@ -3,6 +3,7 @@
 namespace model\event;
 
 use lib\util\Object;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity
@@ -39,6 +40,20 @@ class Event extends Object {
      * @OneToMany(targetEntity="model\activity\Activity", mappedBy="event")    
      */
     private $activities;
+
+    /** @Column(type="boolean") */
+    private $isOpen;
+
+    /**
+     * @ManyToMany(targetEntity="model\user\User")
+     * @JoinTable(name="event_participant")
+     */
+    private $participants;
+
+    public function __construct() {
+        $this->isOpen = true;
+        $this->participants = new ArrayCollection;
+    }
 
     public function getId() {
         return $this->id;
@@ -125,6 +140,24 @@ class Event extends Object {
 
     public function setActivities($activities) {
         $this->activities = $activities;
+        return $this;
+    }
+
+    public function getIsOpen() {
+        return $this->isOpen;
+    }
+
+    public function setIsOpen($isOpen) {
+        $this->isOpen = $isOpen;
+        return $this;
+    }
+
+    public function getParticipants() {
+        return $this->participants;
+    }
+
+    public function setParticipants($participants) {
+        $this->participants = $participants;
         return $this;
     }
 

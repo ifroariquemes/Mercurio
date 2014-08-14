@@ -18,4 +18,5 @@ return module\Module::createInstance()
                         ->setControl('UserController')
                         ->setAction('Manage'))
                 ->addController(module\Controller::createInstance()
-                        ->setName('UserController'));
+                        ->setName('UserController'))
+                ->addAccess('ADMINISTRATOR');

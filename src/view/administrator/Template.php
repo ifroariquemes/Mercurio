@@ -72,7 +72,7 @@ global $_MyCookieGoBack;
         <?php if ($_MyCookie->getModule() == 'administrator') : ?>
             <footer id="admin-footer">
                 <hr />
-                <p class="align-center"><strong>Copyright &copy; 2014 <a href="http://natanaelsimoes.com/" target="_blank">Natanael Simões</a></strong></p>           
+                <p class="align-center"><strong>Copyright &copy; 2014 IFRO</strong><br>Instituto Federal de Educação, Ciência e Tecnologia de Rondônia<br><i>Campus Ariquemes</i></p>           
             </footer>              
         <?php endif; ?>
         <?php $_MyCookie->JSBundle() ?>                  

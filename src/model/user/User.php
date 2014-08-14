@@ -41,7 +41,10 @@ class User extends Object {
     private $accountType;
 
     /** @Column(type="string", length=1) */
-    private $status;        
+    private $status;
+
+    /** @Column(type="string", nullable=true) */
+    private $code;
 
     function __construct() {
         $this->status = '1';
@@ -144,6 +147,15 @@ class User extends Object {
 
     public function getStatusStr() {
         return ($this->status) ? 'ATIVADO' : 'DESATIVADO';
+    }
+
+    public function getCode() {
+        return $this->code;
+    }
+
+    public function setCode($code) {
+        $this->code = $code;
+        return $this;
     }
 
 }

@@ -9,7 +9,7 @@ use model\user\User;
 class UserController {
 
     public function __construct() {
-        if (is_null(filter_input(INPUT_SERVER, MyCookie::MessageSession))) {
+        if (!array_key_exists(MyCookie::MessageSession, $_SESSION)) {
             $_SESSION[MyCookie::MessageSession] = '';
         }
     }
@@ -55,6 +55,89 @@ class UserController {
         $_MyCookie->LoadView('user', 'Edit', array('action' => 'Edit', 'user' => $user));
     }
 
+    public static function verifyUsername() {
+        $user = User::select('u')->where('u.login = ?1')->setParameter(1, filter_input(INPUT_POST, 'email'))->getQuery()->getResult();
+        if (count($user) > 0) {
+            _e('This e-mail already exists.', 'user');
+        }
+    }
+
+    public static function resend() {
+        $user = User::select('u')->where('u.login = ?1')->setParameter(1, filter_input(INPUT_POST, 'email'))->getQuery()->getResult();
+        if (count($user) > 0) {
+            self::sendEmail($user[0]);
+        } else {
+            _e('There is no account registred with this e-mail.', 'user');
+        }
+    }
+
+    public static function saveAndEmail() {
+        $user = new User();
+        $user
+                ->setName(filter_input(INPUT_POST, 'name'))
+                ->setLastname(filter_input(INPUT_POST, 'lastName'))
+                ->setLogin(filter_input(INPUT_POST, 'email'))
+                ->setEmail(filter_input(INPUT_POST, 'email'))
+                ->setPassword(filter_input(INPUT_POST, 'newPassword'))
+                ->setAccountType(AccountType::select('a')->where('a.id = ?1')
+                        ->setParameter(1, filter_input(INPUT_POST, 'accountTypeId'))->getQuery()->getSingleResult())
+                ->setStatus(0)
+                ->save();
+        $user->setCode(md5($user->getId()))->save();
+        self::sendEmail($user);
+    }
+
+    public static function confirmRegistration() {
+        global $_MyCookie;
+        $user = User::select('u')->where('u.code = ?1')->setParameter(1, filter_input(INPUT_GET, 'key'))->getQuery()->getResult();
+        if (count($user) > 0) {
+            $user[0]->setStatus(1)->save();
+            $_MyCookie->LoadView('user', 'Confirmed', filter_input(INPUT_GET, 'return'));
+        } else {
+            _e('Key not recognised.', 'user');
+        }
+    }
+
+    public static function sendEmail(User $user) {
+        $return = filter_input(INPUT_SERVER, 'HTTP_REFERER');
+        require_once 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
+        $mail = new \PHPMailer;
+        $mail->isSMTP();
+        $mail->SMTPDebug = 0;
+        $mail->SMTPAuth = true;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPSecure = 'tls';
+        $mail->Username = 'natanael.simoes@ifro.edu.br';
+        $mail->Password = '145111nn';
+        $mail->setFrom('natanael.simoes@ifro.edu.br', $user->getEmail());
+        $mail->Subject = utf8_decode('Seu cadastro no Mercúrio');
+        $mail->msgHTML(utf8_decode(<<<EOT
+<p>Olá, {$user->getCompleteName()}!</p>
+           
+<p>Este e-mail foi enviado porque recebemos uma solicitação de cadastro no Mercúrio, nosso Sistema Gerenciador de Eventos.<br>
+Para confirmar seu cadastro, por favor, clique no link abaixo ou copie e cole-o na barra de endereço do seu navegador:</p>
+
+<p><a href="http://localhost/Mercurio/user/confirmRegistration/?key={$user->getCode()}&return={$return}">http://localhost/Mercurio/user/confirmRegistration/?key={$user->getCode()}</a></p>
+                
+<p>Se você não solicitou cadastro em nosso sistema, contate-nos através do e-mail <a href="mailto:natanael.simoes@ifro.edu.br">natanael.simoes@ifro.edu.br</a> e desconsidere este e-mail.</p>
+
+<p><span style="font-size: small">Este é um e-mail automático. Não o responda.</span></p>
+<hr>
+Mercúrio - Sistema Gerenciador de Eventos<br>
+<b>IFRO - Instituto Federal de Educação, Ciência e Tecnologia de Rondônia</b> - <i>Campus Ariquemes</i><br>
+<a href="http://www.ifro.edu.br">http://www.ifro.edu.br</a>                
+EOT
+        ));
+        $mail->addAddress($user->getEmail());
+        $mail->send();
+        _e('We\'ve sent a confirmation link, please check your e-mail to use this service.', 'user');
+    }
+
+    /**
+     * 
+     * @return User
+     */
     public static function save() {
         $user = (empty(filter_input(INPUT_POST, 'id'))) ? new User() : User::select('u')->where('u.id =  ?1')
                         ->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();
@@ -68,6 +151,7 @@ class UserController {
         $user->setAccountType(AccountType::select('a')->where('a.id = ?1')
                         ->setParameter(1, filter_input(INPUT_POST, 'accountTypeId'))->getQuery()->getSingleResult());
         $user->save();
+        return $user;
     }
 
     public static function deactivate() {
@@ -124,15 +208,15 @@ class UserController {
                 ->where('u.login = :login')
                 ->setParameter('login', filter_input(INPUT_POST, 'login'))
                 ->getQuery()
-                ->execute();
-        $_SESSION[MyCookie::MessageSession] = _e('Invalid login or password. Please, try again.', 'user');
+                ->getResult();
+        $_SESSION[MyCookie::MessageSession] = __('Invalid login or password. Please, try again.', 'user');
         if (count($users) == 1) {
             if ($users[0]->getPassword() == md5(filter_input(INPUT_POST, 'password'))) {
                 if ($users[0]->getStatus()) {
                     $_SESSION[MyCookie::UserIdSession] = $users[0]->getId();
-                    $_SESSION[MyCookie::MessageSession] = _e('Success!', 'user');
+                    $_SESSION[MyCookie::MessageSession] = __('Success!', 'user');
                 } else {
-                    $_SESSION[MyCookie::MessageSession] = _('Your username was deactivated. Please, contact administration.', 'user');
+                    $_SESSION[MyCookie::MessageSession] = __('Your username is deactivated. Please contact administration.', 'user');
                 }
             }
         }

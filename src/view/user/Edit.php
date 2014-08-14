@@ -2,6 +2,8 @@
 
 use controller\user\accountType\AccountTypeControl;
 
+global $_MyCookieUser;
+
 __('Add', 'user');
 __('Edit', 'user');
 $user = $data['user'];
@@ -80,15 +82,17 @@ $user = $data['user'];
                         <div class="text-right">                           
                             <button class="btn btn-default" type="submit"><i class="fa fa-edit"></i> <?php _e('Change password', 'user') ?></button>                
                         </div>
-                    </form>                    
+                    </form>                                        
                     <div class="text-right">
                         <br>
-                        <?php if ($user->getStatus()) : ?>
-                            <a href="#" onclick="user.deactivate(event)"><?php _e('Deactivate user', 'user') ?></a>
-                        <?php else : ?>
-                            <span class="alert-danger"><?php _e('This user is deactivated', 'user') ?></span> <a href="#" onclick="user.reactivate(event)"><?php _e('Reactivate user?', 'user') ?></a>
-                        <?php endif; ?>
-                        | <a href="#" onclick="user.delete(event)"><?php _e('Delete user', 'user') ?></a>                
+                        <?php if ($_MyCookieUser->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
+                            <?php if ($user->getStatus()) : ?>
+                                <a href="#" onclick="user.deactivate(event)"><?php _e('Deactivate user', 'user') ?></a>
+                            <?php else : ?>
+                                <span class="alert-danger"><?php _e('This user is deactivated', 'user') ?></span> <a href="#" onclick="user.reactivate(event)"><?php _e('Reactivate user?', 'user') ?></a>
+                            <?php endif; ?>                           
+                            | 
+                        <?php endif; ?><a href="#" onclick="user.delete(event)"><?php _e('Delete user', 'user') ?></a>                
                     </div>
                 </div>
             </div>                       
@@ -97,98 +101,5 @@ $user = $data['user'];
 </div>
 
 <script type="text/javascript">
-    function User() {
-
-        var self = this;
-        
-        document.getElementById('textActualPassword').setCustomValidity('Incorrect password');
-
-        this.event_onChangePassword = function() {
-            if ($('#textNewPassword').val() !== $('#textPasswordRepeat').val()) {
-                document.getElementById('textPasswordRepeat').setCustomValidity('Passwords do not match');
-            } else {
-                document.getElementById('textPasswordRepeat').setCustomValidity('');
-            }
-        };
-
-        this.event_onBlurActualPassword = function() {
-            var msg = MyCookieJS.execute('user/checkActualPassword', $('#FrmEditPassword').serialize(), false);
-            if (msg === 'false') {
-                document.getElementById('textActualPassword').setCustomValidity('Incorrect password');
-            }
-            else {
-                document.getElementById('textActualPassword').setCustomValidity('');
-            }
-        };
-
-        this.deactivate = function(e) {
-            e.preventDefault();
-            var msg = MyCookieJS.execute('user/deactivate', $('#FrmEdit').serialize(), false);
-            if (msg !== '') {
-                alert(msg);
-            }
-            else {
-                MyCookieJS.alert(t('user:user_deactivated'));
-                MyCookieJS.alert('Usuário desativado com sucesso!', function() {
-                    MyCookieJS.goto('administrator/user');
-                });
-            }
-        };
-
-        this.reactivate = function(e) {
-            e.preventDefault();
-            var msg = MyCookieJS.execute('user/reactivate', $('#FrmEdit').serialize(), false);
-            if (msg !== '') {
-                alert(msg);
-            }
-            else {
-                MyCookieJS.alert('Usuário reativado com sucesso!', function() {
-                    MyCookieJS.goto('administrator/user');
-                });
-            }
-        };
-
-        this.changePassword = function(e) {
-            e.preventDefault();
-            var msg = MyCookieJS.execute('user/changePassword', $('#FrmEditPassword').serialize(), false);
-            if (msg !== '') {
-                alert(msg);
-            }
-            else {
-                MyCookieJS.alert('Senha alterada com sucesso!', function() {
-                    MyCookieJS.goto('administrator/user');
-                });
-            }
-        };
-
-        this.delete = function(e) {
-            e.preventDefault();
-            MyCookieJS.confirm('Deseja realmente deletar este usuário?', function() {
-                var msg = MyCookieJS.execute('user/delete', $('#FrmEdit').serialize(), false);
-                if (msg !== '') {
-                    alert(msg);
-                }
-                else {
-                    MyCookieJS.alert('Usuário deletado com sucesso!', function() {
-                        MyCookieJS.goto('administrator/user');
-                    });
-                }
-            });
-        };
-
-        this.submit = function(e) {
-            e.preventDefault();
-            var msg = MyCookieJS.execute('user/save', $('#FrmEdit').serialize(), false);
-            if (msg !== '') {
-                alert(msg);
-            }
-            else {
-                MyCookieJS.alert('Usuário salvo com sucesso!', function() {
-                    MyCookieJS.goto('administrator/user');
-                });
-            }
-        };
-    }
-
-    var user = new User();
+    document.getElementById('textActualPassword').setCustomValidity('Incorrect password');
 </script>

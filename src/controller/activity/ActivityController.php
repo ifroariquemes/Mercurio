@@ -39,9 +39,11 @@ class ActivityController {
         $activity
                 ->setName(filter_input(INPUT_POST, 'Name'))
                 ->setDuration(filter_input(INPUT_POST, 'Duration'))
+                ->setDescription(filter_input(INPUT_POST, 'Description'))
                 ->setType($type)
                 ->setHasCertificate(filter_input(INPUT_POST, 'Certificate') == 'true')
-                ->setHasSubmissions(filter_input(INPUT_POST, 'Submissions') == 'true');
+                ->setHasSubmissions(filter_input(INPUT_POST, 'Submissions') == 'true')
+                ->setVacancies(filter_input(INPUT_POST, 'Vacancies'));
         $speakers = filter_input(INPUT_POST, 'Speakers', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
         if (!empty($speakers)) {
             array_multisort($speakers);
@@ -65,9 +67,11 @@ class ActivityController {
         $activity
                 ->setName(filter_input(INPUT_POST, 'Name'))
                 ->setDuration(filter_input(INPUT_POST, 'Duration'))
+                ->setDescription(filter_input(INPUT_POST, 'Description'))
                 ->setType($type)
                 ->setHasCertificate(filter_input(INPUT_POST, 'Certificate') == 'true')
                 ->setHasSubmissions(filter_input(INPUT_POST, 'Submissions') == 'true')
+                ->setVacancies(filter_input(INPUT_POST, 'Vacancies'))
                 ->setSpeakers(array());
         $speakers = filter_input(INPUT_POST, 'Speakers', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
         if (!empty($speakers)) {

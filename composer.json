@@ -16,7 +16,8 @@
         "sheillendra/metro-bootstrap": "dev-master",
         "ckeditor/ckeditor": "dev-master",
         "eternicode/bootstrap-datepicker": "dev-master",
-        "ivaynberg/select2": "dev-master"
+        "ivaynberg/select2": "dev-master",
+        "phpmailer/phpmailer": "dev-master"
     },
     "autoload": {
         "psr-0": {

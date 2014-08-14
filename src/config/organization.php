@@ -18,4 +18,5 @@ return module\Module::createInstance()
                         ->setControl('OrganizationController')
                         ->setAction('Manage'))
                 ->addController(module\Controller::createInstance()
-                        ->setName('OrganizationController'));
+                        ->setName('OrganizationController'))
+                ->addAccess('ADMINISTRATOR');

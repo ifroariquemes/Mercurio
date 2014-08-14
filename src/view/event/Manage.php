@@ -38,14 +38,16 @@
     </div>
 </div>
 
-<nav id="admin-navbar" class="navbar navbar-default navbar-fixed-bottom" role="navigation">    
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="align-center">
-        <a href="<?php echo $_MyCookie->mountLink('administrator', 'event', 'add') ?>" class="navbar-link">
-            <i class="fa fa-plus-circle fa-4x"></i>
-        </a>
-    </div><!-- /.navbar-collapse -->
-</nav>
+<?php if ($_MyCookieUser->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
+    <nav id="admin-navbar" class="navbar navbar-default navbar-fixed-bottom" role="navigation">    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="align-center">
+            <a href="<?php echo $_MyCookie->mountLink('administrator', 'event', 'add') ?>" class="navbar-link">
+                <i class="fa fa-plus-circle fa-4x"></i>
+            </a>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+<?php endif; ?>
 
 <script type="text/javascript">
     require(['jquery'], function($) {

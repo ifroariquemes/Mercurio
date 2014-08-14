@@ -15,7 +15,7 @@ class AdministratorController extends Router {
     }
 
     public static function VerifyAdministratorLoggedIn() {
-        if (!UserController::isAdministratorLoggedIn()) {
+        if (!UserController::isUserLoggedIn()) {
             AdministratorController::ShowLogin();
             exit;
         }
@@ -29,7 +29,7 @@ class AdministratorController extends Router {
             UserController::firstRun();             
         }
         $_MyCookie->LoadView('administrator', 'Login');
-        //unset($_SESSION[MyCookie::MessageSession]);
+        unset($_SESSION[\lib\MyCookie::MessageSession]);
     }
 
     public function ShowPage($view = null, $ajax = false) {
@@ -54,7 +54,7 @@ class AdministratorController extends Router {
             ob_end_clean();
             $_Cache->doCache($page);
             echo $page;
-        }
+        }        
     }
 
     public static function ModuleHeader($nomeModulo, $voltarPara) {

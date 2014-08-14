@@ -225,20 +225,26 @@ function TMyCookieJS() {
     this.closePopup = function(popupName, isOpeningPopup) {
         openingPopup = (typeof (isOpeningPopup) === 'boolean') ? isOpeningPopup : false;
         popupName = (typeof (popupName) === 'string') ? popupName : $('.modal.in').attr('id');
-        idPopup = String.format('#{0}', popupName);
-        $(idPopup).modal('hide');
+        if (typeof (popupName) !== 'undefined') {
+            idPopup = String.format('#{0}', popupName);
+            $(idPopup).modal('hide');
+        }
     };
 
     this.closeAllPopups = function() {
-        $('.modal').remove();
+        $('.modal').modal('hide');
         $('.modal-backdrop').remove();
-    }
+    };
 
-    this.gotoPopup = function(namePopup) {
+    this.gotoPopup = function(namePopup, onShown) {
         self.closePopup(null, true);
+        fShown = (typeof (onShown) === 'function') ? onShown : function(e) {};
         setTimeout(function() {
             openingPopup = false;
-            $(String.format('#{0}', namePopup)).modal('show');
+            $(String.format('#{0}', namePopup)).on('shown.bs.modal', function(e) {
+                fShown(e);
+                $(String.format('#{0}', namePopup)).unbind('shown.bs.modal');
+            }).modal('show');
         }, 700);
     };
 
@@ -273,7 +279,7 @@ function TMyCookieJS() {
     }
 
     this.showWaitMessage = function(msg) {
-        msg = typeof(msg) === "string" ? msg : 'Obtendo dados do servidor...';
+        msg = typeof (msg) === "string" ? msg : 'Obtendo dados do servidor...';
         self.showStaticPopup('aguarde-box', String.format('<div class="modal-header"><h4 class="modal-title">Aguarde <img src="{0}{1}" title="carregando" alt="carregando"></h4></div><div class="modal-body"><p>{2}</p></div>', self.getSite(), 'src/assets/images/loading1.gif', msg));
     }
 

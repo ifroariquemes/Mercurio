@@ -36,10 +36,20 @@ $event = $data['event'];
                                 </div>           
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="textAddress"><?php _e('Address', 'event') ?>:</label>                            
-                            <input type="text" required="required" name="Address" id="textAddress" class="form-control" value="<?php echo $event->getAddress() ?>">                            
-                        </div>             
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="textAddress"><?php _e('Address', 'event') ?>:</label>                            
+                                    <input type="text" required="required" name="Address" id="textAddress" class="form-control" value="<?php echo $event->getAddress() ?>">                            
+                                </div>             
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="checkOpen"><?php _e('Is it opened?', 'event') ?>:</label>                            
+                                    <input type="checkbox" name="IsOpen" id="checkOpen" value="true" <?php if ($event->getIsOpen()): ?>checked="checked"<?php endif; ?>>                            
+                                </div>             
+                            </div>
+                        </div>
                     </fieldset>
                     <input type="hidden" name="id" value="<?php echo $event->getId() ?>">                                
                     <input type="submit" style="position: absolute; visibility: hidden">
@@ -78,7 +88,7 @@ $event = $data['event'];
 <script type="text/javascript">
     require(['jquery'], function($) {
         $(function() {
-            $('#textName').focus();            
+            $('#textName').focus();
         });
     });
 </script>
