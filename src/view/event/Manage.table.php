@@ -30,7 +30,7 @@ $uid = uniqid();
                             <td><?php echo $event->getStartDate() ?></td>                            
                             <td><?php echo $event->getEndDate() ?></td>  
                             <td><?php echo count($event->getActivities()) ?></td>
-                            <td class="hidden-sm hidden-xs text-right">                                                                                                
+                            <td class="hidden-sm hidden-xs text-right">                                                                                                                                
                                 <a href="<?php echo $url ?>" class="btn btn-default">
                                     <?php if ($_MyCookieUser->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
                                         <i class="fa fa-pencil"></i>

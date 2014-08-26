@@ -49,3 +49,7 @@
 .select2-container {
     display: block !important;
 }
+
+.navbar-link:hover {
+    text-decoration: none
+}

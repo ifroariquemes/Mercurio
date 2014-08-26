@@ -70,6 +70,11 @@ $event = $data['event'];
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="align-center">
         <div class="scr-1">
+            <?php if ($event->getId()) : ?>
+            <a href="#" class="navbar-link" title="<?php _e('Accreditation', 'event') ?>" onclick="MyCookieJS.showDynamicPopup('mdAccreditation', 'event/accreditation', String.format('id={0}', <?php echo $event->getId() ?>))">
+                    <i class="fa fa-file-text fa-4x"></i>
+                </a> &nbsp;&nbsp;&nbsp;
+            <?php endif; ?>
             <a href="#" class="navbar-link" title="<?php _e('Next', 'event') ?>" onclick="evt.submitEvent(event)">
                 <i class="fa fa-arrow-circle-o-right fa-4x"></i>
             </a>

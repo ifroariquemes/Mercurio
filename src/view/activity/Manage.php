@@ -18,6 +18,8 @@
                                 <th><?php _e('Has Certificate?', 'activity') ?></th>
                                 <th><?php _e('Has Submissions?', 'activity') ?></th>
                                 <th><?php _e('Vacancies', 'activity') ?></th>
+                                <th><?php _e('Subscriptions', 'activity') ?></th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>

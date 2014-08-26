@@ -8,6 +8,13 @@ function Event() {
         $('#lstSearch, #searchClean').hide();
         $('#textName').focus();
     };
+    
+    this.clearParticipant = function(e) {
+        e.preventDefault();
+        $('#lstDataParticipant').show();
+        $('#lstSearchParticipant, #searchCleanP').hide();
+        $('#textNameParticipant').focus();
+    };
 
     this.search = function(e) {
         e.preventDefault();
@@ -17,6 +24,16 @@ function Event() {
         $('#lstSearch, #searchClean').show();
         $('#lstSearchData').html(msg);
         $('#FrmSearch')[0].reset();
+    };
+
+    this.searchParticipant = function(e) {
+        e.preventDefault();
+        $('#searchTermParticipant').html($('#textNameParticipant').val());
+        var msg = MyCookieJS.execute('event/searchParticipant', $('#FrmSearchAccreditation').serialize(), false);
+        $('#lstDataParticipant').hide();
+        $('#lstSearchParticipant, #searchCleanP').show();
+        $('#lstSearchDataParticipant').html(msg);
+        $('#FrmSearchAccreditation')[0].reset();
     };
 
     this.delete = function(e) {
@@ -69,6 +86,7 @@ function Event() {
             MyCookieJS.goto('administrator/event');
         });
     };
+
 }
 
 var evt = new Event();

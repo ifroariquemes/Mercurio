@@ -4,6 +4,7 @@ namespace model\event;
 
 use lib\util\Object;
 use Doctrine\Common\Collections\ArrayCollection;
+use model\user\User;
 
 /**
  * @Entity
@@ -47,12 +48,20 @@ class Event extends Object {
     /**
      * @ManyToMany(targetEntity="model\user\User")
      * @JoinTable(name="event_participant")
+     * @OrderBy({"name" = "ASC"})
      */
     private $participants;
+
+    /**
+     * @ManyToMany(targetEntity="model\user\User")
+     * @JoinTable(name="event_participant_confirmed")
+     */
+    private $confirmed;
 
     public function __construct() {
         $this->isOpen = true;
         $this->participants = new ArrayCollection;
+        $this->confirmed = new ArrayCollection;
     }
 
     public function getId() {
@@ -159,6 +168,19 @@ class Event extends Object {
     public function setParticipants($participants) {
         $this->participants = $participants;
         return $this;
+    }
+
+    public function getConfirmed() {
+        return $this->confirmed;
+    }
+
+    public function setConfirmed($confirmed) {
+        $this->confirmed = $confirmed;
+        return $this;
+    }
+    
+    public function isConfirmed(User $user) {
+        return $this->confirmed->contains($user);
     }
 
 }
