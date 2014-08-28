@@ -28,7 +28,7 @@ class I18n {
         /* @var $_MyCookie \lib\MyCookie */
         global $_MyCookie;
         $mc = $_MyCookie->getMyCookieConfiguration();
-        $locale = ($mc->lang === 'user') ? \Locale::acceptFromHttp(filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE')) : $mc->lang;
+        $locale = ($mc->lang === 'user') ? \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']) : $mc->lang;
         putenv("LANG=$locale");
         if (setlocale(LC_MESSAGES, $locale) === false) {
             if (setlocale(LC_MESSAGES, "$locale.utf8") === false) {

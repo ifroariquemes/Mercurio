@@ -1,6 +1,7 @@
 {
     "lang": "en_US",
     "database": {
+        "host": "localhost",
         "driver": "mysql",
         "user": "root",
         "password": "",

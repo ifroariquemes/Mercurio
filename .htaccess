@@ -1,5 +1,5 @@
 # Enable PHP 5.4
-AddType application/x-httpd-php54 .php
+AddType application/x-httpd-php55 .php
 # BEGIN MyCookie
 <IfModule mod_rewrite.c>
 RewriteEngine On

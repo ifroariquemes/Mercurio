@@ -8,7 +8,7 @@ abstract class Router {
         global $_MyCookie;
         global $_Async;
         I18n::singleton();
-        $_Async = strpos(filter_input(INPUT_SERVER, 'REQUEST_URI'), 'async') > 0;
+        $_Async = strpos($_SERVER['REQUEST_URI'], 'async') > 0;
         if ($_MyCookie->getGateway() == $_MyCookie->getModule()) {
             $this->ShowPage();
         } else {

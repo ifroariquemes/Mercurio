@@ -49,7 +49,7 @@ class Activity extends Object {
      * @ManyToMany(targetEntity="model\user\User")
      * @JoinTable(name="activity_present")   
      */
-    private $present = array();
+    private $present;
 
     /** @Column(type="boolean") */
     private $hasCertificate;
@@ -63,6 +63,7 @@ class Activity extends Object {
     public function __construct() {
         $this->type = new type\Type;
         $this->participants = new ArrayCollection;
+        $this->present = new ArrayCollection;
     }
 
     public function getId() {
@@ -73,6 +74,9 @@ class Activity extends Object {
         return $this->name;
     }
 
+    /**
+     * @return \model\event\Event
+     */
     public function getEvent() {
         return $this->event;
     }
@@ -187,6 +191,18 @@ class Activity extends Object {
 
     public function remainingVacancies() {
         return (empty($this->vacancies)) ? __('Unlimited', 'activity') : $this->vacancies - count($this->participants);
+    }
+
+    public function getConfirmed() {
+        $conf = 0;        
+        if (count($this->participants)) {
+            foreach ($this->participants as $participant) {
+                if ($this->getEvent()->getConfirmed()->contains($participant)) {
+                    $conf++;
+                }
+            }
+        }
+        return $conf;
     }
 
 }

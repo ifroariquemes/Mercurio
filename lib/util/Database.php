@@ -32,6 +32,7 @@ class Database {
     public function __construct() {
         $myCookieConfiguration = json_decode(file_get_contents('config.json'));
         $this->entityManager = EntityManager::create(array(
+                    'host'=> $myCookieConfiguration->database->host,
                     'driver' => "pdo_{$myCookieConfiguration->database->driver}",
                     'user' => $myCookieConfiguration->database->user,
                     'password' => $myCookieConfiguration->database->password,

@@ -34,15 +34,6 @@ class EventController {
         }
     }
 
-    public static function searchParticipant() {
-        global $_MyCookie;
-        $event = Event::select('e')->join('e.participants', 'p')->where(Event::expr()->like('p.name', '?1'))->orWhere(Event::expr()->like('p.lastName', '?1'))->orderBy('e.name')
-                        ->setParameter(1, sprintf('%%%s%%', filter_input(INPUT_POST, 'name')))->getQuery()->getResult();
-        if (count($event) && !empty($event[0]->getParticipants())) {
-            $_MyCookie->LoadView('event', 'Participants.table', $event[0]);
-        }
-    }
-
     public static function urlManage(Event $event) {
         global $_MyCookie;
         global $_MyCookieUser;
@@ -149,12 +140,6 @@ class EventController {
         } else {
             _e('You need to select at least one activity to register in this event', 'event');
         }
-    }
-
-    public static function accreditation() {
-        global $_MyCookie;
-        $event = Event::select('e')->where('e.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();
-        $_MyCookie->LoadView('event', 'Participants.manage', $event);
     }
 
 }

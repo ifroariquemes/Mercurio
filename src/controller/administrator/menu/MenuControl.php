@@ -55,8 +55,8 @@ class MenuControl {
     }
 
     public static function getBackLink() {
-        $httpReferer = filter_input(INPUT_SERVER, 'HTTP_REFERER');
-        $requestURI = filter_input(INPUT_SERVER, 'REQUEST_URI');
+        $httpReferer = $_SERVER['HTTP_REFERER'];
+        $requestURI = $_SERVER['REQUEST_URI'];
         echo (strpos($httpReferer, $requestURI) === false) ? $httpReferer : '..';
     }
 

@@ -99,26 +99,27 @@ class UserController {
     }
 
     public static function sendEmail(User $user) {
-        $return = filter_input(INPUT_SERVER, 'HTTP_REFERER');
+        global $_MyCookie;
+        $url = sprintf('%suser/confirmRegistration/?key=%s&return=%s', $_MyCookie->getSite(), $user->getCode(), $_SERVER['HTTP_REFERER']);
         require_once 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
         $mail = new \PHPMailer;
         $mail->isSMTP();
         $mail->SMTPDebug = 0;
         $mail->SMTPAuth = true;
         $mail->Host = 'smtp.gmail.com';
-        $mail->Port = 587;
-        $mail->SMTPSecure = 'tls';
+        $mail->Port = 465;
+        $mail->SMTPSecure = 'ssl';
         $mail->Username = 'natanael.simoes@ifro.edu.br';
         $mail->Password = '145111nn';
         $mail->setFrom('natanael.simoes@ifro.edu.br', $user->getEmail());
-        $mail->Subject = utf8_decode('Seu cadastro no Mercúrio');
+        $mail->Subject = utf8_decode('Seu cadastro no Mercúrio');            
         $mail->msgHTML(utf8_decode(<<<EOT
 <p>Olá, {$user->getCompleteName()}!</p>
            
 <p>Este e-mail foi enviado porque recebemos uma solicitação de cadastro no Mercúrio, nosso Sistema Gerenciador de Eventos.<br>
 Para confirmar seu cadastro, por favor, clique no link abaixo ou copie e cole-o na barra de endereço do seu navegador:</p>
 
-<p><a href="http://localhost/Mercurio/user/confirmRegistration/?key={$user->getCode()}&return={$return}">http://localhost/Mercurio/user/confirmRegistration/?key={$user->getCode()}</a></p>
+<p><a href="$url">$url</a></p>
                 
 <p>Se você não solicitou cadastro em nosso sistema, contate-nos através do e-mail <a href="mailto:natanael.simoes@ifro.edu.br">natanael.simoes@ifro.edu.br</a> e desconsidere este e-mail.</p>
 
@@ -138,7 +139,7 @@ EOT
      * 
      * @return User
      */
-    public static function save() {
+    public static function save() {        
         $user = (empty(filter_input(INPUT_POST, 'id'))) ? new User() : User::select('u')->where('u.id =  ?1')
                         ->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();
         $user->setName(filter_input(INPUT_POST, 'name'));

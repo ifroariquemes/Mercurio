@@ -158,8 +158,8 @@ class MyCookie {
     }
 
     private function setURLVariables() {
-        $remove = str_replace('/index.php', '', filter_input(INPUT_SERVER, 'SCRIPT_NAME'));
-        $this->URLVariables = explode('/', str_replace($remove, '', filter_input(INPUT_SERVER, 'REDIRECT_URL')));
+        $remove = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
+        $this->URLVariables = explode('/', str_replace($remove, '', $_SERVER['REDIRECT_URL']));
         if ($this->URLVariables[0] == '') {
             array_shift($this->URLVariables);
         }
@@ -193,7 +193,7 @@ class MyCookie {
 
     public function getSOServidor() {
         if (empty($this->serverOS)) {
-            $soServidor = filter_input(INPUT_SERVER, 'SERVER_SIGNATURE');
+            $soServidor = $_SERVER['SERVER_SIGNATURE'];
             if (strpos($soServidor, 'Unix') !== false) {
                 $this->serverOS = 'Linux';
             } else if (strpos($soServidor, 'Win32') !== false) {
@@ -324,9 +324,9 @@ class MyCookie {
      */
     public function getSite() {
         if (empty($this->site)) {
-            $requestScheme = filter_input(INPUT_SERVER, 'REQUEST_SCHEME');
-            $httpHost = filter_input(INPUT_SERVER, 'HTTP_HOST');
-            $scriptName = str_replace('index.php', '', filter_input(INPUT_SERVER, 'SCRIPT_NAME'));
+            $requestScheme = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http';
+            $httpHost = $_SERVER['HTTP_HOST'];
+            $scriptName = str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
             $this->site = sprintf('%s://%s%s', $requestScheme, $httpHost, $scriptName);
         }
         return $this->site;

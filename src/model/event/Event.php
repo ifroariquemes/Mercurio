@@ -20,8 +20,7 @@ class Event extends Object {
 
     /**
      * @ManyToOne(targetEntity="model\organization\Organization", cascade={"merge"})
-     * @JoinColumn(name="organization_id", referencedColumnName="id")     
-     * @Input(type="select")
+     * @JoinColumn(name="organization_id", referencedColumnName="id")          
      */
     private $organization;
 
@@ -39,6 +38,7 @@ class Event extends Object {
 
     /**
      * @OneToMany(targetEntity="model\activity\Activity", mappedBy="event")    
+     * @OrderBy({"name" = "ASC"})
      */
     private $activities;
 
@@ -178,7 +178,7 @@ class Event extends Object {
         $this->confirmed = $confirmed;
         return $this;
     }
-    
+
     public function isConfirmed(User $user) {
         return $this->confirmed->contains($user);
     }
