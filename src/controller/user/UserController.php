@@ -106,12 +106,12 @@ class UserController {
         $mail->isSMTP();
         $mail->SMTPDebug = 0;
         $mail->SMTPAuth = true;
-        $mail->Host = 'smtp.gmail.com';
+        $mail->Host = 'mail.eiifro.com';
         $mail->Port = 465;
         $mail->SMTPSecure = 'ssl';
-        $mail->Username = 'natanael.simoes@ifro.edu.br';
-        $mail->Password = '145111nn';
-        $mail->setFrom('natanael.simoes@ifro.edu.br', $user->getEmail());
+        $mail->Username = 'contato@eiifro.com';
+        $mail->Password = 'eiifro!1';
+        $mail->setFrom('contato@eiifro.com', $user->getEmail());
         $mail->Subject = utf8_decode('Seu cadastro no Mercúrio');            
         $mail->msgHTML(utf8_decode(<<<EOT
 <p>Olá, {$user->getCompleteName()}!</p>
