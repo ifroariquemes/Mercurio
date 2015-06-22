@@ -434,13 +434,14 @@ class Cache {
 
     public function doCache($data) {
         global $_Cache;
-        if ($this->doCache)
-            $_Cache->setVar($_SERVER['REQUEST_URI'], $data, Cache::CACHE_ONE_HOUR);
+        if ($this->doCache) {
+            $this->setVar($_SERVER['REQUEST_URI'], $data, Cache::CACHE_ONE_HOUR);
+        }
     }
 
     public function getCache() {
         global $_Cache;
-        $data = $_Cache->getVar($_SERVER['REQUEST_URI']);
+        $data = $_Cache->getVar(filter_input(INPUT_SERVER, 'REQUEST_URI'));
         if ($data !== false) {
             print_r($data);
             exit;

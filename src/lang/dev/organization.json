@@ -1,0 +1,17 @@
+{
+    "label": {
+        "add_organization": "Add organization",
+        "edit_organization": "Edit organization",
+        "name": "Name",
+        "city": "City",
+        "state": "State"
+    },
+    "message": {
+        "saved": "Organization saved successfully!",
+        "empty": "There is no organization registred"
+    },
+    "button": {
+        "delete": "Delete organization",
+        "new_event": "New event"
+    }
+}

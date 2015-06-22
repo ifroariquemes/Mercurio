@@ -4,7 +4,7 @@ namespace model\user\accountType;
 
 use \lib\util\Object;
 
-/** @Entity @Table("account_type") */
+/** @Entity @Table("event_account_type") */
 class AccountType extends Object {
 
     /** @Id @GeneratedValue @Column(type="integer") */

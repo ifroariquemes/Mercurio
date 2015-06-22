@@ -2017,6 +2017,7 @@ var requirejs, require, define;
     //Set up with config info.
     req(cfg);
 }(this));
+
 var components = {
     "packages": [
         {
@@ -2024,18 +2025,10 @@ var components = {
             "main": "jquery-built.js"
         },
         {
-            "name": "jquery-ui",
-            "main": "jquery-ui-built.js"
+            "name": "select2",
+            "main": "select2-built.js"
         }
     ],
-    "shim": {
-        "jquery-ui": {
-            "deps": [
-                "jquery"
-            ],
-            "exports": "jQuery"
-        }
-    },
     "baseUrl": "components"
 };
 if (typeof require !== "undefined" && require.config) {

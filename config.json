@@ -1,22 +1,39 @@
 {
-    "lang": "en_US",
+    "name": "Mercurio",
+    "lang": "user",    
     "database": {
-        "host": "localhost",
         "driver": "mysql",
         "user": "root",
         "password": "",
         "dbname": "mercurio"
     },
     "build": {
+        "production": false,
         "password": "1234",
-        "use_jquery": true,
-        "use_bootstrap": true,
-        "use_metro": true
+        "custom_js": {            
+            "bootstrap": "vendor/sheillendra/metro-bootstrap/docs/bootstrap.js",
+            "application": "vendor/sheillendra/metro-bootstrap/docs/application.js",
+            "webshim": "vendor/coldtrick/webshim/vendors/webshim-1.15.5/js-webshim/minified/polyfiller.js"
+        },
+        "custom_css": {
+            "bootstrap": "vendor/sheillendra/metro-bootstrap/css/metro-bootstrap.css",
+            "font-awesome": "vendor/sheillendra/metro-bootstrap/docs/font-awesome.css"            
+        }
     },
     "home": {
         "gateway": "index",
         "module": "index",
         "control": "IndexControl",
         "action": "ShowPage"
+    },
+    "allowPublicSignup": true,
+    "mail": {
+        "host": "smtp.host.com",        
+        "email": "user@host.com",
+        "username": "user@host.com",
+        "password": "pwd",
+        "port": 25,
+        "security": "tls",
+        "reply_to": "user@host.com"
     }
 }

@@ -1,0 +1,117 @@
+{
+    "label": {
+        "add_event": "Add event",
+        "edit_event": "Edit event",
+        "name": "Name",
+        "organization": "Organization",
+        "organizations": "Organizations",
+        "description": "Description",
+        "starts": "Starts",
+        "ends": "Ends",
+        "address": "Address",
+        "is_open": "Is it opened?",
+        "is_registration_open": "Allow registration?",
+        "registred_activities": "Registred activities",
+        "activities": "Activities"
+    },
+    "button": {
+        "register": "Register",
+        "update": "Update registration",
+        "delete": "Delete event",
+        "next": "Next",
+        "previous": "Previous",
+        "save": "Save",
+        "accreditation": "Accreditation",
+        "frequency": "Frequency"
+    },
+    "message": {
+        "empty": "There is no event registred",
+        "success": "Event saved successfully!",
+        "delete": "Do you really want to delete this event?",
+        "deleted": "Event deleted successfully!",
+        "select_activities": "Please, select activities you do want to participate",
+        "remaining_vacancies": "Remaining vacancies",
+        "no_vacancy": "No vacancy"
+    },
+    "activity": {
+        "label": {
+            "name": "Name",
+            "duration": "Duration",
+            "description": "Description",
+            "has_certificate": "Has Certificate?",
+            "has_submissions": "Has Submissions?",
+            "vacancies": "Vacancies",
+            "speakers": "Speakers",
+            "speakers_name": "Name",
+            "subscriptions": "Subscriptions",
+            "sessions": "Sessions",
+            "session_date": "Date",
+            "session_start": "Start at",
+            "session_end": "End at"
+        },
+        "button": {
+        },
+        "type": {
+            "label": {
+                "type": "Type",
+                "name": "Name",
+                "translations": "Translations",
+                "translation_name": "Name",
+                "translation_lang": "Language"
+            },
+            "message": {
+                "delete": "Are you sure to delete this type?",
+                "deleted": "Type deleted successfully."
+            },
+            "button": {
+                "add_type": "Add type"
+            }
+        }
+    },
+    "register": {
+        "label": {
+            "title": "Registering",
+            "information": "Event information"
+        },
+        "button": {
+            "delete": "Delete registration"
+        },
+        "message": {
+            "at_least": "You need to select at least one activity to register in this event",
+            "registred": "Register saved successfully",
+            "delete": "Do you really want to delete your registration?",
+            "deleted": "Registration deleted successfully!",
+            "no_vacancy": "Vacancies of following activity were depleted during request processing",
+            "session_collision": "We detected a session collision between activities in your selection (they will be happening at the same time)"
+        }
+    },
+    "accreditation": {
+        "label": {
+            "event_info": "Event info",
+            "registred": "Registred",
+            "confirmed": "Confirmed",
+            "registred_participants": "Registred participants",
+            "credentials_confirmation": "Credentials confirmation",
+            "confirmed": "Confirmed",
+            "override_activities": "Override activities"
+        },
+        "message": {
+            "empty": "There is no registrations in this event at the moment",
+            "confirmed": "Credentials confirmed successfully",
+            "at_least": "You need to select at least one activity to confirm credentials in this event"
+        }
+    },
+    "frequency": {
+        "label": {
+            "event_activities": "Event activities",
+            "presents": "Presents",
+            "signature_list": "Signature list",
+            "signature": "Signature",
+            "activity_info": "Activity info"
+        },
+        "message": {
+            "empty": "There is no credentials confirmed in this event at the moment",
+            "empty_participant": "There is no participants in this activity"
+        }
+    }
+}
