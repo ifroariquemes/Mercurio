@@ -2,7 +2,7 @@
 $organization = $data['organization'];
 ?>    
 <header class="row">     
-    <div class="col-md-12"><h2 data-i18n="organization:label.<?=$data['action']?>_organization"></h2></div>
+    <div class="col-md-12"><h2 data-i18n="event:organization.label.<?=$data['action']?>_organization"></h2></div>
 </header>    
 <div class="row">
     <div class="col-md-12">
@@ -11,15 +11,15 @@ $organization = $data['organization'];
                 <form name="FrmEdit" id="FrmEdit" role="form" onsubmit="organization.submit(event);">
                     <fieldset>
                         <div class="form-group">
-                            <label for="textName"><span data-i18n="organization:label.name"></span>:</label>                            
+                            <label for="textName"><span data-i18n="event:organization.label.name"></span>:</label>                            
                             <input type="text" required="required" name="name" id="textName" class="form-control" value="<?= $organization->getName() ?>">                            
                         </div>             
                         <div class="form-group">
-                            <label for="textCity"><span data-i18n="organization:label.city"></span>:</label>                            
+                            <label for="textCity"><span data-i18n="event:organization.label.city"></span>:</label>                            
                             <input type="text" required="required" name="city" id="textCity" class="form-control" value="<?= $organization->getCity() ?>">                            
                         </div>             
                         <div class="form-group">
-                            <label for="textState"><span data-i18n="organization:label.state"></span>:</label>                            
+                            <label for="textState"><span data-i18n="event:organization.label.state"></span>:</label>                            
                             <input type="text" required="required" name="state" id="textState" class="form-control" value="<?= $organization->getState() ?>">                            
                         </div>             
                     </fieldset>
@@ -32,7 +32,7 @@ $organization = $data['organization'];
         </div>
         <?php if ($organization->getId()) : ?>
             <div class="text-right">            
-                <a href="#" onclick="organization.delete(event)" data-i18n="organization:button.delete"></a>                
+                <a href="#" onclick="organization.delete(event)" data-i18n="event:organization.button.delete"></a>                
             </div>
         <?php endif; ?>
     </div>    

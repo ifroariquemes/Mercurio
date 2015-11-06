@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "44e6ae30f3b25b4b30e608d02ff9dddc",
+    "hash": "91746c0d865407b88f43d4630e733058",
     "packages": [
         {
             "name": "coldtrick/webshim",
@@ -782,12 +782,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "9cbd8bf1cb6ca47a1c6ece7c00f4f6a5b25ef7a8"
+                "reference": "db33c00096cdc142936613245e3ab25afdd8a620"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/9cbd8bf1cb6ca47a1c6ece7c00f4f6a5b25ef7a8",
-                "reference": "9cbd8bf1cb6ca47a1c6ece7c00f4f6a5b25ef7a8",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/db33c00096cdc142936613245e3ab25afdd8a620",
+                "reference": "db33c00096cdc142936613245e3ab25afdd8a620",
                 "shasum": ""
             },
             "require": {
@@ -829,7 +829,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2015-06-13 20:00:01"
+            "time": "2015-07-01 09:52:56"
         },
         {
             "name": "sheillendra/metro-bootstrap",
@@ -876,6 +876,39 @@
                 "yii2"
             ],
             "time": "2014-03-01 23:30:32"
+        },
+        {
+            "name": "summernote/summernote",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/summernote/summernote.git",
+                "reference": "ce6f718a082cb4eb6103226a30cc946103db8020"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/summernote/summernote/zipball/ce6f718a082cb4eb6103226a30cc946103db8020",
+                "reference": "ce6f718a082cb4eb6103226a30cc946103db8020",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alan",
+                    "email": "susukang98@gmail.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "Super Simple WYSIWYG Editor on Bootstrap(3.0 and 2.x).",
+            "homepage": "http://summernote.org/",
+            "keywords": [
+                "wysiwyg"
+            ],
+            "time": "2015-06-22 13:23:31"
         },
         {
             "name": "symfony/console",
@@ -993,7 +1026,8 @@
         "components/jquery": 20,
         "sheillendra/metro-bootstrap": 20,
         "phpmailer/phpmailer": 20,
-        "coldtrick/webshim": 20
+        "coldtrick/webshim": 20,
+        "summernote/summernote": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

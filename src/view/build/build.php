@@ -108,7 +108,7 @@ global $_Config;
                     $('img.step2').addClass('hidden');
                     $('i.step2').removeClass('hidden');
                     $('p.step3').removeClass('hidden');
-                    Step3();
+                   Step3();
                 });
             }
 

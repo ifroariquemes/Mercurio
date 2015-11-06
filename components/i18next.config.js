@@ -7,7 +7,7 @@ require(['jquery', 'i18next'], function ($) {
             lng: lngUser,
                         resGetPath: 'http://localhost/Mercurio/src/lang/__lng__/__ns__.json',
             ns: {
-                namespaces: ['admin','build','event','index','mycookie','organization','user']
+                namespaces: ['admin','build','event','index','mycookie','user']
             },
             useLocalStorage: false,
             localStorageExpirationTime: 86400000 // in ms

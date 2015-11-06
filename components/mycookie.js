@@ -29,7 +29,12 @@ function TMyCookieJS() {
      */
     this.getSite = function () {
         return MYCOOKIEJS_BASEURL;
-    }
+    };
+
+    this.getUserLang = function () {
+        lngComp = navigator.language.split("-");
+        return lngComp[0];
+    };
 
     /**
      * Shows a popup with some content
@@ -377,7 +382,7 @@ function TMyCookieJS() {
 
     this.confirm = function (messageStr, onYes, onNo, closeAtConfirm) {
         var modalcontent, modalheader, header, modalbody, message, modalfooter, yesIcon, yesButton, noIcon, noButton;
-        var title = MYCOOKIEJS_CONFIRMATION;
+        var title = $.i18n.t('mycookie:window.confirmation');
         closeAtConfirm = (typeof (closeAtConfirm) === 'boolean') ? closeAtConfirm : true;
 
         header = document.createElement('h4');
@@ -404,7 +409,7 @@ function TMyCookieJS() {
         $(yesButton)
                 .addClass('btn btn-success')
                 .append(yesIcon)
-                .append(' ' + MYCOOKIEJS_YES)
+                .append(' ' + $.i18n.t('mycookie:button.yes'))
                 .click(function () {
                     confirmResult = true;
                     if (typeof (onYes) === 'function') {
@@ -425,7 +430,7 @@ function TMyCookieJS() {
         $(noButton)
                 .addClass('btn btn-danger')
                 .append(noIcon)
-                .append(' ' + MYCOOKIEJS_NO)
+                .append(' ' + $.i18n.t('mycookie:button.no'))
                 .click(function () {
                     confirmResult = false;
                     if (typeof (onNo) === 'function') {
@@ -459,7 +464,7 @@ function TMyCookieJS() {
 
     this.alert = function (messageStr, gotoPopup) {
         var modalcontent, modalheader, header, modalbody, message, modalfooter, okButton;
-        title = MYCOOKIEJS_ALERT;
+        title = $.i18n.t('mycookie:window.alert');
 
         header = document.createElement('h4');
         $(header).append(title);

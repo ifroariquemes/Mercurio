@@ -33,6 +33,24 @@
         "remaining_vacancies": "Remaining vacancies",
         "no_vacancy": "No vacancy"
     },
+    "organization": {
+        "label": {
+            "add_organization": "Add organization",
+            "edit_organization": "Edit organization",
+            "name": "Name",
+            "city": "City",
+            "state": "State"
+        },
+        "message": {
+            "saved": "Organization saved successfully!",
+            "empty": "There is no organization registred"
+        },
+        "button": {
+            "delete": "Delete organization",
+            "new_event": "New event",
+            "certificate_templates": "Certificate templates"
+        }
+    },
     "activity": {
         "label": {
             "name": "Name",
@@ -112,6 +130,38 @@
         "message": {
             "empty": "There is no credentials confirmed in this event at the moment",
             "empty_participant": "There is no participants in this activity"
+        }
+    },
+    "certificate": {
+        "label": {
+            "name": "Name",
+            "certificate_templates": "Certificate templates",
+            "add": "Add certificate template",
+            "participant_template": "Participant",
+            "speaker_template": "Speaker",
+            "front": "Front",
+            "back": "Back",
+            "participant_markups": "Participant markups",
+            "participant_name": "Participant name",
+            "event_name": "Event name",
+            "event_sd": "Event start date",
+            "event_ed": "Event end date",
+            "organization_name": "Organization name",
+            "activity_name": "Activity name that participant was frequent (use it only if printing will be done by activity)",
+            "activity_list": "List activities that participant was frequent",
+            "hours": "Total hours of participation",
+            "speaker_markups": "Speaker markups",
+            "speaker_name": "Speaker name",
+            "speaker_activity": "Activity name where speaker were",
+            "speaker_hours": "Total hours of participation in activity",
+            "general_markups": "General markups",
+            "book": "Book number where certificate will be registred",
+            "page": "Page number of registration in book",
+            "registration": "Certificate registration number",
+            "date": "Current date"
+        },
+        "message": {
+            "empty": "There is no certificate templates in this organization"
         }
     }
 }

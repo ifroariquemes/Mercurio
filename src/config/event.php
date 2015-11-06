@@ -33,4 +33,7 @@ return module\Module::createInstance()
                         ->setHome('manage'))
                 ->addController(module\Controller::createInstance()
                         ->setName('FrequencyController')
-                        ->setSubmodule('frequency'));
+                        ->setSubmodule('frequency'))
+                ->addController(module\Controller::createInstance()
+                        ->setName('CertificateController')
+                        ->setSubmodule('certificate'));

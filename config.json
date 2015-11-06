@@ -8,16 +8,19 @@
         "dbname": "mercurio"
     },
     "build": {
-        "production": false,
+        "production": true,
         "password": "1234",
         "custom_js": {            
             "bootstrap": "vendor/sheillendra/metro-bootstrap/docs/bootstrap.js",
             "application": "vendor/sheillendra/metro-bootstrap/docs/application.js",
-            "webshim": "vendor/coldtrick/webshim/vendors/webshim-1.15.5/js-webshim/minified/polyfiller.js"
+            "webshim": "vendor/coldtrick/webshim/vendors/webshim-1.15.5/js-webshim/minified/polyfiller.js",                        
+            "summernote": "vendor/summernote/summernote/dist/summernote.min.js" 
         },
         "custom_css": {
             "bootstrap": "vendor/sheillendra/metro-bootstrap/css/metro-bootstrap.css",
-            "font-awesome": "vendor/sheillendra/metro-bootstrap/docs/font-awesome.css"            
+            "font-awesome": "vendor/sheillendra/metro-bootstrap/docs/font-awesome.css",
+            "summernote": "vendor/summernote/summernote/dist/summernote.css",
+            "summernote": "vendor/summernote/summernote/dist/summernote.css"
         }
     },
     "home": {
@@ -28,12 +31,12 @@
     },
     "allowPublicSignup": true,
     "mail": {
-        "host": "smtp.host.com",        
-        "email": "user@host.com",
-        "username": "user@host.com",
-        "password": "pwd",
-        "port": 25,
-        "security": "tls",
-        "reply_to": "user@host.com"
+        "host": "smtp.gmail.com",        
+        "email": "teste@gmail.com",
+        "username": "teste@gmail.com",
+        "password": "teste",
+        "port": 465,
+        "security": "ssl",
+        "reply_to": "mailuser@host.com"
     }
 }

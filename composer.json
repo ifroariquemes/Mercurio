@@ -16,7 +16,8 @@
         "components/jquery" : "dev-master",
         "sheillendra/metro-bootstrap": "dev-master",
         "phpmailer/phpmailer": "dev-master",        
-        "coldtrick/webshim": "dev-master"
+        "coldtrick/webshim": "dev-master",
+        "summernote/summernote": "dev-master"
     },
     "autoload": {
         "psr-4": {
