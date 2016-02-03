@@ -1,6 +1,6 @@
 <?php
 
-namespace lib\util;
+namespace MPWeb\API\lib;
 
 use Doctrine\ORM\EntityManager;
 
