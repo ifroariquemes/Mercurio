@@ -13,7 +13,7 @@
         "custom_js": {            
             "bootstrap": "vendor/sheillendra/metro-bootstrap/docs/bootstrap.js",
             "application": "vendor/sheillendra/metro-bootstrap/docs/application.js",
-            "webshim": "vendor/coldtrick/webshim/vendors/webshim-1.15.5/js-webshim/minified/polyfiller.js",                        
+            "webshim": "mod/webshim/vendors/webshim-1.15.5/js-webshim/minified/polyfiller.js",                        
             "summernote": "vendor/summernote/summernote/dist/summernote.min.js" 
         },
         "custom_css": {

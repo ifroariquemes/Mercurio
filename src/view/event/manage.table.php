@@ -27,7 +27,7 @@
                     <td><?= $event->getOrganization()->getName() ?></td>
                     <td><?= $event->getStartDate() ?></td>                            
                     <td><?= $event->getEndDate() ?></td>  
-                    <td><?= count($event->getActivities()) ?></td>
+                    <td><?= $event->getActivities()->count() ?></td>
                     <td class="text-right">
                         <?php if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
                             <?php if ($event->getIsOpen()) : ?>

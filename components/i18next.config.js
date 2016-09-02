@@ -5,11 +5,11 @@ require(['jquery', 'i18next'], function ($) {
         console.log("User language: %s", lngUser);
         var option = {
             lng: lngUser,
-                        resGetPath: 'http://localhost/Mercurio/src/lang/__lng__/__ns__.json',
+                        resGetPath: 'http://localhost:8080/Mercurio/src/lang/__lng__/__ns__.json',
             ns: {
                 namespaces: ['admin','build','event','index','mycookie','user']
             },
-            useLocalStorage: false,
+            useLocalStorage: true,
             localStorageExpirationTime: 86400000 // in ms
         };
         i18n.init(option, function (t) {                

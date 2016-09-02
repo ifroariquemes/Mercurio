@@ -38,10 +38,14 @@ class UserController
     public static function manage()
     {
         global $_MyCookie;
+        if(isset($_GET['q'])) {
+            self::search();
+            return;
+        }
         UserController::checkAccessLevel('ADMINISTRATOR');
         $urlPage = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
         $urlPage = ($urlPage) ? $urlPage : 1;
-        $data = Pagination::paginate(User::select('u'), $urlPage);
+        $data = Pagination::paginate(User::select('u')->addOrderBy('u.status', 'DESC')->addOrderBy('u.name'), $urlPage);
         $_MyCookie->loadView('user', 'manage'
                 , array(
             'users' => $data,
@@ -343,7 +347,7 @@ class UserController
         if (count($users) == 1) {
             $uPass = filter_input(INPUT_POST, 'password');
             $bPass = $users[0]->getPassword();
-            if (password_verify($uPass, $bPass)) {
+            if (md5($uPass) === $bPass) { // password_verify($uPass, $bPass)) {
                 if ($users[0]->getStatus()) {
                     $_EntityManager->detach($users[0]);
                     $_SESSION[MyCookie::USER_ID_SESSION] = $users[0]->getId();

@@ -55,12 +55,14 @@ class User extends Object
 
     public function getFirstName()
     {
-        return array_shift(explode(' ', $this->name));
+        $nameInfo = explode(' ', $this->name);
+        return array_shift($nameInfo);
     }
 
     public function getLastName()
     {
-        return end(explode(' ', $this->name));
+        $nameInfo = explode(' ', $this->name);
+        return end($nameInfo);
     }
 
     public function getPassword()
@@ -102,7 +104,7 @@ class User extends Object
 
     public function setPassword($password)
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = md5($password);// password_hash($password, PASSWORD_DEFAULT);
         return $this;
     }
 

@@ -2,7 +2,7 @@
 <div class="row">    
     <div class="col-md-12 text-right">        
         <form id="FrmSearch" class="form-inline" onsubmit="user.search(event)">            
-            <input type="search" name="name" id="textName" class="form-control" value="" data-i18n="[placeholder]mycookie:message.search_pla">                            
+            <input type="search" name="q" id="textName" class="form-control" value="" data-i18n="[placeholder]mycookie:message.search_pla">                            
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> <span data-i18n="mycookie:button.search"></span></button>
         </form>        
     </div>

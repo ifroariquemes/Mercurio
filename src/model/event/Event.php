@@ -18,7 +18,7 @@ class Event extends Object
     private $name;
     /**
      * @ManyToOne(targetEntity="model\event\Organization", cascade={"merge"})
-     * @JoinColumn(name="organization_id", referencedColumnName="id")          
+     * @JoinColumn(name="organization_id", referencedColumnName="id")
      */
     private $organization;
     /** @Column(type="string", nullable=true) */
@@ -30,7 +30,7 @@ class Event extends Object
     /** @Column(type="string") */
     private $address;
     /**
-     * @OneToMany(targetEntity="model\event\Activity", mappedBy="event", cascade={"remove"})    
+     * @OneToMany(targetEntity="model\event\Activity", mappedBy="event", cascade={"remove"})
      * @OrderBy({"name" = "ASC"})
      */
     private $activities;

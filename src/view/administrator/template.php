@@ -37,9 +37,9 @@ global $_MyCookieGoBack;
                         <div id="header-container">                            
                             <h4 data-i18n="admin:header.title">administrative panel</h4>
                             <div class="dropdown">
-                                <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#" >
+                                <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" style="cursor: pointer">
                                     <?= MenuControl::listCurrentModuleName() ?>
-                                    <b class="caret" href="#"></b>
+                                    <b class="caret"></b>
                                 </a>
                                 <?php MenuControl::listModuleNames() ?>                    
                             </div>
@@ -47,14 +47,14 @@ global $_MyCookieGoBack;
                     </div>
                 <?php endif; ?>                                 
                 <div class="col-md-6 col-sm-6 col-xs-5">
-                    <a class="user-info dropdown-toggle" href="#" data-toggle="dropdown">    
+                    <a class="user-info dropdown-toggle" data-toggle="dropdown" style="cursor: pointer">
                         <div style="float: left">
                             <h3><?= $_User->getFirstName() ?></h3>
                             <h4><?= $_User->getLastName() ?></h4>     
                             <div id="user_completename" class="hidden"><?= $_User->getName() ?></div>
                         </div>
                         <i class="fa fa-4x fa-user"></i>
-                    </a>                    
+                    </a>
                     <ul id="profile-dropdown" class="dropdown-menu" role="menu">
                         <li><a href="<?= $_MyCookie->mountLink('administrator', 'user', 'edit', $_User->getId()) ?>" data-i18n="admin:button.edit_profile">Edit profile</a></li>                       
                         <li class="divider"></li>
