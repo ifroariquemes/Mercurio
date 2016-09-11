@@ -4,6 +4,7 @@ namespace model\event;
 
 use lib\util\Object;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use model\user\User;
 
 /**
@@ -112,7 +113,7 @@ class Event extends Object
     }
 
     /**
-     * @return ArrayCollection
+     * @return \Doctrine\ORM\PersistentCollection
      */
     public function getActivities()
     {

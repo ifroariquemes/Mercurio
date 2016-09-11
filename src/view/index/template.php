@@ -1,48 +1,49 @@
+<?php
+
+use lib\MyCookie;
+
+global $_MyCookie;
+global $_BaseURL;
+global $_Config;
+global $_User;
+?>
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="pt-BR"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="pt-BR"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="pt-BR"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="pt-BR"> <!--<![endif]-->
+<html>
     <head>
         <meta charset="utf-8">
-        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />        
-        <meta name="viewport" content="width=device-width">
-        <title data-i18n="index:site.title">MyCookie - Starter page</title>                        
+        <title>Mercúrio - Sistema Gerenciador de Eventos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php $_MyCookie->CSSBundle() ?>        
-        <?php $_MyCookie->RequireJS() ?>      
+        <?php $_MyCookie->RequireJS() ?>
     </head>
-    <body id="index-body">        
-        <header class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">MyCookie</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#home" role="tab" data-toggle="tab"><i class="fa fa-home"></i> <span data-i18n="index:nav.home">Home</span></a></li>
-                        <li><a href="#programacao" role="tab" data-toggle="tab" data-i18n="index:nav.about">About</a></li>
-                        <li><a href="#local" role="tab" data-toggle="tab" data-i18n="index:nav.features">Features</a></li>
-                        <li><a href="#local" role="tab" data-toggle="tab"><i class="fa fa-file-text"></i> <span data-i18n="index:nav.docs">Documentation</span></a></li>
-                        <li><a href="administrator/"><i class="fa fa-file-text"></i> <span data-i18n="index:nav.admin">Administration</span></a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
+    <body>      
+        <header>
+
         </header>
-        <section class="container">                                         
-            <?= $view ?>
-            <div class="spacer"></div>
-        </section>         
-        <footer>
-            <hr />
-            <p class="text-center"><strong>Copyright &copy; 2014 - 2015 IFRO</strong><br>Instituto Federal de Educação, Ciência e Tecnologia de Rondônia<br><i>Campus Ariquemes</i></p>           
-        </footer>              
-        <?php $_MyCookie->JSBundle() ?>         
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6">
+                    <img src="<?= $_BaseURL ?>src/assets/images/ifro.png" class="img-responsive">
+                    <h2 class="text-center">Mercúrio</h2>
+                    <h4 class="text-center">Sistema Gerenciador de Eventos</h4>
+                </div>
+            </div>
+            <?php if (!empty($_User)) : ?>
+                <div class="row">
+                    <h4 class="text-center">
+                        <a href="#" class="label label-info"><?= $_User->getName() ?></a> <a href="<?= $_BaseURL ?>user/logout/" class="label label-danger"><i class="glyphicon glyphicon-eject"></i> Sair</a>
+                    </h4>
+                </div>
+            <?php endif; ?>
+            <div class="row">
+                <?= $view ?>
+            </div>
+        </div>
+        <?php $_MyCookie->JSBundle() ?>
+        <script type="text/javascript">
+            require(['jquery', 'i18next'], function ($) {
+                $('#email').focus();
+            });
+        </script>
     </body>
 </html>

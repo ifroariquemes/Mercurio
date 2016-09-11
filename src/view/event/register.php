@@ -90,18 +90,6 @@
     </div>
 <?php endif ?>
 
-<nav id="admin-navbar" class="navbar navbar-default navbar-fixed-bottom" role="navigation">    
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="align-center">                    
-        <a href="#" class="navbar-link" data-i18n="[title]event:button.previous" onclick="MyCookieJS.goto('administrator/event')">
-            <i class="fa fa-arrow-circle-o-left fa-4x"></i>
-        </a> &nbsp;&nbsp;&nbsp;
-        <a href="#" class="navbar-link" data-i18n="[title]event:button.save" onclick="evt.register(event)">
-            <i class="fa fa-save fa-4x"></i>
-        </a>        
-    </div><!-- /.navbar-collapse -->
-</nav>
-
 <script type="text/javascript">
     require(['jquery'], function ($) {
         $(function () {

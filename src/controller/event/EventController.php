@@ -37,6 +37,18 @@ class EventController
             'searchTerm' => $q));
     }
 
+    public static function managePublic()
+    {
+        global $_MyCookie;
+        UserController::checkAccessLevel('USER');
+        $_MyCookie->goBackTo('');
+        $events = Event::select('e')->where('e.isRegistrationOpen = ?1')
+                        ->setParameter(1, true)
+                        ->add('orderBy', 'e.name ASC')
+                        ->getQuery()->getResult();
+        $_MyCookie->loadView('event', 'managePublic', ['events' => $events]);
+    }
+
     public static function urlManage(Event $event, $register = false)
     {
         global $_MyCookie;
@@ -98,6 +110,7 @@ class EventController
                 $act['Speakers'] = array();
             }
             $activity
+                    ->setEvent($event)
                     ->setName($act['Name'])
                     ->setType($type)
                     ->setDuration($act['Duration'])
@@ -146,14 +159,18 @@ class EventController
     public static function register()
     {
         global $_MyCookie;
-        UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF', 'USER');
-        $event = Event::select('e')->where('e.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getSingleResult();
-        $_MyCookie->LoadView('event', 'register', $event);
+        global $_User;
+        if (empty($_User)) {
+            \controller\index\IndexController::showPage();
+        } else {
+            $event = Event::select('e')->where('e.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getSingleResult();
+            $_MyCookie->LoadView('event', 'register', $event);
+        }
     }
 
     public static function saveRegister($pUser = null)
     {
-        global $_User;        
+        global $_User;
         UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF', 'USER');
         $user = (is_null($pUser)) ? $_User : $pUser;
         $activities = filter_input(INPUT_POST, 'Activity', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
@@ -195,7 +212,7 @@ class EventController
             }
             // Removes activities already registred
             foreach ($removedAct as $activity) {
-                $activity->getParticipants()->remove($user);
+                $activity->getParticipants()->removeElement($user);
                 $activity->save();
             }
             // Register for new activities
@@ -292,4 +309,5 @@ EOT
             $mail->send();
         }
     }
+
 }

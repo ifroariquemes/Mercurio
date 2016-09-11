@@ -347,7 +347,7 @@ class UserController
         if (count($users) == 1) {
             $uPass = filter_input(INPUT_POST, 'password');
             $bPass = $users[0]->getPassword();
-            if (md5($uPass) === $bPass) { // password_verify($uPass, $bPass)) {
+            if (password_verify($uPass, $bPass)) {
                 if ($users[0]->getStatus()) {
                     $_EntityManager->detach($users[0]);
                     $_SESSION[MyCookie::USER_ID_SESSION] = $users[0]->getId();

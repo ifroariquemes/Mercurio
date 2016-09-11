@@ -14,8 +14,7 @@ function User() {
         var msg = MyCookieJS.execute('user/checkActualPassword', $('#FrmEditPassword').serialize(), false);
         if (msg === 'false') {
             document.getElementById('textActualPassword').setCustomValidity($.i18n.t('user:message.incorrect_pwd'));
-        }
-        else {
+        } else {
             document.getElementById('textActualPassword').setCustomValidity('');
         }
     };
@@ -25,8 +24,7 @@ function User() {
         var msg = MyCookieJS.execute('user/deactivate', $('#FrmEdit').serialize(), false);
         if (msg !== '') {
             alert(msg);
-        }
-        else {
+        } else {
             MyCookieJS.alert(t('user:user_deactivated'));
             MyCookieJS.alert($.i18n.t('user:message.user_deactivated'), function () {
                 MyCookieJS.goto('administrator/user');
@@ -39,8 +37,7 @@ function User() {
         var msg = MyCookieJS.execute('user/reactivate', $('#FrmEdit').serialize(), false);
         if (msg !== '') {
             alert(msg);
-        }
-        else {
+        } else {
             MyCookieJS.alert($.i18n.t('user:message.user_reativated'), function () {
                 MyCookieJS.goto('administrator/user');
             });
@@ -52,8 +49,7 @@ function User() {
         var msg = MyCookieJS.execute('user/changePassword', $('#FrmEditPassword').serialize(), false);
         if (msg !== '') {
             alert(msg);
-        }
-        else {
+        } else {
             MyCookieJS.alert($.i18n.t('user:message.incorrect_pwd'), function () {
                 MyCookieJS.goto('administrator/user');
             });
@@ -66,8 +62,7 @@ function User() {
             var msg = MyCookieJS.execute('user/delete', $('#FrmEdit').serialize(), false);
             if (msg !== '') {
                 alert(msg);
-            }
-            else {
+            } else {
                 MyCookieJS.alert($.i18n.t('user:message.user_deleted'), function () {
                     MyCookieJS.goto('administrator/user');
                 });
@@ -81,12 +76,19 @@ function User() {
         var msg = MyCookieJS.execute('user/save', $('#FrmEdit').serialize(), false);
         if (msg !== '') {
             alert(msg);
-        }
-        else {
+        } else {
             MyCookieJS.alert($.i18n.t('user:message.user_saved'), function () {
                 MyCookieJS.goto('administrator/user');
             });
         }
+    };
+
+    this.savePublic = function (e) {
+        e.preventDefault();
+        var msg = MyCookieJS.execute('user/savePublic', $('#FrmEdit').serialize(), false);
+        MyCookieJS.alert(msg, function() {
+            MyCookieJS.closeAllPopups();
+        });
     };
 }
 

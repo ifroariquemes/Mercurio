@@ -52,6 +52,7 @@ function Event() {
                 if (msg != '') {
                     MyCookieJS.alert(msg, function () {
                         MyCookieJS.closeAllPopups();
+                        MyCookieJS.closeWaitMessage();
                     });
                 } else {
                     MyCookieJS.alert($.i18n.t('event:register.message.registred'), function () {

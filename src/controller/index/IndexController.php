@@ -11,9 +11,17 @@ class IndexController extends \lib\util\Router
         global $_Async;
         global $_MyCookie;
         global $_BaseURL;
-        if (is_null($view)) {
+        global $_User;
+        if(empty($_User)) {
             ob_start();
-            include('src/view/index/main.php');
+            include('src/view/index/login.php');
+            $view = ob_get_contents();
+            ob_end_clean();
+            $_Cache->doCache = false;
+        }
+        else if (is_null($view)) {
+            ob_start();
+            \controller\event\EventController::managePublic();
             $view = ob_get_contents();
             ob_end_clean();
             $_Cache->doCache = false;

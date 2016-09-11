@@ -104,7 +104,7 @@ class User extends Object
 
     public function setPassword($password)
     {
-        $this->password = md5($password);// password_hash($password, PASSWORD_DEFAULT);
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
         return $this;
     }
 

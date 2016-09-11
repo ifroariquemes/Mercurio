@@ -81,24 +81,24 @@ global $_Config;
                         <div class="modal-header">
                             <h4 class="modal-title" data-i18n="admin:register.title">Register new account</h4>
                         </div>
-                        <form name="FrmEdit" id="FrmEdit" role="form" autocomplete="off">
+                        <form name="FrmEdit" id="FrmEdit" role="form" autocomplete="off" onsubmit="return user.savePublic(event)">
                             <div class="modal-body">                                        
                                 <fieldset>
                                     <div class="form-group">
                                         <label for="textName"><span data-i18n="user:label.name">Name</span>:</label>                            
-                                        <input type="text" required="required" name="name" id="textName" class="form-control" onkeyup="user.checkPublicValidity()">                            
+                                        <input type="text" required="required" name="name" id="textName" class="form-control">                            
                                     </div>                                                                      
                                     <div class="form-group">
                                         <label for="textEmail"><span data-i18n="user:label.email">E-mail</span>:</label>                            
-                                        <input type="email" name="email" id="textEmail" required="required" class="form-control" onkeyup="user.checkPublicValidity()">                            
+                                        <input type="email" name="email" id="textEmail" required="required" class="form-control">                            
                                     </div>                                                                                                  
                                     <div class="form-group">
                                         <label for="textPassword"><span data-i18n="user:label.password">Password</span>:</label> (<span data-i18n="user:message.pwd_minimum">minimum of 6 characters</span>)                           
-                                        <input required="required" pattern=".{6,32}" onkeyup="user.checkPublicValidity()" onchange="$('#textPasswordRepeat').attr('pattern', this.value)" type="password" name="newPassword" id="textPassword" class="form-control" value="">                            
+                                        <input required="required" pattern=".{6,32}" onchange="$('#textPasswordRepeat').attr('pattern', this.value)" type="password" name="newPassword" id="textPassword" class="form-control" value="">                            
                                     </div>
                                     <div class="form-group">
                                         <label for="textPasswordRepeat"><span data-i18n="user:label.repeat_pwd">Repeat password</span>:</label>                            
-                                        <input required="required" pattern="" type="password" name="passwordRepeat" id="textPasswordRepeat" class="form-control" onkeyup="user.checkPublicValidity()">                            
+                                        <input required="required" pattern="" type="password" name="passwordRepeat" id="textPasswordRepeat" class="form-control">                            
                                     </div>
                                 </fieldset>                                
                                 <input type="hidden" name="id" value="">                                          
@@ -106,7 +106,7 @@ global $_Config;
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" onclick="$('#FrmEdit')[0].reset();
                                             $('#mdRegister').modal('hide')"><i class="fa fa-times"></i> <span data-i18n="mycookie:button.cancel">Cancel</span></button>                                
-                                <button type="submit" class="btn btn-success" onclick="user.verifyEmailPublic(event)" disabled="disabled"><i class="fa fa-sign-in"></i> <span data-i18n="admin:register.button">Register</span></button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> <span data-i18n="admin:register.button">Register</span></button>
                             </div>
                         </form>
                     </div>
