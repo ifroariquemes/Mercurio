@@ -1,0 +1,167 @@
+{
+    "label": {
+        "add_event": "Adicionar evento",
+        "edit_event": "Editar evento",
+        "name": "Nome",
+        "organization": "Organização",
+        "organizations": "Organizações",
+        "description": "Descrição",
+        "starts": "Início",
+        "ends": "Fim",
+        "address": "Endereço",
+        "is_open": "Está aberto?",
+        "is_registration_open": "Permitir inscrições?",
+        "registred_activities": "Atividades registradas",
+        "activities": "Atividades"
+    },
+    "button": {
+        "register": "Registrar",
+        "update": "Atualizar registro",
+        "delete": "Deletar evento",
+        "next": "Próximo",
+        "previous": "Anterior",
+        "save": "Salvar",
+        "accreditation": "Credeciamento",
+        "frequency": "Frequência"
+    },
+    "message": {
+        "empty": "Não há qualquer evento registrado",
+        "success": "Evento salvo com sucesso!",
+        "delete": "Você quer realmente deletar este evento?",
+        "deleted": "Evento deletado com sucesso!",
+        "select_activities": "Por favor, selecione atividades que você quer participar",
+        "remaining_vacancies": "Vagas remanescentes",
+        "no_vacancy": "Sem vagas"
+    },
+    "organization": {
+        "label": {
+            "add_organization": "Adicionar organização",
+            "edit_organization": "Editar organização",
+            "name": "Nome",
+            "city": "Cidade",
+            "state": "Estado"
+        },
+        "message": {
+            "saved": "Organização salva com sucesso!",
+            "empty": "Não há qualquer organização registrada"
+        },
+        "button": {
+            "delete": "Deletar organização",
+            "new_event": "Novo evento",
+            "certificate_templates": "Modelos de certificado"
+        }
+    },
+    "activity": {
+        "label": {
+            "name": "Nome",
+            "duration": "Duração",
+            "description": "Descrição",
+            "has_certificate": "Terá certificado?",
+            "has_submissions": "Terá submissões?",
+            "vacancies": "Vagas",
+            "speakers": "Ministrantes",
+            "speakers_name": "Nome",
+            "subscriptions": "Subscrições",
+            "sessions": "Sessões",
+            "session_date": "Data",
+            "session_start": "Começa às",
+            "session_end": "Termina às"
+        },
+        "button": {
+        },
+        "type": {
+            "label": {
+                "type": "Tipo",
+                "name": "Nome",
+                "translations": "Traduções",
+                "translation_name": "Nome",
+                "translation_lang": "Idioma"
+            },
+            "message": {
+                "delete": "Você tem certeza de que quer deletar este tipo?",
+                "deleted": "Tipo apagado com sucesso!"
+            },
+            "button": {
+                "add_type": "Adicionar tipo"
+            }
+        }
+    },
+    "register": {
+        "label": {
+            "title": "Inscrição",
+            "information": "Informação do evento"
+        },
+        "button": {
+            "delete": "Deletar inscrição"
+        },
+        "message": {
+            "at_least": "Você precisa selecionar ao menos uma atividade para se inscrever neste evento",
+            "registred": "Inscrição salva com sucesso",
+            "delete": "Você quer realmente deletar sua inscrição?",
+            "deleted": "Inscrição deletada com sucesso!",
+            "no_vacancy": "As vagas das atividades a seguir acabaram durante o processamento da sua inscrição",
+            "session_collision": "Nós detectamos uma colisão de sessões entre atividades na sua seleção (elas acontecerão ao mesmo tempo)"
+        }
+    },
+    "accreditation": {
+        "label": {
+            "event_info": "Informação do evento",
+            "registred": "Inscritos",
+            "confirmed": "Confirmados",
+            "registred_participants": "Participantes inscritos",
+            "credentials_confirmation": "Confirmação de credenciais",
+            "confirmed": "Confirmado",
+            "override_activities": "Sobrescrever atividades"
+        },
+        "message": {
+            "empty": "Não há inscrições para este evento até o momento",
+            "confirmed": "Credenciais confirmadas com sucesso",
+            "at_least": "Você precisa selecionar ao menos uma atividade para confirmar credenciais neste evento"
+        }
+    },
+    "frequency": {
+        "label": {
+            "event_activities": "Atividades no evento",
+            "presents": "Presentes",
+            "signature_list": "Lista de assinaturas",
+            "signature": "Assinatura",
+            "activity_info": "Informações da atividade"
+        },
+        "message": {
+            "empty": "Não há credenciais confirmadas neste evento até o momento",
+            "empty_participant": "Não há participantes nesta atividade"
+        }
+    },
+    "certificate": {
+        "label": {
+            "name": "Nome",
+            "certificate_templates": "Modelos de certificado",
+            "add": "Adicionar modelo de certificado",
+            "participant_template": "Participante",
+            "speaker_template": "Ministrante",
+            "front": "Frente",
+            "back": "Verso",
+            "participant_markups": "Marcações do participante",
+            "participant_name": "Nome do participante",
+            "event_name": "Nome do evento",
+            "event_sd": "Data inicial do evento",
+            "event_ed": "Data final do evento",
+            "organization_name": "Nome da organização",
+            "activity_name": "Nome da atividade em que o participante estava presente (use isto apenas se a impressão for feita por atividade)",
+            "activity_list": "Lista de atividades que o participante estava presente",
+            "hours": "Total de horas de participação",
+            "speaker_markups": "Marcações do ministrante",
+            "speaker_name": "Nome do ministrante",
+            "speaker_activity": "Nome da atividade ministrada",
+            "speaker_hours": "Total de horas de participação na atividade",
+            "general_markups": "Marcações gerais",
+            "book": "Número do livro onde o certificado será registrado",
+            "page": "Número da página de registro no livro",
+            "registration": "Número de registro do certificado",
+            "date": "Data atual"
+        },
+        "message": {
+            "empty": "Não há qualquer modelo de certificado nesta organização"
+        }
+    }
+}
