@@ -54,7 +54,7 @@ class AdministratorController extends Router
         $this->checkUserLoggedIn();
         if (is_null($view)) {
             ob_start();
-            $_MyCookie->loadView('administrator', 'Main');
+            $_MyCookie->loadView('administrator', 'main');
             $view = ob_get_contents();
             ob_end_clean();
         }
@@ -63,7 +63,7 @@ class AdministratorController extends Router
             echo $view;
         } else {
             ob_start();
-            $_MyCookie->loadTemplate('administrator', 'Template', $view);
+            $_MyCookie->loadTemplate('administrator', 'template', $view);
             $page = ob_get_contents();
             ob_end_clean();
             $_Cache->doCache($page);

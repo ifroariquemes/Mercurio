@@ -32,7 +32,7 @@ function Organization() {
     this.submit = function(e) {
         e.preventDefault();
         var msg = MyCookieJS.execute('event/organization/save', $('#FrmEdit').serialize(), false);
-        MyCookieJS.alert($.i18n.t('organization:message.saved'), function() {
+        MyCookieJS.alert($.i18n.t('event:organization.message.saved'), function() {
             MyCookieJS.goto('administrator/event/organization/manage');
         });
     };

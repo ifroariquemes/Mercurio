@@ -17,7 +17,7 @@ class MenuControl
     {
         global $_MyCookie;
         $data = MenuControl::loadMenus();
-        $_MyCookie->loadView('administrator/menu', 'ListNames', $data);
+        $_MyCookie->loadView('administrator/menu', 'listNames', $data);
     }
 
     public static function listModuleIcons()

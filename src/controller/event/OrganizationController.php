@@ -35,7 +35,7 @@ class OrganizationController
                         ->setParameter(1, sprintf('%%%s%%', filter_input(INPUT_POST, 'name')))->getQuery()->getResult();
         $pages = Pagination::paginate($organization);
         if (count($pages) > 0) {
-            $_MyCookie->loadView('organization', 'Manage.table', $pages);
+            $_MyCookie->loadView('organization', 'manage.table', $pages);
         }
     }
 
@@ -45,7 +45,7 @@ class OrganizationController
         UserController::checkAccessLevel('ADMINISTRATOR');
         $_MyCookie->goBackTo('administrator', 'event', 'organization');
         $organization = new Organization;
-        $_MyCookie->loadView('event/organization', 'Edit', array('organization' => $organization, 'action' => 'add'));
+        $_MyCookie->loadView('event/organization', 'edit', array('organization' => $organization, 'action' => 'add'));
     }
 
     public static function edit()
@@ -55,7 +55,7 @@ class OrganizationController
         $_MyCookie->goBackTo('administrator', 'event', 'organization');
         $organization = Organization::select('o')->where('o.id = ?1')
                         ->setParameter(1, $_MyCookie->getURLVariables(3))->getQuery()->getSingleResult();
-        $_MyCookie->loadView('event/organization', 'Edit', array('action' => 'edit', 'organization' => $organization));
+        $_MyCookie->loadView('event/organization', 'edit', array('action' => 'edit', 'organization' => $organization));
     }
 
     public static function save()
