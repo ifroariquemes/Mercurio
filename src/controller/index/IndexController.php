@@ -12,7 +12,7 @@ class IndexController extends \lib\util\Router
         global $_MyCookie;
         global $_BaseURL;
         global $_User;
-        if(empty($_User)) {
+        if(empty($_User) && $_MyCookie->getNamespace() !== 'controller\build') {
             ob_start();
             include('src/view/index/login.php');
             $view = ob_get_contents();
