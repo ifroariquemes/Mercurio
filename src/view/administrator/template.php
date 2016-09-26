@@ -71,7 +71,7 @@ global $_MyCookieGoBack;
             <footer id="admin-footer">
                 <hr />
                 <p class="align-center">
-                    <strong>Copyright &copy; 2014 - 2015 IFRO</strong><br>
+                    <strong>Copyright &copy; 2014 - 2016 IFRO</strong><br>
                     <span data-i18n="admin:footer.institute">Federal Institute of Rondônia</span><br>
                     <i>Campus Ariquemes</i>
                 </p>           

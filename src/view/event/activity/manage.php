@@ -35,6 +35,6 @@
                 </form>
             </div>
         </div>                
-        <p class="text-right"><button class="btn btn-primary" onclick="activity.add()"><i class="fa fa-plus-circle"></i> Add activity</button></p>        
+        <p class="text-right"><button class="btn btn-primary" onclick="activity.add()"><i class="fa fa-plus-circle"></i> <span data-i18n="event:activity.button.add_activity">Add activity</span></button></p>        
     </div>
 </div>

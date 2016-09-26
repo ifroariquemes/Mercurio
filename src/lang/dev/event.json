@@ -68,6 +68,7 @@
             "session_end": "End at"
         },
         "button": {
+            "add_activity": "Add activity"
         },
         "type": {
             "label": {

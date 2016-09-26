@@ -113,17 +113,19 @@ function TMyCookieJS() {
     this.showDynamicPopup = function (popupId, moduleAction, data, requestType) {
         requestType = (typeof (requestType) !== 'string') ? 'POST' : requestType;
         self.showWaitMessage();
-        $.ajax({
-            async: true,
-            type: requestType,
-            url: self.mountURL(moduleAction, false),
-            data: data,
-            success: function (returning) {
-                self.closeWaitMessage();
-                self.showStaticPopup(popupId, returning);
-                $(String.format('#{0}', popupId)).attr('data-action', moduleAction).attr('data-data', data).i18n();
-            }
-        });
+        setTimeout(function () {
+            $.ajax({
+                async: true,
+                type: requestType,
+                url: self.mountURL(moduleAction, false),
+                data: data,
+                success: function (returning) {
+                    self.closeWaitMessage();
+                    self.showStaticPopup(popupId, returning);
+                    $(String.format('#{0}', popupId)).attr('data-action', moduleAction).attr('data-data', data).i18n();
+                }
+            });
+        }, 500);
     };
 
     this.refreshPopup = function (popupId) {
@@ -162,8 +164,7 @@ function TMyCookieJS() {
 
             });
             return returning;
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
             MyCookieJSErrors.Handle(error);
             return false;
@@ -225,8 +226,7 @@ function TMyCookieJS() {
             if (moduleAction === null)
                 throw 3;
             location.href = self.mountURL(moduleAction, true);
-        }
-        catch (error) {
+        } catch (error) {
             MyCookieJSErrors.Handle(error);
             return false;
         }
