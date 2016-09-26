@@ -22,8 +22,8 @@ global $_User;
         </header>
         <div class="container">
             <div class="row">
-                <div class="col-md-offset-3 col-md-6">
-                    <img src="<?= $_BaseURL ?>src/assets/images/ifro.png" class="img-responsive">
+                <div class="col-md-offset-4 col-md-4">
+                    <img src="<?= $_BaseURL ?>src/assets/images/ifro-horizontal.png" class="img-responsive">
                     <h2 class="text-center">Mercúrio</h2>
                     <h4 class="text-center">Sistema Gerenciador de Eventos</h4>
                 </div>
