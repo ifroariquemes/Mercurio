@@ -38,7 +38,7 @@ class UserController
     public static function manage()
     {
         global $_MyCookie;
-        if(isset($_GET['q'])) {
+        if (isset($_GET['q'])) {
             self::search();
             return;
         }
@@ -138,7 +138,9 @@ class UserController
                     ->setStatus(0)
                     ->save();
             $user->setCode(md5($user->getId()))->save();
-            self::sendEmailPublic($user);
+            if(!self::sendEmailPublic($user)) {
+                $user->delete();
+            }
         }
     }
 
@@ -189,6 +191,7 @@ class UserController
         $mail = new \PHPMailer;
         $mail->isSMTP();
         $mail->SMTPDebug = 0;
+        $mail->Debugoutput = 'html';
         $mail->SMTPAuth = true;
         $mail->Host = $mailConfig->host;
         $mail->Port = $mailConfig->port;
@@ -199,8 +202,13 @@ class UserController
         $mail->Subject = utf8_decode(sprintf('%s %s', $_MyCookie->getTranslation('user', 'email.new_subject'), $_Config->name));
         $mail->msgHTML(utf8_decode($_MyCookie->loadView('user', 'email.public', array('user' => $user, 'confirmationLink' => $url), true)));
         $mail->addAddress($user->getEmail());
-        $mail->send();
-        echo $_MyCookie->getTranslation('user', 'email.check');
+        if ($mail->send()) {
+            echo $_MyCookie->getTranslation('user', 'email.check');
+            return true;
+        } else {
+            echo $mail->ErrorInfo;
+            return false;
+        }
     }
 
     public static function sendEmailForgot(User $user)
@@ -413,5 +421,7 @@ class UserController
                         ->setParameter(1, $flag)->getQuery()->getResult();
         $_MyCookie->loadView('user', 'Select', $users);
     }
+
 }
+
 ?>

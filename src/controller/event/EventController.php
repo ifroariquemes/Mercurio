@@ -40,13 +40,20 @@ class EventController
     public static function managePublic()
     {
         global $_MyCookie;
-        UserController::checkAccessLevel('USER');
-        $_MyCookie->goBackTo('');
-        $events = Event::select('e')->where('e.isRegistrationOpen = ?1')
-                        ->setParameter(1, true)
-                        ->add('orderBy', 'e.name ASC')
-                        ->getQuery()->getResult();
-        $_MyCookie->loadView('event', 'managePublic', ['events' => $events]);
+        global $_User;
+        global $_BaseURL;
+        if (!isset($_User)) {
+            $_MyCookie->loadView('index', 'login');
+        } else if (UserController::isAdministratorLoggedIn()) {
+            header("location: {$_BaseURL}administrator/");
+        } else {
+            $_MyCookie->goBackTo('');
+            $events = Event::select('e')->where('e.isRegistrationOpen = ?1')
+                            ->setParameter(1, true)
+                            ->add('orderBy', 'e.name ASC')
+                            ->getQuery()->getResult();
+            $_MyCookie->loadView('event', 'managePublic', ['events' => $events]);
+        }
     }
 
     public static function urlManage(Event $event, $register = false)
@@ -78,7 +85,7 @@ class EventController
         $_SESSION[\controller\event\ActivityController::SESSIONKEY_ACTIVITIES] = array();
         $event = Event::select('e')->where('e.id = ?1')
                         ->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getSingleResult();
-        $_MyCookie->LoadView('event', 'Edit', array('action' => 'edit', 'event' => $event));
+        $_MyCookie->LoadView('event', 'edit', array('action' => 'edit', 'event' => $event));
     }
 
     public static function save()
