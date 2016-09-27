@@ -138,7 +138,11 @@ class UserController
                     ->setStatus(0)
                     ->save();
             $user->setCode(md5($user->getId()))->save();
-            if(!self::sendEmailPublic($user)) {
+            try {
+                if (!self::sendEmailPublic($user)) {
+                    $user->delete();
+                }
+            } catch (\Exception $e) {
                 $user->delete();
             }
         }
@@ -199,8 +203,8 @@ class UserController
         $mail->Username = $mailConfig->username;
         $mail->Password = $mailConfig->password;
         $mail->setFrom($mailConfig->email, $_Config->name);
-        $mail->Subject = utf8_decode(sprintf('%s %s', $_MyCookie->getTranslation('user', 'email.new_subject'), $_Config->name));
-        $mail->msgHTML(utf8_decode($_MyCookie->loadView('user', 'email.public', array('user' => $user, 'confirmationLink' => $url), true)));
+        $mail->Subject = \utf8_decode(sprintf('%s %s', $_MyCookie->getTranslation('user', 'email.new_subject'), $_Config->name));
+        $mail->msgHTML(\utf8_decode($_MyCookie->loadView('user', 'email.public', array('user' => $user, 'confirmationLink' => $url), true)));
         $mail->addAddress($user->getEmail());
         if ($mail->send()) {
             echo $_MyCookie->getTranslation('user', 'email.check');
