@@ -82,13 +82,18 @@
     </div>    
 </div>
 
-<?php if ($data->getParticipants()->contains($_User)) : ?>
-    <div class="row">
-        <div class="col-md-12">
-            <p class="text-right"><a href="#" onclick="evt.deleteRegistration(event)" data-i18n="event:register.button.delete"></a></p>
-        </div>
+<div class="row">
+    <div class="col-md-12">
+        <p class="text-right">
+            <?php if ($data->getParticipants()->contains($_User)) : ?>
+                <a href="#" class="text-danger" onclick="evt.deleteRegistration(event)" data-i18n="event:register.button.delete"></a>
+                <button class="btn btn-success" type="button" onclick="evt.register(event)"><i class="fa fa-exchange"></i> <span data-i18n="event:button.update">Atualizar registro</span></button>
+            <?php else : ?>
+                <button class="btn btn-success" type="button" onclick="evt.register(event)"><i class="fa fa-save"></i> <span data-i18n="event:button.register">Registrar</span></button>
+            <?php endif ?>
+        </p>
     </div>
-<?php endif ?>
+</div>
 
 <script type="text/javascript">
     require(['jquery'], function ($) {

@@ -35,7 +35,7 @@ class AccountTypeControl {
         global $_User;
         $accountTypes = AccountType::select('a')->orderBy('a.name')->getQuery()->execute();
         $readonly = ($_User->getId() == $uId);
-        $_MyCookie->loadView('user/accountType', 'Select', array('accountTypes' => $accountTypes, 'readonly' => $readonly, 'accid' => $accId));
+        $_MyCookie->loadView('user/accountType', 'select', array('accountTypes' => $accountTypes, 'readonly' => $readonly, 'accid' => $accId));
     }
 
     public static function Gerenciar() {

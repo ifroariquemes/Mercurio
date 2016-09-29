@@ -554,4 +554,4 @@ if (!String.format) {
 }
 
 var MyCookieJS = new TMyCookieJS();
-MYCOOKIEJS_BASEURL = 'http://localhost:8080/Mercurio/';
+MYCOOKIEJS_BASEURL = 'http://localhost:8080/Mercurio-Original/';

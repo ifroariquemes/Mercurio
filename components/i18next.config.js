@@ -5,7 +5,7 @@ require(['jquery', 'i18next'], function ($) {
         console.log("User language: %s", lngUser);
         var option = {
             lng: lngUser,
-                        resGetPath: 'http://localhost:8080/Mercurio/src/lang/__lng__/__ns__.json',
+                        resGetPath: 'http://localhost:8080/Mercurio-Original/src/lang/__lng__/__ns__.json',
             ns: {
                 namespaces: ['admin','build','event','index','mycookie','user']
             },
