@@ -52,7 +52,9 @@
             <div class="panel-body">   
                 <div class="alert alert-warning alert-dismissible row" role="alert">
                     <div class="col-xs-1 hidden-xs"><i class="glyphicon glyphicon-info-sign btn-lg"></i></div>
-                    <div class="col-xs-11">A <b>MARCAÇÃO</b> de algumas atividades ficará <b>DESABILITADA</b> quando uma ou mais sessões (data e hora) acontecerem ao mesmo tempo que em uma das atividades que você já selecionou.</div>
+                    <div class="col-xs-2 hidden-sm hidden-md hidden-lg"><i class="glyphicon glyphicon-info-sign btn-lg"></i></div>
+                    
+                    <div class="col-xs-10">A <b>MARCAÇÃO</b> de algumas atividades ficará <b>DESABILITADA</b> quando uma ou mais sessões (data e hora) acontecerem ao mesmo tempo que em uma das atividades que você já selecionou.</div>
                 </div>
                 <p data-i18n="event:message.select_activities"></p>
                 <form id="FrmRegister">
