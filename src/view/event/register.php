@@ -55,22 +55,25 @@
                     <fieldset>
                         <?php foreach ($data->getActivities() as $activity) : ?>
                             <div class="form-group col-md-4">
-                                <?php if ($activity->hasVacancy() || $activity->getParticipants()->contains($_User)): ?>
-                                    <input type="checkbox" name="Activity[]" id="act_<?= $activity->getId() ?>" data-disable="<?= json_encode($activity->getDisable()) ?>"                                           
-                                           <?php if ($activity->getParticipants()->contains($_User)) : ?>checked="checked"<?php endif; ?>
-                                           value="<?= $activity->getId() ?>">
-                                       <?php endif; ?>
-                                <label for="act_<?= $activity->getId() ?>" data-toogle="tooltip" data-placement="right" 
-                                       title="<?= $activity->getDescription() ?>">
-                                           <?= $activity->getName() ?>                                            
+                                <label id="act_<?= $activity->getId() ?>_label" for="act_<?= $activity->getId() ?>" data-html="true" data-toogle="tooltip" data-placement="right" 
+                                       title="<?php include('activity/session.information.php') ?>">
+                                           <?php if ($activity->hasVacancy() || $activity->getParticipants()->contains($_User)): ?>
+                                        <input type="checkbox" name="Activity[]" id="act_<?= $activity->getId() ?>" data-disable="<?= json_encode($activity->getDisable()) ?>"                                           
+                                               <?php if ($activity->getParticipants()->contains($_User)) : ?>checked="checked"<?php endif; ?>
+                                               value="<?= $activity->getId() ?>">
+                                           <?php endif; ?>
+                                           <?= $activity->getName() ?> 
                                            <?php if ($activity->remainingVacancies() !== 'Unlimited') : ?>
-                                        (<?php if ($activity->hasVacancy()) : ?>
-                                            <span data-i18n="event:message.remaining_vacancies"></span>: <?= $activity->remainingVacancies() ?>                                                   
-                                        <?php else : ?>
-                                            <span data-i18n="event:message.no_vacancy" class="text-danger"></span>                                                   
-                                        <?php endif; ?>)
+                                        <span style="font-weight: normal">
+                                            (<?php if ($activity->hasVacancy()) : ?>
+                                                <span data-i18n="event:message.remaining_vacancies"></span>: <?= $activity->remainingVacancies() ?>                                                   
+                                            <?php else : ?>
+                                                <span data-i18n="event:message.no_vacancy" class="text-danger"></span>                                                   
+                                            <?php endif; ?>)
+                                        </span>
                                     <?php endif; ?>
-                                </label>                            
+                                </label>      
+                                <a href="#" class="hidden-lg" data-toggle="modal" data-target="#modalInfo" onclick="$('#atividade').html('<?= $activity->getName() ?>'); $('#descricaoAtividade').html($('#act_<?= $activity->getId() ?>_label').attr('data-original-title'))">+info</a>
                                 <br>
                             </div>             
                         <?php endforeach; ?>                                 
@@ -80,6 +83,24 @@
             </div>
         </div>        
     </div>    
+</div>
+
+<div class="modal fade hidden-lg" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Informações de atividade</h4>
+            </div>
+            <div class="modal-body">
+                <b>Atividade:</b> <span id="atividade"></span><br><br>
+                <div id="descricaoAtividade"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -99,7 +120,9 @@
     require(['jquery'], function ($) {
         $(function () {
             $('#textName').focus();
-            $('label[data-toogle=tooltip]').tooltip();
+            $('label[data-toogle=tooltip]').tooltip({
+                template: '<div class="tooltip hidden-md hidden-sm hidden-xs" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+            });
             evt.updateDisable();
             $('input[type="checkbox"]').change(function () {
                 if ($(this).is(':checked')) {
@@ -112,3 +135,10 @@
 
     });
 </script>
+<style type="text/css">
+    .tooltip-inner {
+        text-align: justify;
+        width: 300px !important;
+        max-width: 800px !important;
+    }
+</style>
