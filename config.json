@@ -8,7 +8,7 @@
         "dbname": "mercurio"
     },
     "build": {
-        "production": true,
+        "production": false,
         "password": "1234",
         "custom_js": {            
             "bootstrap": "vendor/sheillendra/metro-bootstrap/docs/bootstrap.js",

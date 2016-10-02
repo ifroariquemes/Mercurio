@@ -62,6 +62,10 @@ class Session extends Object
         }
         return $this->start->format('H:i');
     }
+    
+    function getStartTime() {
+        return $this->start;
+    }
 
     function getEnd($timestamp = false)
     {
@@ -69,6 +73,10 @@ class Session extends Object
             return $this->end->getTimestamp();
         }
         return $this->end->format('H:i');
+    }
+    
+    function getEndTime() {
+        return $this->end;
     }
 
     function setDate($date)

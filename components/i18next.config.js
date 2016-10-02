@@ -9,7 +9,7 @@ require(['jquery', 'i18next'], function ($) {
             ns: {
                 namespaces: ['admin','build','event','index','mycookie','user']
             },
-            useLocalStorage: true,
+            useLocalStorage: false,
             localStorageExpirationTime: 86400000 // in ms
         };
         i18n.init(option, function (t) {                

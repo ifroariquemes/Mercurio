@@ -167,12 +167,65 @@ class EventController
     {
         global $_MyCookie;
         global $_User;
-        if (empty($_User)) {
-            \controller\index\IndexController::showPage();
-        } else {
-            $event = Event::select('e')->where('e.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getSingleResult();
-            $_MyCookie->LoadView('event', 'register', $event);
+        UserController::checkAccessLevel('ADMINISTRATOR', 'USER');
+        $event = Event::select('e')->where('e.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getSingleResult();
+        $stDate = date_create_from_format('d/m/Y H:i', $event->getStartDate() . ' 00:00');
+        $enDate = date_create_from_format('d/m/Y H:i', $event->getEndDate() . ' 23:59');
+        $eventDetail = array();
+        while ($stDate <= $enDate) {
+            $activities = array();
+            $turDate = clone($stDate);
+            $turDate->add(date_interval_create_from_date_string("5 hours 59 minutes"));
+            if ($turDate->format('H') < 12) {
+                $turno = 'MATUTINO';
+            } else if ($turDate->format('H') <= 18) {
+                $turno = 'VESPERTINO';
+            } else {
+                $turno = 'NOTURNO';
+            }
+            $minTime = date_create_from_format('Y-m-d H:i', '1970-01-01 23:59');
+            $maxTime = date_create_from_format('Y-m-d H:i', '1970-01-01 00:00');
+            foreach ($event->getActivities() as $activity) {
+                foreach ($activity->getSessions() as $session) {
+                    if ($session->getDate() === $stDate->format('Y-m-d') && $session->getStart() >= $stDate->format('H:i') && $session->getStart() <= $turDate->format('H:i')) {
+                        $minTime = ($session->getStartTime() < $minTime) ? $session->getStartTime() : $minTime;
+                        $maxTime = ($session->getEndTime() > $maxTime) ? $session->getEndTime() : $maxTime;
+                        if (!in_array($activity, $activities)) {
+                            array_push($activities, $activity);
+                        }
+                    }
+                }
+            }
+            if ($minTime->format('i') < 30) {
+                $minTime = date_create_from_format('Y-m-d H:i', "1970-01-01 {$minTime->format('H')}:00");
+            } else {
+                $minTime = date_create_from_format('Y-m-d H:i', "1970-01-01 {$minTime->format('H')}:30");
+            }
+
+            if ($maxTime->format('i') == 0) {
+                $maxTime = date_create_from_format('Y-m-d H:i', "1970-01-01 {$maxTime->format('H')}:00");
+            } else if ($maxTime->format('i') <= 30) {
+                $maxTime = date_create_from_format('Y-m-d H:i', "1970-01-01 {$maxTime->format('H')}:30");
+            } else {
+                $maxHour = $maxTime->format('H') + 1;
+                $maxHour = ($maxHour == 24) ? '00' : $maxHour;
+                $maxTime = date_create_from_format('Y-m-d H:i', "1970-01-01 {$maxHour}:00");
+            }
+            if (!isset($eventDetail[$stDate->format('Y-m-d')])) {
+                $eventDetail[$stDate->format('Y-m-d')] = array(
+                    'date' => $stDate->format('d/m/Y'),
+                    'dateUs' => $stDate->format('Y-m-d'),
+                    'turnos' => array()
+                );
+            }
+            array_push($eventDetail[$stDate->format('Y-m-d')]['turnos'], [
+                'minTime' => $minTime,
+                'maxTime' => $maxTime,
+                'turno' => $turno,
+                'activities' => $activities]);
+            $stDate->add(date_interval_create_from_date_string("6 hours"));
         }
+        $_MyCookie->LoadView('event', 'register', ['event' => $event, 'eventDetail' => $eventDetail]);
     }
 
     public static function saveRegister($pUser = null)

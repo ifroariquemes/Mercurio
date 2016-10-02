@@ -25,7 +25,6 @@ function User() {
         if (msg !== '') {
             alert(msg);
         } else {
-            MyCookieJS.alert(t('user:user_deactivated'));
             MyCookieJS.alert($.i18n.t('user:message.user_deactivated'), function () {
                 MyCookieJS.goto('administrator/user');
             });
@@ -38,7 +37,7 @@ function User() {
         if (msg !== '') {
             alert(msg);
         } else {
-            MyCookieJS.alert($.i18n.t('user:message.user_reativated'), function () {
+            MyCookieJS.alert($.i18n.t('user:message.user_reactivated'), function () {
                 MyCookieJS.goto('administrator/user');
             });
         }

@@ -56,7 +56,7 @@ function Event() {
                     });
                 } else {
                     MyCookieJS.alert($.i18n.t('event:register.message.registred'), function () {
-                        MyCookieJS.goto('administrator/event');
+                        MyCookieJS.goto('event');
                     });
                 }
             });
@@ -78,20 +78,25 @@ function Event() {
     this.actDisable = function (ids) {
         $(ids).each(function () {
             $('input[type="checkbox"][value="' + this + '"]').attr('disabled', true);
+            $('.act_' + this).css('background', '#ddd').css('color', 'gray');
         });
     };
 
     this.actEnable = function (ids) {
         $(ids).each(function () {
             $('input[type="checkbox"][value="' + this + '"]').attr('disabled', false);
+            $('.act_' + this).css('background', 'inherit').css('color', 'inherit');
         });
         self.updateDisable();
     };
 
     this.updateDisable = function () {
         $('input[type="checkbox"]').each(function () {
-            if ($(this).is(':checked'))
+            if ($(this).is(':checked')) {
                 self.actDisable($.parseJSON($(this).attr('data-disable')));
+                $('.' + $(this).attr('id')).css('background', '#5cb85c').css('color', 'white');
+
+            }
         });
     };
 
