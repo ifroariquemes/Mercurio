@@ -102,9 +102,8 @@ $sessionBlocks = array();
                                                                         ?>
                                                                         <td class="cell_act act_<?= $activity->getId() ?>" rowspan="<?= $blocos ?>">
                                                                             <div class="block_act">
-                                                                                <label id="act_<?= $activity->getId() ?>_label" for="act_<?= $activity->getId() ?>" data-html="true" data-toogle="tooltip" data-placement="right" 
-                                                                                       title="<?php include('activity/session.information.php') ?>">
-                                                                                           <?php if (!in_array($activity, $general)) : ?>
+                                                                                <label id="act_<?= $activity->getId() ?>_label" for="act_<?= $activity->getId() ?>">
+                                                                                    <?php if (!in_array($activity, $general)) : ?>
                                                                                         <input type="checkbox" class="check_act btn-lg" data-blocks="<?= $blocos ?>" data-act="<?= $activity->getId() ?>" data-date="<?= $detail['dateUs'] ?>"
                                                                                                name="Activity[]" id="act_<?= $activity->getId() ?>" data-disable="<?= json_encode($activity->getDisable()) ?>"                                           
                                                                                                <?php if ($activity->getParticipants()->contains($_User)) : ?>checked="checked"<?php endif; ?>
@@ -126,7 +125,7 @@ $sessionBlocks = array();
                                                                             </div>
                                                                         </td>
                                                                         <?php
-                                                                        array_push($general, $activity); 
+                                                                        array_push($general, $activity);
                                                                     elseif (!isset($sessionBlocks[$session->getId()]) || $sessionBlocks[$session->getId()] -- <= 0) :
                                                                         ?>   
                                                                         <td class="text-center" style="background: #ddd">-</td>
@@ -184,10 +183,6 @@ $sessionBlocks = array();
 <script type="text/javascript">
     require(['jquery'], function ($) {
         $(function () {
-            $('#textName').focus();
-            $('label[data-toogle=tooltip]').tooltip({
-                template: '<div class="tooltip hidden-md hidden-sm hidden-xs" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
-            });
             evt.updateDisable();
             $('input[type="checkbox"]').change(function () {
                 if ($(this).is(':checked')) {
