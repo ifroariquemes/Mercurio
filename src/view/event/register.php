@@ -85,10 +85,12 @@ $sessionBlocks = array();
                                                     <div class="block_act">
                                                         <label id="act_<?= $activity->getId() ?>_label" for="act_<?= $activity->getId() ?>">
                                                             <?php if (!in_array($activity, $general)) : ?>
-                                                                <input type="checkbox" class="check_act btn-lg" data-blocks="<?= $blocos ?>" data-act="<?= $activity->getId() ?>" data-date="<?= $detail['dateUs'] ?>"
-                                                                       name="Activity[]" id="act_<?= $activity->getId() ?>" data-disable="<?= json_encode($activity->getDisable()) ?>"                                           
-                                                                       <?php if ($activity->getParticipants()->contains($_User)) : ?>checked="checked"<?php endif; ?>
-                                                                       value="<?= $activity->getId() ?>">
+                                                                <?php if ($activity->hasVacancy() || $activity->getParticipants()->contains($_User)) : ?>
+                                                                    <input type="checkbox" class="check_act btn-lg" data-blocks="<?= $blocos ?>" data-act="<?= $activity->getId() ?>" data-date="<?= $detail['dateUs'] ?>"
+                                                                           name="Activity[]" id="act_<?= $activity->getId() ?>" data-disable="<?= json_encode($activity->getDisable()) ?>"                                           
+                                                                           <?php if ($activity->getParticipants()->contains($_User)) : ?>checked="checked"<?php endif; ?>
+                                                                           value="<?= $activity->getId() ?>">
+                                                                       <?php endif; ?>
                                                                    <?php endif; ?>
                                                             <?= $activity->getType()->getName() ?> - <?= $activity->getName() ?><br>
                                                             <?php if ($activity->remainingVacancies() !== 'Unlimited') : ?>
