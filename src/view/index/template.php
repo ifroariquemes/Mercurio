@@ -20,7 +20,7 @@ global $_User;
         <header>
 
         </header>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-offset-4 col-md-4">
                     <img src="<?= $_BaseURL ?>src/assets/images/ifro-horizontal.png" class="img-responsive">
@@ -35,7 +35,7 @@ global $_User;
                     </h4>
                 </div>
             <?php endif; ?>
-            <div class="row">
+            <div class="row-fluid">
                 <?= $view ?>
             </div>
         </div>
