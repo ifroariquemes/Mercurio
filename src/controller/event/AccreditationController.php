@@ -43,8 +43,9 @@ class AccreditationController
         UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF');
         $_MyCookie->goBackTo('administrator', 'event', 'accreditation', 'participants', $_MyCookie->getURLVariables(3));
         $event = Event::select('e')->where('e.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(3))->getQuery()->getSingleResult();
+        $eventDetail = EventController::getEventDetail($event);
         $participant = User::select('u')->where('u.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(4))->getQuery()->getSingleResult();
-        $_MyCookie->loadView('event/accreditation', 'participants.activities', array('event' => $event, 'participant' => $participant));
+        $_MyCookie->loadView('event/accreditation', 'participants.activities', array('event' => $event, 'participant' => $participant, 'eventDetail' => $eventDetail));
     }
 
     public static function override()
@@ -62,7 +63,7 @@ class AccreditationController
         UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF');
         $participant = User::select('u')->where('u.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'participant'))->getQuery()->getSingleResult();
         EventController::saveRegister($participant);
-        $event = Event::select('e')->where('e.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();        
+        $event = Event::select('e')->where('e.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();
         if (!$event->getConfirmed()->contains($participant)) {
             $event->getConfirmed()->add($participant);
             $event->save();
@@ -75,7 +76,7 @@ class AccreditationController
         $activities = filter_input(INPUT_POST, 'Activity', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
         $participant = User::select('u')->where('u.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'participant'))->getQuery()->getSingleResult();
         if (count($activities) > 0) {
-            $event = Event::select('e')->where('e.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();            
+            $event = Event::select('e')->where('e.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();
             foreach ($event->getActivities() as $activity) {
                 $activity->getParticipants()->removeElement($participant);
                 $activity->save();
@@ -87,4 +88,5 @@ class AccreditationController
             }
         }
     }
+
 }
