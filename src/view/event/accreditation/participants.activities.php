@@ -54,7 +54,7 @@ $sessionBlocks = array();
                                                                 <?php if ($activity->hasVacancy() || $activity->getParticipants()->contains($data['participant'])) : ?>
                                                                     <input type="checkbox" class="check_act btn-lg" data-blocks="<?= $blocos ?>" data-act="<?= $activity->getId() ?>" data-date="<?= $detail['dateUs'] ?>"
                                                                            name="Activity[]" id="act_<?= $activity->getId() ?>" data-disable="<?= json_encode($activity->getDisable()) ?>"                                           
-                                                                           <?php if ($activity->getParticipants()->contains($_User)) : ?>checked="checked"<?php endif; ?>
+                                                                           <?php if ($activity->getParticipants()->contains($data['participant'])) : ?>checked="checked"<?php endif; ?>
                                                                            value="<?= $activity->getId() ?>">
                                                                        <?php endif; ?>
                                                                    <?php endif; ?>
