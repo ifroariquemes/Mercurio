@@ -94,7 +94,10 @@ global $_BaseURL;
                             location.reload();
                         });
                     } else {
-                        MyCookieJS.alert(msg);
+                        MyCookieJS.alert(msg, function() {
+                            MyCookieJS.closeWaitMessage();
+                            MyCookieJS.closeAllPopups();
+                        });
                     }
                 }
             });

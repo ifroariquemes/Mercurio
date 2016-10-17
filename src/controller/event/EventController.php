@@ -411,6 +411,7 @@ EOT
         $mailConfig = $_Config->mail;
         foreach ($event->getParticipants() as $user) {
             if ($user->getEmail() === 'natanael.simoes@ifro.edu.br') {
+                echo 'found';
                 $mail = new \PHPMailer;
                 $mail->isSMTP();
                 $mail->SMTPDebug = 0;
@@ -422,10 +423,12 @@ EOT
                 $mail->Username = $mailConfig->username;
                 $mail->Password = $mailConfig->password;
                 $mail->setFrom($mailConfig->email, $_Config->name);
-                $mail->Subject = \utf8_decode('Mensagem dos organizadores', $_Config->name);
-                $mail->msgHTML(\utf8_decode(filter_input(INPUT_POST, 'mensagem'), true));
+                $mail->Subject = \utf8_decode('Mensagem dos organizadores');
+                $mail->msgHTML(\utf8_decode(filter_input(INPUT_POST, 'mensagem')));
                 $mail->addAddress($user->getEmail());
-                $mail->send();
+                if(!$mail->send()) {
+                    echo $mail->ErrorInfo;
+                }
             }
         }
     }
