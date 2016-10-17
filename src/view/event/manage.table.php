@@ -29,7 +29,7 @@
                     <td><?= $event->getEndDate() ?></td>  
                     <td><?= $event->getActivities()->count() ?></td>
                     <td class="text-right">
-                        <?php if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
+                        <?php if ($_User->getAccountType()->getFlag() !== 'USER') : ?>
                             <?php if ($event->getIsOpen()) : ?>
                                 <a href="<?= $urlFrequency ?>" class="btn btn-default"><i class="fa fa-clock-o"></i> <span data-i18n="event:button.frequency"></span></a>
                                 <a href="<?= $urlAccreditation ?>" class="btn btn-default hidden-sm hidden-xs"><i class="fa fa-star"></i> <span data-i18n="event:button.accreditation"></span></a>
@@ -44,17 +44,11 @@
                                 </a>                                          
                             <?php endif; ?>
                         <?php endif; ?>
-                        <a href="<?= $url ?>" class="btn btn-default hidden-sm hidden-xs">
-                            <?php if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
+                        <?php if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
+                            <a href="<?= $url ?>" class="btn btn-default hidden-sm hidden-xs">
                                 <i class="fa fa-pencil"></i>
-                            <?php elseif ($event->getIsRegistrationOpen()) : ?>  
-                                <?php if (!$event->getParticipants()->contains($_User)) : ?>
-                                    <i class="fa fa-sign-in"></i> <span data-i18n="event:button.register"></span>
-                                <?php else: ?>
-                                    <i class="fa fa-edit"></i> <span data-i18n="event:button.update"></span>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        </a>                                
+                            </a>                                
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>                                            

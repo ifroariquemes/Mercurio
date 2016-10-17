@@ -390,11 +390,11 @@ class MyCookie
      * @param string $title Titulo da imagem
      * @param string $alt Texto alternativo a imagem
      */
-    public function image($src, $class = '', $title = '', $alt = '')
+    public function image($src, $class = '', $title = '', $alt = '', $opt = '')
     {
         global $_BaseURL;
-        $image = '<img class="%s" title="%s" alt="%s" src="%s%s">';
-        echo sprintf($image, $class, $title, $alt, $_BaseURL, $src);
+        $image = '<img class="%s" title="%s" alt="%s" src="%s%s" %s>';
+        echo sprintf($image, $class, $title, $alt, $_BaseURL, $src, $opt);
     }
 
     /**

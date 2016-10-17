@@ -314,12 +314,17 @@ class EventController
     public static function printCertificates()
     {
         global $_MyCookie;
-        include('vendor/dompdf/dompdf_config.inc.php');
+        UserController::checkAccessLevel('ADMINISTRATOR');
+        include('vendor/dompdf/dompdf/autoload.inc.php');
         ini_set('memory_limit', '512M');
+        ini_set('allow_url_fopen', 1);
         set_time_limit(0);
+        $event = Event::select('e')->where('e.id = ?1')
+                        ->setParameter(1, $_MyCookie->getURLVariables(2))
+                        ->getQuery()->getOneOrNullResult();
         $users = User::select('u')->join('u.activities', 'a')->join('a.event', 'e')->where('e.id = ?1')->orderBy('u.id')
                         ->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getResult();
-        $users = array_slice($users, 0, 4);
+        $users = array_slice($users, 0, 50);
         $reg = 999; //O ultimo registro
         $pag = 51; //a ultima pagina
         $cert = 0;
@@ -327,14 +332,18 @@ class EventController
             $reg++;
             $cert++;
             $pag = $pag + (($cert - 1) % 3 == 0);
-            $dom = new \DOMPDF();
+            $dom = new \Dompdf\Dompdf();
+            $a = new \Dompdf\Options();
+            $a->setIsRemoteEnabled(true);
+            $dom->setOptions($a);
             ob_start();
-            $_MyCookie->LoadView('event', 'Certificate', array($user, $reg, $pag));
-            $dom->load_html(ob_get_contents());
+            $_MyCookie->LoadView('event', 'Certificate', array($user, $reg, $pag, $event));
+            $htmlOutput = ob_get_contents();
+            $dom->load_html($htmlOutput);
             ob_clean();
             $dom->set_paper('A4', 'landscape');
             $dom->render();
-            $fp = fopen('src/controller/event/cert/' . $user->getId() . '-' . urlencode($user->getCompleteName()) . '.pdf', 'w+');
+            $fp = fopen('src/controller/event/cert/' . $event->getId() . '-' . $user->getId() . '-' . urlencode($user->getName()) . '.pdf', 'w+');
             fwrite($fp, $dom->output());
             fclose($fp);
         }
@@ -378,6 +387,14 @@ EOT
             $mail->addAddress($user->getEmail());
             $mail->send();
         }
+    }
+
+    public static function openActivities()
+    {
+        global $_MyCookie;
+        $event = Event::select('e')->where('e.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getSingleResult();
+        $eventDetail = EventController::getEventDetail($event);
+        $_MyCookie->loadView('event', 'openActivities', ['event' => $event, 'eventDetail' => $eventDetail]);
     }
 
 }

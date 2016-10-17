@@ -36,6 +36,11 @@ class User extends Object
 
     /** @Column(type="string", nullable=true) */
     private $code;
+    
+    /**
+     * @ManyToMany(targetEntity="model\event\Activity", mappedBy="participants")
+     */
+    private $activities;
 
     function __construct()
     {
@@ -149,5 +154,9 @@ class User extends Object
     {
         $this->code = $code;
         return $this;
+    }
+    
+    public function getActivities() {
+        return $this->activities;
     }
 }

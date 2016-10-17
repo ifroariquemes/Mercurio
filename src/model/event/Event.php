@@ -13,32 +13,43 @@ use model\user\User;
  */
 class Event extends Object
 {
+
     /** @Id @Column(type="integer") @GeneratedValue */
     private $id;
+
     /** @Column(type="string") */
     private $name;
+
     /**
      * @ManyToOne(targetEntity="model\event\Organization", cascade={"merge"})
      * @JoinColumn(name="organization_id", referencedColumnName="id")
      */
     private $organization;
+
     /** @Column(type="string", nullable=true) */
     private $description;
+
     /** @Column(type="date") */
     private $startDate;
+
     /** @Column(type="date") */
     private $endDate;
+
     /** @Column(type="string") */
     private $address;
+
     /**
      * @OneToMany(targetEntity="model\event\Activity", mappedBy="event", cascade={"remove"})
      * @OrderBy({"name" = "ASC"})
      */
     private $activities;
+
     /** @Column(type="boolean") */
     private $isOpen;
+
     /** @Column(type="boolean") */
     private $isRegistrationOpen;
+
     /**
      * @ManyToMany(targetEntity="model\user\User")
      * @JoinTable(name="event_participant")
@@ -46,6 +57,7 @@ class Event extends Object
      * @var ArrayCollection
      */
     private $participants;
+
     /**
      * @ManyToMany(targetEntity="model\user\User")
      * @JoinTable(name="event_participant_confirmed")
@@ -216,4 +228,31 @@ class Event extends Object
         $this->isRegistrationOpen = $isRegistrationOpen;
         return $this;
     }
+
+    function getFullDate()
+    {
+        if ($this->startDate->format('Y') !== $this->endDate->format('Y')) {
+            return sprintf("%s de %s de %s a %s de %s de %s"
+                    , $this->startDate->format('d')
+                    , \lib\util\Date::MesNome($this->startDate->format('m'))
+                    , $this->startDate->format('Y')
+                    , $this->endDate->format('d')
+                    , \lib\util\Date::MesNome($this->endDate->format('m'))
+                    , $this->endDate->format('Y'));
+        } else if ($this->startDate->format('m') !== $this->endDate->format('m')) {
+            return sprintf("%s de %s a %s de %s de %s"
+                    , $this->startDate->format('d')
+                    , \lib\util\Date::MesNome($this->startDate->format('m'))
+                    , $this->endDate->format('d')
+                    , \lib\util\Date::MesNome($this->endDate->format('m'))
+                    , $this->endDate->format('Y'));
+        } else {
+            return sprintf("%s a %s de %s de %s"
+                    , $this->startDate->format('d')
+                    , $this->endDate->format('d')
+                    , \lib\util\Date::MesNome($this->endDate->format('m'))
+                    , $this->endDate->format('Y'));
+        }
+    }
+
 }

@@ -19,8 +19,8 @@
         <table class="table table-bordered table-condensed">
             <thead>                
                 <tr>
-                    <th data-i18n="event:activity.label.name"></th>
-                    <th data-i18n="event:frequency.label.signature"></th>
+                    <th data-i18n="event:activity.label.name">Nome</th>
+                    <th data-i18n="event:frequency.label.signature">Assinatura</th>
                 </tr>
             </thead>
             <tbody>

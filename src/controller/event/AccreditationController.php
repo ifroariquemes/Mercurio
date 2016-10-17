@@ -18,12 +18,15 @@ class AccreditationController
         $_MyCookie->goBackTo('administrator', 'event');
         $urlPage = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
         $urlPage = ($urlPage) ? $urlPage : 1;
-        $event = Event::select('e')->where('e.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(3))->getQuery()->getSingleResult();
+        $event = Event::select('e')
+                        ->where('e.id = ?1')
+                        ->setParameter(1, $_MyCookie->getURLVariables(3))
+                        ->getQuery()->getSingleResult();
         $q = filter_input(INPUT_GET, 'q');
         if (!empty($q)) {
             $pFilter = $event->getParticipants()->filter(
                     function($entry) use ($q) {
-                return strpos(strtolower($entry->getName()), strtolower($q)) !== false;
+                return strpos(strtolower(self::removeAccents($entry->getName())), strtolower(self::removeAccents($q))) !== false;
             });
             $participants = $pFilter->slice(25 * ($urlPage - 1), 25);
         } else {
@@ -87,6 +90,11 @@ class AccreditationController
                 $activity->save();
             }
         }
+    }
+
+    public static function removeAccents($string)
+    {
+        return strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'))), ' '));
     }
 
 }

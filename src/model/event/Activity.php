@@ -12,51 +12,68 @@ use \Doctrine\Common\Collections\ArrayCollection;
  */
 class Activity extends Object
 {
+
     /** @Id @Column(type="integer") @GeneratedValue */
     private $id;
+
     /** @Column(type="string") */
     private $name;
+
     /**
      * @ManyToOne(targetEntity="model\event\Event", inversedBy="activities", cascade={"merge"})
      * @JoinColumn(name="event_id", referencedColumnName="id")
      * @var Event
      */
     private $event;
+
     /**
      * @ManyToOne(targetEntity="model\event\activity\Type", cascade={"merge"})
      * @JoinColumn(name="type_id", referencedColumnName="id")
      */
     private $type;
+
     /** @Column(type="string") */
     private $duration;
+
     /** @Column(type="text") */
     private $description;
+
     /** @Column(type="array") */
     private $speakers = array();
+
     /**
      * @ManyToMany(targetEntity="model\user\User", inversedBy="activities")
      * @JoinTable(name="event_activity_participant")
+     * @OrderBy({"name"="ASC"})
      */
     private $participants;
+
     /**
-     * @ManyToMany(targetEntity="model\user\User")
+     * @ManyToMany(targetEntity="model\user\User", inversedBy="activities")
      * @JoinTable(name="event_activity_present")   
      */
     private $present;
+
     /** @Column(type="boolean") */
     private $hasCertificate;
+
     /** @Column(type="boolean") */
     private $hasSubmissions;
+
     /** @Column(type="integer") */
     private $vacancies;
+
     /**
      * @OneToMany(targetEntity="model\event\activity\Session", mappedBy="activity", cascade={"persist","remove"})    
      * @OrderBy({"date" = "ASC", "start" = "ASC"})
      * @var ArrayCollection
      */
     private $sessions;
+
     /** @Column(type="array") */
     private $disable = array();
+    private $confirmed;
+    private $participantNotConfirmed;
 
     public function __construct()
     {
@@ -64,6 +81,7 @@ class Activity extends Object
         $this->participants = new ArrayCollection;
         $this->present = new ArrayCollection;
         $this->sessions = new ArrayCollection;
+        $this->confirmed = new ArrayCollection;
     }
 
     public function getId()
@@ -110,6 +128,9 @@ class Activity extends Object
         return $this->speakers;
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getParticipants()
     {
         return $this->participants;
@@ -223,15 +244,17 @@ class Activity extends Object
 
     public function getConfirmed()
     {
-        $conf = 0;
-        if (count($this->participants)) {
-            foreach ($this->participants as $participant) {
-                if ($this->getEvent()->getConfirmed()->contains($participant)) {
-                    $conf++;
+        if (is_null($this->confirmed)) {
+            $this->confirmed = new ArrayCollection;
+            if (count($this->participants)) {
+                foreach ($this->participants as $participant) {
+                    if ($this->getEvent()->getConfirmed()->contains($participant)) {
+                        $this->confirmed->add($participant);
+                    }
                 }
             }
         }
-        return $conf;
+        return $this->confirmed->count();
     }
 
     /**
@@ -264,4 +287,19 @@ class Activity extends Object
         $this->disable = $disable;
         return $this;
     }
+
+    function getParticipantsNotConfirmed()
+    {
+        $this->getConfirmed();
+        if (is_null($this->participantNotConfirmed)) {
+            $this->participantNotConfirmed = new ArrayCollection();
+            foreach ($this->participants as $participant) {
+                if (is_null($this->confirmed) || !$this->confirmed->contains($participant)) {
+                    $this->participantNotConfirmed->add($participant);
+                }
+            }
+        }
+        return $this->participantNotConfirmed;
+    }
+
 }

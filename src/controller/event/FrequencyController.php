@@ -52,4 +52,26 @@ class FrequencyController
         $activity = Activity::select('a')->where('a.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(3))->getQuery()->getSingleResult();
         $_MyCookie->LoadView('event/frequency', 'print', $activity);
     }
+
+    public static function removeParticipant()
+    {
+        global $_MyCookie;
+        UserController::checkAccessLevel('ADMINISTRATOR');
+        $activity = Activity::select('a')->where('a.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'activity'))->getQuery()->getSingleResult();
+        $user = \model\user\User::select('u')->where('u.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'user'))->getQuery()->getSingleResult();
+        $activity->getParticipants()->removeElement($user);
+        $activity->save();
+    }
+
+    public static function removeAllParticipantsNotConfirmed()
+    {
+        global $_MyCookie;
+        UserController::checkAccessLevel('ADMINISTRATOR');
+        $activity = Activity::select('a')->where('a.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'activity'))->getQuery()->getSingleResult();
+        foreach ($activity->getParticipantsNotConfirmed() as $participant) {
+            $activity->getParticipants()->removeElement($participant);
+        }
+        $activity->save();
+    }
+
 }

@@ -5,3 +5,4 @@ vendor/
 /components/bundle.css
 /components/bundle.js
 /src/lang/_po/
+/src/controller/event/cert/
