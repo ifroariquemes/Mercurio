@@ -410,23 +410,21 @@ EOT
                         ->getQuery()->getSingleResult();
         $mailConfig = $_Config->mail;
         foreach ($event->getParticipants() as $user) {
-            if ($user->getEmail() === 'natanael.simoes@ifro.edu.br') {
-                $mail = new \PHPMailer;
-                $mail->isSMTP();
-                $mail->SMTPDebug = 0;
-                $mail->Debugoutput = 'html';
-                $mail->SMTPAuth = true;
-                $mail->Host = $mailConfig->host;
-                $mail->Port = $mailConfig->port;
-                $mail->SMTPSecure = $mailConfig->security;
-                $mail->Username = $mailConfig->username;
-                $mail->Password = $mailConfig->password;
-                $mail->setFrom($mailConfig->email, $event->getName());
-                $mail->Subject = \utf8_decode('Mensagem dos organizadores');
-                $mail->msgHTML(\utf8_decode(filter_input(INPUT_POST, 'mensagem')));
-                $mail->addAddress($user->getEmail());
-                $mail->send();
-            }
+            $mail = new \PHPMailer;
+            $mail->isSMTP();
+            $mail->SMTPDebug = 0;
+            $mail->Debugoutput = 'html';
+            $mail->SMTPAuth = true;
+            $mail->Host = $mailConfig->host;
+            $mail->Port = $mailConfig->port;
+            $mail->SMTPSecure = $mailConfig->security;
+            $mail->Username = $mailConfig->username;
+            $mail->Password = $mailConfig->password;
+            $mail->setFrom($mailConfig->email, $event->getName());
+            $mail->Subject = \utf8_decode('Mensagem dos organizadores');
+            $mail->msgHTML(\utf8_decode(filter_input(INPUT_POST, 'mensagem')));
+            $mail->addAddress($user->getEmail());
+            $mail->send();
         }
     }
 
