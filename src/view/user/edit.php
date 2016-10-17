@@ -43,6 +43,7 @@ $user = $data['user'];
                     <input type="hidden" name="id" value="<?= $user->getId() ?>">            
                     <div class="text-right">            
                         <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> <span data-i18n="mycookie:button.save">Save</span></button>                        
+                        <button class="btn btn-danger" type="button" onclick="history.go(-1);"><i class="fa fa-times"></i> <span data-i18n="mycookie:button.cancel">Cancelar</span></button>                        
                     </div>
                 </form>                
             </div>

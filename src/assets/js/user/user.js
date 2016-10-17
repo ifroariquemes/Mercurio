@@ -49,7 +49,7 @@ function User() {
         if (msg !== '') {
             alert(msg);
         } else {
-            MyCookieJS.alert($.i18n.t('user:message.incorrect_pwd'), function () {
+            MyCookieJS.alert($.i18n.t('user:message.pwd_chagend'), function () {
                 MyCookieJS.goto('administrator/user');
             });
         }

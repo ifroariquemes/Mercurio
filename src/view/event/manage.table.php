@@ -1,5 +1,8 @@
-<?php global $_MyCookie; ?>
-<?php global $_User; ?>
+<?php
+global $_MyCookie;
+global $_User;
+global $_BaseURL;
+?>
 <?php if ($data['events']->count()) : ?>    
     <table class="table table-striped">
         <thead>
@@ -47,13 +50,56 @@
                         <?php if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
                             <a href="<?= $url ?>" class="btn btn-default hidden-sm hidden-xs">
                                 <i class="fa fa-pencil"></i>
-                            </a>                                
+                            </a>    
+                            <a href="#" onclick="$('#eventId').val(<?= $event->getId() ?>)" data-toggle="modal" data-target="#mensagem"><i class="fa fa-comment"></i> Mensagem</a>
                         <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>                                            
         </tbody>                            
-    </table>                
+    </table> 
+    <div class="modal fade" id="mensagem" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Enviar mensagem para inscritos</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="FrmMensagem">
+                        <textarea id="pMensagem" name="mensagem" class="form-control"></textarea>
+                        <input type="hidden" name="eventId" id="eventId">
+                        <input type="hidden" name="async" value="true">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="enviarMensagem()">Enviar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script>
+        require(['jquery', 'summernote'], function ($) {
+            $('#pMensagem').summernote({height: 250});
+        });
+        function enviarMensagem() {
+            MyCookieJS.showWaitMessage('Enviando e-mails (isso pode demorar muitos minutos)');
+            $.ajax({
+                type: 'POST',
+                url: '<?= $_BaseURL ?>event/sendMessage/?async',
+                data: $('#FrmMensagem').serialize(),
+                success: function (msg) {
+                    if (msg === '') {
+                        MyCookieJS.alert('Mensagem enviada com sucesso!', function () {
+                            location.reload();
+                        });
+                    } else {
+                        MyCookieJS.alert(msg);
+                    }
+                }
+            });
+        }
+    </script>
 <?php else : ?>
     <br>
     <div class="alert alert-info">

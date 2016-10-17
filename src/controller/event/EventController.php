@@ -397,4 +397,37 @@ EOT
         $_MyCookie->loadView('event', 'openActivities', ['event' => $event, 'eventDetail' => $eventDetail]);
     }
 
+    public static function sendMessage()
+    {
+        global $_MyCookie;
+        global $_BaseURL;
+        global $_Config;
+        UserController::checkAccessLevel('ADMINISTRATOR');
+        set_time_limit(0);
+        require_once 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
+        $event = Event::select('e')->where('e.id = ?1')
+                        ->setParameter(1, filter_input(INPUT_POST, 'eventId'))
+                        ->getQuery()->getSingleResult();
+        $mailConfig = $_Config->mail;
+        foreach ($event->getParticipants() as $user) {
+            if ($user->getEmail() === 'natanael.simoes@ifro.edu.br') {
+                $mail = new \PHPMailer;
+                $mail->isSMTP();
+                $mail->SMTPDebug = 0;
+                $mail->Debugoutput = 'html';
+                $mail->SMTPAuth = true;
+                $mail->Host = $mailConfig->host;
+                $mail->Port = $mailConfig->port;
+                $mail->SMTPSecure = $mailConfig->security;
+                $mail->Username = $mailConfig->username;
+                $mail->Password = $mailConfig->password;
+                $mail->setFrom($mailConfig->email, $_Config->name);
+                $mail->Subject = \utf8_decode('Mensagem dos organizadores', $_Config->name);
+                $mail->msgHTML(\utf8_decode(filter_input(INPUT_POST, 'mensagem'), true));
+                $mail->addAddress($user->getEmail());
+                $mail->send();
+            }
+        }
+    }
+
 }

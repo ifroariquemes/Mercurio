@@ -38,9 +38,14 @@ class UserController
     public static function manage()
     {
         global $_MyCookie;
+        global $_User;
         if (isset($_GET['q'])) {
             self::search();
             return;
+        }
+        if(isset($_User) && $_User->getAccountType()->getFlag() === 'USER') {
+            header('location: ../../event/');
+            exit;
         }
         UserController::checkAccessLevel('ADMINISTRATOR');
         $urlPage = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
@@ -283,6 +288,7 @@ class UserController
         $mail = new \PHPMailer;
         $mail->isSMTP();
         $mail->SMTPDebug = 0;
+        $mail->Debugoutput = 'html';
         $mail->SMTPAuth = true;
         $mail->Host = $mailConfig->host;
         $mail->Port = $mailConfig->port;
