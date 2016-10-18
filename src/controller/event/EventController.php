@@ -404,7 +404,7 @@ EOT
                         ->setParameter(1, filter_input(INPUT_GET, 'eventId'))
                         ->getQuery()->getSingleResult();
         foreach ($event->getParticipants() as $user) {
-            echo "{$user->getEmail()},";
+            echo "{$user->getEmail()}, ";
         }
     }
 
