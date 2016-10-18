@@ -396,6 +396,17 @@ EOT
         $eventDetail = EventController::getEventDetail($event);
         $_MyCookie->loadView('event', 'openActivities', ['event' => $event, 'eventDetail' => $eventDetail]);
     }
+    
+    public static function loadEmails() {
+        global $_MyCookie;
+        UserController::checkAccessLevel('ADMINISTRATOR');
+        $event = Event::select('e')->where('e.id = ?1')
+                        ->setParameter(1, filter_input(INPUT_POST, 'eventId'))
+                        ->getQuery()->getSingleResult();
+        foreach ($event->getParticipants() as $user) {
+            echo "{$user->getEmail()},";
+        }
+    }
 
     public static function sendMessage()
     {
