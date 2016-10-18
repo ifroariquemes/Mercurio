@@ -71,9 +71,7 @@ global $_BaseURL;
                         <input type="hidden" name="eventId" id="eventId">
                         <input type="hidden" name="async" value="true">
                     </form>
-                    <a href="#" id="carregarEmails" onclick="carregarEmails()">Carregar lista de e-mails</a>
-                    <p id="carregandoEmails">Carregando...</p>
-                    <input type="text" id="emailsEvent" class="form-control">
+                    <a href="<?= $_BaseURL ?>event/loadEmails/?async&eventId=<?= $event->getId() ?>" target="_blank">Carregar lista de e-mails</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="enviarMensagem()">Enviar</button>
@@ -86,21 +84,6 @@ global $_BaseURL;
             $('#pMensagem').summernote({height: 200});
             $('#carregandoEmails').hide();
         });
-        
-        function carregarEmails() {
-            $('#carregarEmails').hide();
-            $('#carregandoEmails').show();
-            $.ajax({
-                type: 'POST',
-                url: '<?= $_BaseURL ?>event/loadEmails/?async',
-                data: $('#FrmMensagem').serialize(),
-                success: function(msg) {
-                    $('#emailsEvent').val(msg);
-                    $('#carregandoEmails').hide();
-                    $('#carregarEmails').show();
-                }
-            });
-        }
         
         function enviarMensagem() {
             MyCookieJS.showWaitMessage('Enviando e-mails (isso pode demorar muitos minutos)');

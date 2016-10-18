@@ -401,7 +401,7 @@ EOT
         global $_MyCookie;
         UserController::checkAccessLevel('ADMINISTRATOR');
         $event = Event::select('e')->where('e.id = ?1')
-                        ->setParameter(1, filter_input(INPUT_POST, 'eventId'))
+                        ->setParameter(1, filter_input(INPUT_GET, 'eventId'))
                         ->getQuery()->getSingleResult();
         foreach ($event->getParticipants() as $user) {
             echo "{$user->getEmail()},";
