@@ -23,6 +23,8 @@ global $_BaseURL;
                 $urlAccreditation = $_MyCookie->mountLink('administrator', 'event', 'accreditation', 'participants', $event->getId());
                 $urlFrequency = $_MyCookie->mountLink('administrator', 'event', 'frequency', 'manage', $event->getId());
                 $urlCert = $_MyCookie->mountLink('administrator', 'event', 'printCertificates', $event->getId());
+                $urlCertSpk = $_MyCookie->mountLink('administrator', 'event', 'printSpeakerCertificates', $event->getId());
+                $urlCertSpkLook = $_MyCookie->mountLink('cert', $event->getId(), 'speakers');
                 ?>
                 <tr>          
                     <td>
@@ -37,6 +39,16 @@ global $_BaseURL;
                             <?php if ($event->getIsOpen()) : ?>
                                 <a href="<?= $urlFrequency ?>" class="btn btn-default"><i class="fa fa-clock-o"></i> <span data-i18n="event:button.frequency"></span></a>
                                 <a href="<?= $urlAccreditation ?>" class="btn btn-default hidden-sm hidden-xs"><i class="fa fa-star"></i> <span data-i18n="event:button.accreditation"></span></a>
+                            <?php else : ?>
+                                <a href="<?= $urlCert ?>" class="btn btn-default hidden-sm hidden-xs">
+                                    <i class="fa fa-certificate"></i> Gerar certificados
+                                </a>
+                                <a href="<?= $urlCertSpk ?>" class="btn btn-default hidden-sm hidden-xs">
+                                    <i class="fa fa-certificate"></i> Gerar certificados (ministrantes)
+                                </a>
+                                <a target="_blank" href="<?= $urlCertSpkLook ?>" class="btn btn-default hidden-sm hidden-xs">
+                                    <i class="fa fa-certificate"></i> Ver certificados (ministrantes)
+                                </a>
                             <?php endif; ?>
                             <?php if ($event->getIsRegistrationOpen()) : ?>    
                                 <a href="<?= $urlReg ?>" class="btn btn-default hidden-sm hidden-xs">                                                           
@@ -49,9 +61,6 @@ global $_BaseURL;
                             <?php endif; ?>
                         <?php endif; ?>
                         <?php if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
-                            <a href="<?= $urlCert ?>" class="btn btn-default hidden-sm hidden-xs">
-                                <i class="fa fa-certificate"></i> Gerar certificados
-                            </a>    
                             <a href="<?= $url ?>" class="btn btn-default hidden-sm hidden-xs">
                                 <i class="fa fa-pencil"></i>
                             </a>    

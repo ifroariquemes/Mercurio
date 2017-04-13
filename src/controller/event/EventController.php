@@ -331,12 +331,9 @@ class EventController
         $pag = 51; //a ultima pagina
         $cert = 0;
         $data = '13/04/2017';
-        if (!file_exists('cert/')) {
-            mkdir('cert/');
-        }
-        if (!file_exists("cert/{$event->getId()}/")) {
-            mkdir("cert/{$event->getId()}/");
-        }
+        self::createCertDir($event->getId());
+        $fGen = fopen("cert/{$event->getId()}/_generated.txt", 'w+');
+        fwrite($fGen, 'NOME\tREGISTRO\tPAGINA');
         foreach ($users as $user) {
             $reg++;
             $cert++;
@@ -355,8 +352,79 @@ class EventController
             $fp = fopen("cert/{$event->getId()}/{$user->getId()}.pdf", 'w+');
             fwrite($fp, $dom->output());
             fclose($fp);
+            fwrite($fGen, "{$user->getName()}\t$reg\t$pag\n");
         }
+        fclose($fGen);
         echo 'Certificados gerados com sucesso!';
+    }
+
+    private static function createCertDir($eId)
+    {
+        if (!file_exists('cert/')) {
+            mkdir('cert/');
+        }
+        if (!file_exists("cert/$eId/")) {
+            mkdir("cert/$eId/");
+        }
+        if (!file_exists("cert/$eId/speakers/")) {
+            mkdir("cert/$eId/speakers/");
+        }
+    }
+
+    public static function printSpeakerCertificates()
+    {
+        global $_MyCookie;
+        UserController::checkAccessLevel('ADMINISTRATOR');
+        ini_set('memory_limit', '512M');
+        ini_set('allow_url_fopen', 1);
+        set_time_limit(0);
+        $event = Event::select('e')->where('e.id = ?1')
+                        ->setParameter(1, $_MyCookie->getURLVariables(2))
+                        ->getQuery()->getOneOrNullResult();
+        $reg = 999; //O ultimo registro
+        $pag = 51; //a ultima pagina
+        $cert = 0;
+        $data = '13/04/2017';
+        self::createCertDir($event->getId());
+        $fGen = fopen("cert/{$event->getId()}/speakers/_generated.txt", 'w+');
+        fwrite($fGen, 'NOME\tREGISTRO\tPAGINA');
+        $sp = array();
+        foreach ($event->getActivities() as $activity) {
+            foreach ($activity->getSpeakers() as $speaker) {
+                $reg++;
+                $cert++;
+                $pag = $pag + (($cert - 1) % 3 == 0);
+                $dom = new \Dompdf\Dompdf();
+                $a = new \Dompdf\Options();
+                $a->setIsRemoteEnabled(true);
+                $dom->setOptions($a);
+                ob_start();
+                $_MyCookie->LoadView('event', 'CertificateSpeaker', array($speaker, $reg, $pag, $event, $data, $activity));
+                $htmlOutput = ob_get_contents();
+                $dom->load_html($htmlOutput);
+                ob_clean();
+                $dom->set_paper('A4', 'landscape');
+                $dom->render();
+                $spkFname = self::removeAccent($speaker);
+                array_push($sp, $spkFname);
+                $fp = fopen("cert/{$event->getId()}/speakers/$spkFname.pdf", 'w+');
+                fwrite($fp, $dom->output());
+                fclose($fp);
+                fwrite($fGen, "$speaker\t$reg\t$pag\n");
+            }
+        }
+        fclose($fGen);
+        echo 'Certificados gerados com sucesso!';
+    }
+
+    private static function removeAccent($str)
+    {
+        $unwanted_array = array('Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
+            'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U',
+            'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
+            'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+            'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', '/' => '');
+        return strtr($str, $unwanted_array);
     }
 
     public static function emailEverybody()
@@ -448,7 +516,7 @@ EOT
             $mail->send();
         }
     }
-    
+
     public static function userCertificates()
     {
         global $_MyCookie;
