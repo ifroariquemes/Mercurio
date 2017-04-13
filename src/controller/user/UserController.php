@@ -43,7 +43,7 @@ class UserController
             self::search();
             return;
         }
-        if(isset($_User) && $_User->getAccountType()->getFlag() === 'USER') {
+        if (isset($_User) && $_User->getAccountType()->getFlag() === 'USER') {
             header('location: ../../event/');
             exit;
         }
@@ -433,5 +433,3 @@ class UserController
     }
 
 }
-
-?>

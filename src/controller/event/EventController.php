@@ -315,19 +315,28 @@ class EventController
     {
         global $_MyCookie;
         UserController::checkAccessLevel('ADMINISTRATOR');
-        include('vendor/dompdf/dompdf/autoload.inc.php');
         ini_set('memory_limit', '512M');
         ini_set('allow_url_fopen', 1);
         set_time_limit(0);
         $event = Event::select('e')->where('e.id = ?1')
                         ->setParameter(1, $_MyCookie->getURLVariables(2))
                         ->getQuery()->getOneOrNullResult();
-        $users = User::select('u')->join('u.activities', 'a')->join('a.event', 'e')->where('e.id = ?1')->orderBy('u.id')
+        $users = User::select('u')->join('u.activities', 'a')
+                        ->join('a.event', 'e')
+                        ->where('e.id = ?1')
+                        ->andWhere('u.id = 6')
+                        ->orderBy('u.id')
                         ->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getResult();
-        $users = array_slice($users, 0, 50);
         $reg = 999; //O ultimo registro
         $pag = 51; //a ultima pagina
         $cert = 0;
+        $data = '13/04/2017';
+        if (!file_exists('cert/')) {
+            mkdir('cert/');
+        }
+        if (!file_exists("cert/{$event->getId()}/")) {
+            mkdir("cert/{$event->getId()}/");
+        }
         foreach ($users as $user) {
             $reg++;
             $cert++;
@@ -337,17 +346,17 @@ class EventController
             $a->setIsRemoteEnabled(true);
             $dom->setOptions($a);
             ob_start();
-            $_MyCookie->LoadView('event', 'Certificate', array($user, $reg, $pag, $event));
+            $_MyCookie->LoadView('event', 'Certificate', array($user, $reg, $pag, $event, $data));
             $htmlOutput = ob_get_contents();
             $dom->load_html($htmlOutput);
             ob_clean();
             $dom->set_paper('A4', 'landscape');
             $dom->render();
-            $fp = fopen('src/controller/event/cert/' . $event->getId() . '-' . $user->getId() . '-' . urlencode($user->getName()) . '.pdf', 'w+');
+            $fp = fopen("cert/{$event->getId()}/{$user->getId()}.pdf", 'w+');
             fwrite($fp, $dom->output());
             fclose($fp);
         }
-        exit;
+        echo 'Certificados gerados com sucesso!';
     }
 
     public static function emailEverybody()
@@ -396,8 +405,9 @@ EOT
         $eventDetail = EventController::getEventDetail($event);
         $_MyCookie->loadView('event', 'openActivities', ['event' => $event, 'eventDetail' => $eventDetail]);
     }
-    
-    public static function loadEmails() {
+
+    public static function loadEmails()
+    {
         global $_MyCookie;
         UserController::checkAccessLevel('ADMINISTRATOR');
         $event = Event::select('e')->where('e.id = ?1')
@@ -437,6 +447,19 @@ EOT
             $mail->addAddress($user->getEmail());
             $mail->send();
         }
+    }
+    
+    public static function userCertificates()
+    {
+        global $_MyCookie;
+        global $_User;
+        $events = \model\event\Event::select('e')
+                        ->join('e.activities', 'a')
+                        ->join('a.present', 'u', \Doctrine\ORM\Query\Expr\Join::WITH, 'u.id = ?1')
+                        ->setParameter(1, $_User->getId())
+                        //->orderBy('e.endDate', 'DESC')
+                        ->getQuery()->getResult();
+        $_MyCookie->loadView('event', 'UserCertificates', $events);
     }
 
 }

@@ -35,4 +35,24 @@ class CertificateController
             'organization' => $organization
         ));
     }
+
+    public static function generate()
+    {
+        global $_MyCookie;
+        global $_User;
+        $eId = $_MyCookie->getURLVariables(3);
+        $event = \model\event\Event::select('e')->where('e.id = ?1')
+                        ->setParameter(1, $eId)->getQuery()->getSingleResult();
+        $user = \model\user\User::select('u')->join('u.activities', 'a')->join('a.event', 'e', \Doctrine\ORM\Query\Expr\Join::WITH, 'e.id = ?1')
+                        ->where('u.id = ?2')
+                        ->setParameter(1, $eId)
+                        ->setParameter(2, $_User->getId())
+                        ->getQuery()->getSingleResult();
+        foreach ($user->getActivities() as $act) {
+            if ($act->getPresent()->contains($user)) {
+                echo 'p';
+            }
+        }
+    }
+
 }

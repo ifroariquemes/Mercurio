@@ -7,6 +7,7 @@ use Doctrine\ORM\Tools\Setup;
 
 class Database
 {
+
     const DevMode = true;
 
     private $entityManager;
@@ -45,6 +46,8 @@ class Database
     {
         return Database::getInstance()->entityManager;
     }
+
 }
+
 global $_EntityManager;
 $_EntityManager = Database::EntityManager();

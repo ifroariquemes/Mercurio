@@ -136,6 +136,10 @@ class Activity extends Object
         return $this->participants;
     }
 
+    /**
+     * 
+     * @return ArrayCollection
+     */
     public function getPresent()
     {
         return $this->present;

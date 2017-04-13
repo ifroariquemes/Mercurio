@@ -31,7 +31,9 @@ global $_User;
             <?php if (!empty($_User)) : ?>
                 <div class="row">
                     <h4 class="text-center">
-                        <a href="<?= $_BaseURL ?>user/edit/<?= $_User->getId() ?>/" class="label label-info"><?= $_User->getName() ?></a> <a href="<?= $_BaseURL ?>user/logout/" class="label label-danger"><i class="glyphicon glyphicon-eject"></i> Sair</a>
+                        <a href="<?= $_BaseURL ?>event/userCertificates/" class="label label-success"><i class="glyphicon glyphicon-certificate"></i> Meus certificados</a>
+                        <a href="<?= $_BaseURL ?>user/edit/<?= $_User->getId() ?>/" class="label label-info"><i class="glyphicon glyphicon-user"></i> <?= $_User->getName() ?></a> 
+                        <a href="<?= $_BaseURL ?>user/logout/" class="label label-danger"><i class="glyphicon glyphicon-eject"></i> Sair</a>
                     </h4>
                 </div>
             <?php endif; ?>

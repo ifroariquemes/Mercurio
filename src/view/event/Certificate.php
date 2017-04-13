@@ -3,9 +3,12 @@ $event = $data[3];
 $user = $data[0];
 $reg = $data[1];
 $pag = $data[2];
+$date = $data[4];
 $horas = 0;
 foreach ($user->getActivities() as $activity) {
-    $horas += $activity->getDuration();
+    if ($activity->getPresent()->contains($user)) {
+        $horas += $activity->getDuration();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -145,10 +148,12 @@ foreach ($user->getActivities() as $activity) {
                             </thead>
                             <tbody>
                                 <?php foreach ($user->getActivities() as $activity) : ?>
-                                    <tr>
-                                        <td><?= $activity->getName() ?></td>
-                                        <td><?= $activity->getDuration() ?>h</td>
-                                    </tr>
+                                    <?php if ($activity->getPresent()->contains($user)) : ?>
+                                        <tr>
+                                            <td><?= $activity->getName() ?></td>
+                                            <td><?= $activity->getDuration() ?>h</td>
+                                        </tr>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>                        
                             </tbody>
                         </table>
@@ -158,7 +163,7 @@ foreach ($user->getActivities() as $activity) {
                         <p class="text-center"><b>REGISTRO DO CERTIFICADO</b></p>
                         <p class="text-justify">Certificado expedido pelo Departamento de Extensão do Instituto Federal de Educação, 
                             Ciência e Tecnologia de Rondônia - Campus Ariquemes, 
-                            registro sob nº <?= $reg ?>, do Livro 003, página <?= $pag ?>, em 28/11/2014.</p>
+                            registro sob nº <?= $reg ?>, do Livro 003, página <?= $pag ?>, em <?= $date ?>.</p>
                     </td>
                 </tr>
             </table>        

@@ -22,6 +22,7 @@ global $_BaseURL;
                 $urlReg = controller\event\EventController::urlManage($event, true);
                 $urlAccreditation = $_MyCookie->mountLink('administrator', 'event', 'accreditation', 'participants', $event->getId());
                 $urlFrequency = $_MyCookie->mountLink('administrator', 'event', 'frequency', 'manage', $event->getId());
+                $urlCert = $_MyCookie->mountLink('administrator', 'event', 'printCertificates', $event->getId());
                 ?>
                 <tr>          
                     <td>
@@ -48,6 +49,9 @@ global $_BaseURL;
                             <?php endif; ?>
                         <?php endif; ?>
                         <?php if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
+                            <a href="<?= $urlCert ?>" class="btn btn-default hidden-sm hidden-xs">
+                                <i class="fa fa-certificate"></i> Gerar certificados
+                            </a>    
                             <a href="<?= $url ?>" class="btn btn-default hidden-sm hidden-xs">
                                 <i class="fa fa-pencil"></i>
                             </a>    
@@ -84,7 +88,7 @@ global $_BaseURL;
             $('#pMensagem').summernote({height: 200});
             $('#carregandoEmails').hide();
         });
-        
+
         function enviarMensagem() {
             MyCookieJS.showWaitMessage('Enviando e-mails (isso pode demorar muitos minutos)');
             $.ajax({
@@ -97,7 +101,7 @@ global $_BaseURL;
                             location.reload();
                         });
                     } else {
-                        MyCookieJS.alert(msg, function() {
+                        MyCookieJS.alert(msg, function () {
                             MyCookieJS.closeWaitMessage();
                             MyCookieJS.closeAllPopups();
                         });
