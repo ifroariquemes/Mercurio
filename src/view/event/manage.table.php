@@ -28,7 +28,7 @@ global $_BaseURL;
                 ?>
                 <tr>          
                     <td>
-                        <a href="<?= $url ?>"><?= $event->getName(); ?></a>                                
+                        <a href="<?= $_MyCookie->mountLink('administrator', 'event', 'view', $event->getId()) ?>"><?= $event->getName(); ?></a>                                
                     </td> 
                     <td><?= $event->getOrganization()->getName() ?></td>
                     <td><?= $event->getStartDate() ?></td>                            

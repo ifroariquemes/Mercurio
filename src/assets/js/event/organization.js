@@ -31,16 +31,16 @@ function Organization() {
 
     this.submit = function(e) {
         e.preventDefault();
-        var msg = MyCookieJS.execute('event/organization/save', $('#FrmEdit').serialize(), false);
+        var msg = MyCookieJS.execute('organization/save', $('#FrmEdit').serialize(), false);
         MyCookieJS.alert($.i18n.t('event:organization.message.saved'), function() {
-            MyCookieJS.goto('administrator/event/organization/manage');
+            MyCookieJS.goto('administrator/organization/manage');
         });
     };
     
     this.manage = function(e) {
         e.preventDefault();
         MyCookieJS.showWaitMessage();
-        MyCookieJS.showDynamicPopup('mdOrganization', 'event/organization/manage');
+        MyCookieJS.showDynamicPopup('mdOrganization', 'organization/manage');
     }
 }
 

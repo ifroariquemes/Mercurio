@@ -26,7 +26,7 @@ class Event extends Object
      */
     private $organization;
 
-    /** @Column(type="string", nullable=true) */
+    /** @Column(type="text", nullable=true) */
     private $description;
 
     /** @Column(type="date") */

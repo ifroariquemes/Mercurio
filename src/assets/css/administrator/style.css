@@ -53,3 +53,5 @@
 .navbar-link:hover {
     text-decoration: none
 }
+
+.tile-auto { width: auto !important; }

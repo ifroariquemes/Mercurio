@@ -6,7 +6,7 @@ $pag = $data[2];
 $date = $data[4];
 $horas = 0;
 foreach ($user->getActivities() as $activity) {
-    if ($activity->getPresent()->contains($user)) {
+    if ($activity->getPresent()->contains($user) && $activity->getHasCertificate()) {
         $horas += $activity->getDuration();
     }
 }
@@ -148,7 +148,7 @@ foreach ($user->getActivities() as $activity) {
                             </thead>
                             <tbody>
                                 <?php foreach ($user->getActivities() as $activity) : ?>
-                                    <?php if ($activity->getPresent()->contains($user)) : ?>
+                                    <?php if ($activity->getPresent()->contains($user) && $activity->getHasCertificate()) : ?>
                                         <tr>
                                             <td><?= $activity->getName() ?></td>
                                             <td><?= $activity->getDuration() ?>h</td>

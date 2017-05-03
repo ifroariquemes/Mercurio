@@ -74,6 +74,12 @@ class EventController
         $_MyCookie->goBackTo('administrator', 'event');
         $_SESSION[\controller\event\ActivityController::SESSIONKEY_ACTIVITIES] = array();
         $event = new Event;
+        if ($_MyCookie->getURLVariables(2)) {
+            $organization = Organization::select('c')->where('c.id = ?1')
+                            ->setParameter(1, $_MyCookie->getURLVariables(2))
+                            ->getQuery()->getOneOrNullResult();
+            $event->setOrganization($organization);
+        }
         $_MyCookie->LoadView('event', 'edit', array('event' => $event, 'action' => 'add'));
     }
 
@@ -528,6 +534,15 @@ EOT
                         //->orderBy('e.endDate', 'DESC')
                         ->getQuery()->getResult();
         $_MyCookie->loadView('event', 'UserCertificates', $events);
+    }
+
+    public static function view()
+    {
+        $eId = \lib\MyCookie::getInstance()->getURLVariables(2);
+        $event = Event::select('e')->where('e.id = ?1')
+                        ->setParameter(1, $eId)
+                        ->getQuery()->getOneOrNullResult();
+        \lib\MyCookie::getInstance()->loadView('event', 'View', $event);
     }
 
 }

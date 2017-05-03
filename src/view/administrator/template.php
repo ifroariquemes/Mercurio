@@ -21,7 +21,7 @@ global $_MyCookieGoBack;
         <?php $_MyCookie->RequireJS() ?>      
     </head>
     <body id="admin-body">        
-        <header id="admin-header" class="container">
+        <header id="admin-header" class="container-fluid">
             <div class="row">               
                 <?php if ($_MyCookie->getModule() == 'administrator') : ?>
                     <div class="col-md-6 col-sm-6 col-xs-5">
@@ -63,7 +63,7 @@ global $_MyCookieGoBack;
                 </div>                                                        
             </div>        
         </header>                   
-        <section id="main" class="container">                             
+        <section id="main" class="container-fluid">                             
             <?= $view ?>
             <div class="spacer"></div>
         </section> 

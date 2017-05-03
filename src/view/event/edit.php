@@ -16,11 +16,11 @@ $event = $data['event'];
                         </div>             
                         <div class="form-group">
                             <label for="selectOrganization"><span data-i18n="event:label.organization"></span>:</label>                            
-                            <?php \controller\event\OrganizationController::select($event->getOrganization()) ?>
+                            <?php \controller\organization\OrganizationController::select($event->getOrganization()) ?>
                         </div>             
                         <div class="form-group">
                             <label for="textDescription"><span data-i18n="event:label.description"></span>:</label>                            
-                            <input type="text" required="required" name="Description" id="textDescription" class="form-control" value="<?= $event->getDescription() ?>">                            
+                            <textarea id="textDescription" name="Description" class="form-control" required><?= $event->getDescription() ?></textarea>
                         </div>             
                         <div class="row">
                             <div class="col-md-6">
@@ -92,9 +92,10 @@ $event = $data['event'];
 </nav>
 
 <script type="text/javascript">
-    require(['jquery'], function($) {
+    require(['jquery', 'summernote'], function($) {
         $(function() {
             $('#textName').focus();
+            $('#textDescription').summernote({height: 200});
         });
     });
 </script>
