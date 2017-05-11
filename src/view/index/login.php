@@ -112,14 +112,14 @@ global $_Config;
                     <fieldset>                                
                         <div class="form-group">
                             <label for="textEmailRe"><span data-i18n="user:label.email">E-mail</span>:</label>                            
-                            <input type="email" name="email" id="textEmailRe" required="required" class="form-control" value="" onkeypress="user.checkResendValidity()" onchange="user.checkResendValidity()">                            
+                            <input type="email" name="email" id="textEmailRe" required="required" class="form-control">                            
                         </div>                                                                                                                                  
                     </fieldset>
                     <p data-i18n="admin:resend.spam">If you yet don't received any e-mail with confirmation link, please check your spam folder.</p>                                                                                                                    
                 </div>                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" onclick="$('#mdResend').modal('hide')"><i class="fa fa-times"></i> <span data-i18n="mycookie:button.cancel">Cancel</span></button>
-                    <button disabled="disabled" type="submit" class="btn btn-success"><i class="fa fa-mail-forward"></i> <span data-i18n="admin:resend.button">Resend</span></button>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-mail-forward"></i> <span data-i18n="admin:resend.button">Resend</span></button>
                 </div>
             </form>
         </div>
