@@ -126,3 +126,8 @@ global $_Config;
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    require(['user_user'], function (user) {
+        
+    });
+</script>
