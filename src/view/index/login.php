@@ -52,13 +52,13 @@ global $_Config;
                     <fieldset>                                
                         <div class="form-group">
                             <label for="textEmailRe"><span data-i18n="user:label.email">E-mail</span>:</label>                            
-                            <input type="email" name="email" id="textEmailRe" required="required" class="form-control" value="" onkeypress="user.checkResendValidity()" onchange="user.checkForgotValidity()">                            
+                            <input type="email" name="email" id="textEmailRe" required="required" class="form-control">                            
                         </div>                                                                                                                                  
                     </fieldset>                                                        
                 </div>                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" onclick="$('#mdForgot').modal('hide')"><i class="fa fa-times"></i> <span data-i18n="mycookie:button.cancel">Cancel</span></button>
-                    <button disabled="disabled" type="submit" class="btn btn-success"><i class="fa fa-mail-forward"></i> <span data-i18n="admin:forgot.button">Reset my password</span></button>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-mail-forward"></i> <span data-i18n="admin:forgot.button">Reset my password</span></button>
                 </div>
             </form>
         </div>
@@ -96,30 +96,6 @@ global $_Config;
                     <button type="button" class="btn btn-danger" onclick="$('#FrmEdit')[0].reset();
                             $('#mdRegister').modal('hide')"><i class="fa fa-times"></i> <span data-i18n="mycookie:button.cancel">Cancel</span></button>                                
                     <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> <span data-i18n="admin:register.button">Register</span></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="modal" id="mdResend">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" data-i18n="admin:resend.title">Resend confirmation link</h4>
-            </div>
-            <form name="FrmResend" id="FrmResend" role="form" onsubmit="user.resend(event);" autocomplete="off">
-                <div class="modal-body">                                        
-                    <fieldset>                                
-                        <div class="form-group">
-                            <label for="textEmailRe"><span data-i18n="user:label.email">E-mail</span>:</label>                            
-                            <input type="email" name="email" id="textEmailRe" required="required" class="form-control">                            
-                        </div>                                                                                                                                  
-                    </fieldset>
-                    <p data-i18n="admin:resend.spam">If you yet don't received any e-mail with confirmation link, please check your spam folder.</p>                                                                                                                    
-                </div>                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="$('#mdResend').modal('hide')"><i class="fa fa-times"></i> <span data-i18n="mycookie:button.cancel">Cancel</span></button>
-                    <button type="submit" class="btn btn-success"><i class="fa fa-mail-forward"></i> <span data-i18n="admin:resend.button">Resend</span></button>
                 </div>
             </form>
         </div>
