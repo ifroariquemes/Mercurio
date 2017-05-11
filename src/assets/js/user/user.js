@@ -89,6 +89,40 @@ function User() {
             MyCookieJS.closeAllPopups();
         });
     };
+    
+    this.resend = function (e) {
+        e.preventDefault();
+        MyCookieJS.showWaitMessage();
+        MyCookieJS.execute('user/resend', $('#FrmResend').serialize(), true, function (msg) {
+            MyCookieJS.alert(msg, function () {
+                MyCookieJS.closeWaitMessage();
+                MyCookieJS.closeAllPopups();
+                $('#FrmResend')[0].reset();
+            });
+        });
+    };
+
+    this.forgot = function (e) {
+        e.preventDefault();
+        MyCookieJS.showWaitMessage();
+        MyCookieJS.execute('user/forgot', $('#FrmForgot').serialize(), true, function (msg) {
+            MyCookieJS.alert(msg, function () {
+                MyCookieJS.closeWaitMessage();
+                MyCookieJS.closeAllPopups();
+                $('#FrmForgot')[0].reset();
+            });
+        });
+    };
+
+    this.reset = function (e, href) {
+        e.preventDefault();
+        MyCookieJS.showWaitMessage();
+        MyCookieJS.execute('user/reset', $('#FrmReset').serialize(), true, function (msg) {
+            MyCookieJS.alert(msg, function () {
+                location.href = href;
+            });
+        });
+    };
 }
 
 var user = new User();
