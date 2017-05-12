@@ -13,9 +13,9 @@ global $_User;
         <meta charset="utf-8">
         <title>Mercúrio - Sistema Gerenciador de Eventos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <?php if (empty($_User)) : ?>
+        <?php if (is_null($_SESSION['reload_js'])) : $_SESSION['reload_js'] = false; ?>
             <script type="text/javascript">
-                localStorage.clear();
+                location.reload(true)
             </script>
         <?php endif; ?>
         <?php $_MyCookie->CSSBundle() ?>        
