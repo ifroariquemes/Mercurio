@@ -85,9 +85,7 @@ function User() {
     this.savePublic = function (e) {
         e.preventDefault();
         var msg = MyCookieJS.execute('user/savePublic', $('#FrmEdit').serialize(), false);
-        MyCookieJS.alert(msg, function() {
-            MyCookieJS.closeAllPopups();
-        });
+        MyCookieJS.alert(msg);
     };
     
     this.resend = function (e) {

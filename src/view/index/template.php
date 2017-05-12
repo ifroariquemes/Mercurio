@@ -48,7 +48,8 @@ global $_User;
         </div>
         <?php $_MyCookie->JSBundle() ?>
         <script type="text/javascript">
-            require(['jquery', 'i18next'], function ($) {
+            require(['jquery', 'i18next', 'webshim'], function ($) {
+                webshim.polyfill('forms forms-ext');
                 $('#email').focus();
             });
         </script>

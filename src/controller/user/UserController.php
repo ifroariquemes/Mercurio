@@ -99,9 +99,38 @@ class UserController
     public static function verifyEmail()
     {
         global $_MyCookie;
-        $user = User::select('u')->where('u.email = ?1')->setParameter(1, filter_input(INPUT_POST, 'email'))->getQuery()->getResult();
+        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+        if($email === false) {
+            echo 'E-mail inválido.';
+            return false;
+        }
+        $user = User::select('u')->where('u.email = ?1')->setParameter(1, $email)->getQuery()->getResult();
         if (count($user) > 0) {
             echo $_MyCookie->getTranslation('user', 'email.exists');
+            return false;
+        }
+        return true;
+    }
+    
+    public static function verifyName()
+    {
+        $name = filter_input(INPUT_POST, 'name');
+        if(strpos($name, ' ') === false) {
+            echo 'Entre com nome e sobrenome.';
+            return false;
+        }
+        return true;
+    }
+    
+    public static function verifyPassword() {
+        $pwd = filter_input(INPUT_POST, 'newPassword');
+        $pwdRep = filter_input(INPUT_POST, 'passwordRepeat');
+        if(strlen($pwd) < 6) {
+            echo 'Senha deve possuir 6 caracteres ou mais.';
+            return false;
+        }
+        if($pwd != $pwdRep) {
+            echo 'Senhas não conferem.';
             return false;
         }
         return true;
@@ -133,7 +162,7 @@ class UserController
     public static function savePublic()
     {
         $user = new User();
-        if (self::verifyEmail()) {
+        if (self::verifyName() && self::verifyEmail() && self::verifyPassword()) {
             $user
                     ->setName(filter_input(INPUT_POST, 'name'))
                     ->setEmail(filter_input(INPUT_POST, 'email'))

@@ -74,8 +74,8 @@ global $_Config;
                 <div class="modal-body">                                        
                     <fieldset>
                         <div class="form-group">
-                            <label for="textName"><span data-i18n="user:label.name">Name</span>:</label>                            
-                            <input type="text" required="required" name="name" id="textName" class="form-control">                            
+                            <label for="textName"><span>Nome completo</span>:</label>                            
+                            <input type="text" required="required" name="name" id="textName" class="form-control">
                         </div>                                                                      
                         <div class="form-group">
                             <label for="textEmail"><span data-i18n="user:label.email">E-mail</span>:</label>                            
