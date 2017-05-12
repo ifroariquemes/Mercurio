@@ -536,7 +536,7 @@ class MyCookie
     {
         global $_Config;
         if ($_Config->build->production) {
-            $this->useScript('components/bundle.js?rev=1');
+            $this->useScript('components/bundle.js');
         } else {
             $bCtrl = new \controller\build\BuildController;
             $bCtrl->createBuildJS(true);

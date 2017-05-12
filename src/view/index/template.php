@@ -13,6 +13,11 @@ global $_User;
         <meta charset="utf-8">
         <title>Mercúrio - Sistema Gerenciador de Eventos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <?php if (empty($_User)) : ?>
+            <script type="text/javascript">
+                localStorage.clear();
+            </script>
+        <?php endif; ?>
         <?php $_MyCookie->CSSBundle() ?>        
         <?php $_MyCookie->RequireJS() ?>
     </head>
