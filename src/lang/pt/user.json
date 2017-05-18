@@ -53,7 +53,12 @@
         "internal_1": "Este e-mail foi enviado porque você foi registrado em nosso sistema pela administração",
         "internal_2": "Suas credenciais são",
         "internal_3": "O sistema está acessível em",
-        "internal_4": "Por favor, guarde este e-mail para consulta no futuro"
+        "internal_4": "Por favor, guarde este e-mail para consulta no futuro",
+        "forgot_subject": "Resetar sua senha em",
+        "check_forgot": "Nós enviamos instruções para resetar sua senha, por favor verifique seu e-mail.",
+        "forgot_1": "Este e-mail foi enviado porque nós recebemos uma requisição para resetar sua senha em nosso sistema",
+        "forgot_2": "Por favor, clique no link abaixo para iniciar o processo de resetar ou copie e cole na barra de endereço do seu navegador",
+        "forgot_3": "Se você não requisitou resetar sua senha, contate-nos através do e-mail"        
     },
     "confirmed": {
         "title": "Usuário confirmado!",
