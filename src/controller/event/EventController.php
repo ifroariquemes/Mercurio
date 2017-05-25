@@ -16,7 +16,11 @@ class EventController
     public static function manage()
     {
         global $_MyCookie;
+        global $_User;
         UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF', 'USER');
+        if ($_User->getAccountType()->getFlag() == 'USER') {
+            $this->managePublic();
+        }
         $_MyCookie->goBackTo('administrator');
         $urlPage = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
         $urlPage = ($urlPage) ? $urlPage : 1;
