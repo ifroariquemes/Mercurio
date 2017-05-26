@@ -69,6 +69,15 @@ $notConfirmed = $data->getParticipantsNotConfirmed()->toArray();
     </div>
 </div>
 <script>
+    function presencaTodos(atividade) {
+        MyCookieJS.confirm('Deseja realmente lançar presença para todos os particpantes?', function () {
+            var msg = MyCookieJS.execute('event/frequency/presentAllParticipants', 'activity=' + atividade);
+            if (msg !== '') {
+                console.log(msg);
+            }
+            location.reload();
+        });
+    }
     function removerTodos(atividade) {
         MyCookieJS.confirm('Deseja realmente remover todos os participantes não confirmados dessa atividade?', function () {
             var msg = MyCookieJS.execute('event/frequency/removeAllParticipantsNotConfirmed', 'activity=' + atividade);

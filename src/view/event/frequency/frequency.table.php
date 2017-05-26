@@ -1,5 +1,8 @@
 <?php global $_MyCookie ?>
 <?php if ($data->getParticipants()->count() && $data->getConfirmed() > 0) : ?>
+    <p class="text-right">
+        <a class="btn btn-success" href="javascript:presencaTodos(<?= $data->getId() ?>)">Presença para todos</a>
+    </p>
     <table class="table">
         <thead>
             <tr>

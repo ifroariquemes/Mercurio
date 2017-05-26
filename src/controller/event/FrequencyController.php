@@ -73,5 +73,15 @@ class FrequencyController
         }
         $activity->save();
     }
+    
+    public static function presentAllParticipants() {
+        global $_MyCookie;
+        UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF');
+        $activity = Activity::select('a')->where('a.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'activity'))->getQuery()->getSingleResult();
+        foreach($activity->getParticipants() as $participant) {
+            $activity->getPresent()->add($participant);
+        }
+        $activity->save();
+    }
 
 }
