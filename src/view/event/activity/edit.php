@@ -22,7 +22,7 @@ $activity = $data['activity'];
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="textDuration"><span data-i18n="event:activity.label.duration"></span>:</label>
-                            <input type="number" name="Duration" id="textDuration" class="form-control" value="<?= $activity->getDuration() ?>" required="required">
+                            <input type="number" name="Duration" id="textDuration" class="form-control" step="0.5" value="<?= $activity->getDuration() ?>" required="required">
                         </div>                                
                     </div>
                 </div>

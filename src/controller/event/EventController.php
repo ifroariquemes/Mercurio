@@ -322,10 +322,10 @@ class EventController {
                         ->where('e.id = ?1')
                         ->orderBy('u.id')
                         ->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getResult();
-        $reg = 999; //O ultimo registro
-        $pag = 51; //a ultima pagina
+        $reg = 5489; //O ultimo registro
+        $pag = 0; //a ultima pagina
         $cert = 0;
-        $data = '13/04/2017';
+        $data = '30/08/2017';
         self::createCertDir($event->getId());
         $fGen = fopen("cert/{$event->getId()}/_generated.txt", 'w+');
         fwrite($fGen, str_pad('NOME', 50) . str_pad('REGISTRO', 10) . "PAGINA\n");
@@ -374,8 +374,8 @@ class EventController {
         $event = Event::select('e')->where('e.id = ?1')
                         ->setParameter(1, $_MyCookie->getURLVariables(2))
                         ->getQuery()->getOneOrNullResult();
-        $reg = 999; //O ultimo registro
-        $pag = 51; //a ultima pagina
+        $reg = 5705; //O ultimo registro
+        $pag = 72; //a ultima pagina
         $cert = 0;
         $data = '13/04/2017';
         self::createCertDir($event->getId());

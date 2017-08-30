@@ -163,7 +163,7 @@ foreach ($user->getActivities() as $activity) {
                         <p class="text-center"><b>REGISTRO DO CERTIFICADO</b></p>
                         <p class="text-justify">Certificado expedido pelo Departamento de Extensão do Instituto Federal de Educação, 
                             Ciência e Tecnologia de Rondônia - Campus Ariquemes, 
-                            registro sob nº <?= $reg ?>, do Livro 003, página <?= $pag ?>, em <?= $date ?>.</p>
+                            registro sob nº <?= $reg ?>, do Livro 007, página <?= $pag ?>, em <?= $date ?>.</p>
                     </td>
                 </tr>
             </table>        
