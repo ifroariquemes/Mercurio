@@ -10,11 +10,9 @@ use model\event\Activity;
 use model\event\activity\Type;
 use model\user\User;
 
-class EventController
-{
+class EventController {
 
-    public static function manage()
-    {
+    public static function manage() {
         global $_MyCookie;
         global $_User;
         UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF', 'USER');
@@ -41,8 +39,7 @@ class EventController
             'searchTerm' => $q));
     }
 
-    public static function managePublic()
-    {
+    public static function managePublic() {
         global $_MyCookie;
         global $_User;
         global $_BaseURL;
@@ -60,8 +57,7 @@ class EventController
         }
     }
 
-    public static function urlManage(Event $event, $register = false)
-    {
+    public static function urlManage(Event $event, $register = false) {
         global $_MyCookie;
         global $_User;
         if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR' && !$register) {
@@ -71,8 +67,7 @@ class EventController
         }
     }
 
-    public static function add()
-    {
+    public static function add() {
         global $_MyCookie;
         UserController::checkAccessLevel('ADMINISTRATOR');
         $_MyCookie->goBackTo('administrator', 'event');
@@ -87,8 +82,7 @@ class EventController
         $_MyCookie->LoadView('event', 'edit', array('event' => $event, 'action' => 'add'));
     }
 
-    public static function edit()
-    {
+    public static function edit() {
         global $_MyCookie;
         UserController::checkAccessLevel('ADMINISTRATOR');
         $_MyCookie->goBackTo('administrator', 'event');
@@ -98,8 +92,7 @@ class EventController
         $_MyCookie->LoadView('event', 'edit', array('action' => 'edit', 'event' => $event));
     }
 
-    public static function save()
-    {
+    public static function save() {
         UserController::checkAccessLevel('ADMINISTRATOR');
         $event = (empty(filter_input(INPUT_POST, 'id'))) ? new Event : Event::select('e')->where('e.id = ?1')
                         ->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();
@@ -157,24 +150,21 @@ class EventController
         $_SESSION[\controller\event\ActivityController::SESSIONKEY_ACTIVITIES] = null;
     }
 
-    public static function delete()
-    {
+    public static function delete() {
         UserController::checkAccessLevel('ADMINISTRATOR');
         Event::select('e')->where('e.id = ?1')
                 ->setParameter(1, filter_input(INPUT_POST, 'id'))
                 ->getQuery()->getSingleResult()->delete();
     }
 
-    public static function select($organization)
-    {
+    public static function select($organization) {
         global $_MyCookie;
         $organizations = Organization::select('o')->orderBy('o.name')->getQuery()->getResult();
         $id = (empty($organization)) ? null : $organization->getId();
         $_MyCookie->LoadView('organization', 'Select', array('organizations' => $organizations, 'id' => $id));
     }
 
-    public static function register()
-    {
+    public static function register() {
         global $_MyCookie;
         global $_User;
         if (!isset($_User)) {
@@ -187,8 +177,7 @@ class EventController
         }
     }
 
-    public static function getEventDetail(Event $event)
-    {
+    public static function getEventDetail(Event $event) {
         $stDate = date_create_from_format('d/m/Y H:i', $event->getStartDate() . ' 00:00');
         $enDate = date_create_from_format('d/m/Y H:i', $event->getEndDate() . ' 23:59');
         $eventDetail = array();
@@ -248,8 +237,7 @@ class EventController
         return $eventDetail;
     }
 
-    public static function saveRegister($pUser = null)
-    {
+    public static function saveRegister($pUser = null) {
         global $_User;
         UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF', 'USER');
         $user = (is_null($pUser)) ? $_User : $pUser;
@@ -308,8 +296,7 @@ class EventController
         }
     }
 
-    public static function deleteRegistration()
-    {
+    public static function deleteRegistration() {
         global $_User;
         UserController::checkAccessLevel('ADMINISTRATOR', 'STAFF', 'USER');
         $event = Event::select('e')->where('e.id = ?1')->setParameter(1, filter_input(INPUT_POST, 'id'))->getQuery()->getSingleResult();
@@ -321,11 +308,10 @@ class EventController
         }
     }
 
-    public static function printCertificates()
-    {
+    public static function printCertificates() {
         global $_MyCookie;
         UserController::checkAccessLevel('ADMINISTRATOR');
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit', '1024M');
         ini_set('allow_url_fopen', 1);
         set_time_limit(0);
         $event = Event::select('e')->where('e.id = ?1')
@@ -334,7 +320,6 @@ class EventController
         $users = User::select('u')->join('u.activities', 'a')
                         ->join('a.event', 'e')
                         ->where('e.id = ?1')
-                        ->andWhere('u.id = 6')
                         ->orderBy('u.id')
                         ->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getResult();
         $reg = 999; //O ultimo registro
@@ -343,7 +328,7 @@ class EventController
         $data = '13/04/2017';
         self::createCertDir($event->getId());
         $fGen = fopen("cert/{$event->getId()}/_generated.txt", 'w+');
-        fwrite($fGen, 'NOME\tREGISTRO\tPAGINA');
+        fwrite($fGen, str_pad('NOME', 50) . str_pad('REGISTRO', 10) . "PAGINA\n");
         foreach ($users as $user) {
             $reg++;
             $cert++;
@@ -362,14 +347,13 @@ class EventController
             $fp = fopen("cert/{$event->getId()}/{$user->getId()}.pdf", 'w+');
             fwrite($fp, $dom->output());
             fclose($fp);
-            fwrite($fGen, "{$user->getName()}\t$reg\t$pag\n");
+            fwrite($fGen, str_pad(self::removeAccent($user->getName()), 50) . str_pad($reg, 10) . "$pag\n");
         }
         fclose($fGen);
         echo 'Certificados gerados com sucesso!';
     }
 
-    private static function createCertDir($eId)
-    {
+    private static function createCertDir($eId) {
         if (!file_exists('cert/')) {
             mkdir('cert/');
         }
@@ -381,8 +365,7 @@ class EventController
         }
     }
 
-    public static function printSpeakerCertificates()
-    {
+    public static function printSpeakerCertificates() {
         global $_MyCookie;
         UserController::checkAccessLevel('ADMINISTRATOR');
         ini_set('memory_limit', '512M');
@@ -397,7 +380,7 @@ class EventController
         $data = '13/04/2017';
         self::createCertDir($event->getId());
         $fGen = fopen("cert/{$event->getId()}/speakers/_generated.txt", 'w+');
-        fwrite($fGen, 'NOME\tREGISTRO\tPAGINA');
+        fwrite($fGen, str_pad('NOME', 50) . str_pad('REGISTRO', 10) . "PAGINA\n");
         $sp = array();
         foreach ($event->getActivities() as $activity) {
             foreach ($activity->getSpeakers() as $speaker) {
@@ -420,15 +403,14 @@ class EventController
                 $fp = fopen("cert/{$event->getId()}/speakers/$spkFname.pdf", 'w+');
                 fwrite($fp, $dom->output());
                 fclose($fp);
-                fwrite($fGen, "$speaker\t$reg\t$pag\n");
+                fwrite($fGen, str_pad($spkFname, 50) . str_pad($reg, 10) . "$pag\n");
             }
         }
         fclose($fGen);
         echo 'Certificados gerados com sucesso!';
     }
 
-    private static function removeAccent($str)
-    {
+    private static function removeAccent($str) {
         $unwanted_array = array('Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
             'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U',
             'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
@@ -437,8 +419,7 @@ class EventController
         return strtr($str, $unwanted_array);
     }
 
-    public static function emailEverybody()
-    {
+    public static function emailEverybody() {
         global $_MyCookie;
         set_time_limit(0);
         $users = User::select('u')->getQuery()->getResult();
@@ -476,16 +457,14 @@ EOT
         }
     }
 
-    public static function openActivities()
-    {
+    public static function openActivities() {
         global $_MyCookie;
         $event = Event::select('e')->where('e.id = ?1')->setParameter(1, $_MyCookie->getURLVariables(2))->getQuery()->getSingleResult();
         $eventDetail = EventController::getEventDetail($event);
         $_MyCookie->loadView('event', 'openActivities', ['event' => $event, 'eventDetail' => $eventDetail]);
     }
 
-    public static function loadEmails()
-    {
+    public static function loadEmails() {
         global $_MyCookie;
         UserController::checkAccessLevel('ADMINISTRATOR');
         $event = Event::select('e')->where('e.id = ?1')
@@ -496,8 +475,7 @@ EOT
         }
     }
 
-    public static function sendMessage()
-    {
+    public static function sendMessage() {
         global $_MyCookie;
         global $_BaseURL;
         global $_Config;
@@ -527,8 +505,7 @@ EOT
         }
     }
 
-    public static function userCertificates()
-    {
+    public static function userCertificates() {
         global $_MyCookie;
         global $_User;
         $events = \model\event\Event::select('e')
@@ -540,8 +517,7 @@ EOT
         $_MyCookie->loadView('event', 'UserCertificates', $events);
     }
 
-    public static function view()
-    {
+    public static function view() {
         $eId = \lib\MyCookie::getInstance()->getURLVariables(2);
         $event = Event::select('e')->where('e.id = ?1')
                         ->setParameter(1, $eId)
