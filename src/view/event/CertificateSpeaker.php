@@ -43,13 +43,13 @@ $tipo = $activity->getType()->getName();
             .table > thead > tr > td,
             .table > tbody > tr > td,
             .table > tfoot > tr > td {
-                padding: 8px;
-                line-height: 1.42857143;
-                vertical-align: top;
+                /*padding: 8px;
+                line-height: 2.2;
+                vertical-align: top;*/
                 border-top: 1px solid #ddd;
             }
             .table > thead > tr > th {
-                vertical-align: bottom;
+                /*vertical-align: bottom;*/
                 border-bottom: 2px solid #ddd;
             }
             .table > caption + thead > tr:first-child > th,
@@ -83,6 +83,7 @@ $tipo = $activity->getType()->getName();
             .table-bordered > thead > tr > td,
             .table-bordered > tbody > tr > td,
             .table-bordered > tfoot > tr > td {
+                padding-bottom: 7px;
                 border: 1px solid #ddd;
             }
             .table-bordered > thead > tr > th,
@@ -124,11 +125,25 @@ $tipo = $activity->getType()->getName();
                     </td>
                 </tr>
             </table>
-            <table width="100%">            
+            <table width="100%" style="margin-top: 55px">            
                 <tr>
-                    <td width="33.33%"><p class="text-center" style="margin-top: 10px;"><?= $_MyCookie->image('src/assets/images/osvino.jpg', '', '', '', 'style="height: 166px"') ?></p></td>
+                    <td width="33.33%" style="position: relative">
+                        <?= $_MyCookie->image('src/assets/images/osvino.png', '', '', '', 'style="position: absolute; left: 30px; top: -85px; height: 230px"') ?>
+                        <p class="text-center" style="font-size: 12pt; border-top: 2px solid black">
+                            <b>Osvino Schmidt</b><br>
+                            Diretor Geral<br>
+                            IFRO - Campus Ariquemes
+                        </p>
+                    </td>
                     <td width="33.33%"><p class="text-center" style="font-size: 12pt; border-top: 2px solid black">Titular do Certificado</p></td>
-                    <td width="33.33%"><p class="text-center" style="margin-top: 10px; padding-top: 30px"><?= $_MyCookie->image('src/assets/images/juliana.jpg', '', '', '', 'style="height: 126px"') ?></p></td>
+                    <td width="33.33%" style="position: relative">
+                        <?= $_MyCookie->image('src/assets/images/leonardo.png', '', '', '', 'style="position: absolute; left: 80px; top: -75px; height: 100px"') ?>
+                        <p class="text-center" style="font-size: 12pt; border-top: 2px solid black">
+                            <b>Leonardo Pacheco Pires</b><br>
+                            Departamento de Extensão<br>
+                            IFRO - Campus Ariquemes
+                        </p>
+                    </td>
                 </tr>
             </table>                        
         </div>
@@ -136,14 +151,14 @@ $tipo = $activity->getType()->getName();
             <table width="100%">
                 <tr>
                     <td width="50%">
-                        
+
                     </td>
                     <td width="10%"></td>
                     <td>
                         <p class="text-center"><b>REGISTRO DO CERTIFICADO</b></p>
                         <p class="text-justify">Certificado expedido pelo Departamento de Extensão do Instituto Federal de Educação, 
                             Ciência e Tecnologia de Rondônia - Campus Ariquemes, 
-                            registro sob nº <?= $reg ?>, do Livro 003, página <?= $pag ?>, em <?= $date ?>.</p>
+                            registro sob nº <?= $reg ?>, do Livro 007, página <?= $pag ?>, em <?= $date ?>.</p>
                     </td>
                 </tr>
             </table>        
