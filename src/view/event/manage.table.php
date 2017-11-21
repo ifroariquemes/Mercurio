@@ -40,15 +40,17 @@ global $_BaseURL;
                                 <a href="<?= $urlFrequency ?>" class="btn btn-default"><i class="fa fa-clock-o"></i> <span data-i18n="event:button.frequency"></span></a>
                                 <a href="<?= $urlAccreditation ?>" class="btn btn-default hidden-sm hidden-xs"><i class="fa fa-star"></i> <span data-i18n="event:button.accreditation"></span></a>
                             <?php else : ?>
-                                <a href="<?= $urlCert ?>" class="btn btn-default hidden-sm hidden-xs">
-                                    <i class="fa fa-certificate"></i> Gerar certificados
-                                </a>
-                                <a href="<?= $urlCertSpk ?>" class="btn btn-default hidden-sm hidden-xs">
-                                    <i class="fa fa-certificate"></i> Gerar certificados (ministrantes)
-                                </a>
-                                <a target="_blank" href="<?= $urlCertSpkLook ?>" class="btn btn-default hidden-sm hidden-xs">
-                                    <i class="fa fa-certificate"></i> Ver certificados (ministrantes)
-                                </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-certificate"></i> Certificados <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" data-toggle="modal" data-target="#cert" onclick="evt.setEventToPrint(<?= $event->getId() ?>, 'normal')">Gerar (participantes)</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#cert" onclick="evt.setEventToPrint(<?= $event->getId() ?>, 'speaker')">Gerar (ministrantes)</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a target="_blank" href="<?= $urlCertSpkLook ?>">Ver certificados (ministrantes)</a></li>
+                                    </ul>
+                                </div>
                             <?php endif; ?>
                             <?php if ($event->getIsRegistrationOpen()) : ?>    
                                 <a href="<?= $urlReg ?>" class="btn btn-default hidden-sm hidden-xs">                                                           
@@ -84,7 +86,7 @@ global $_BaseURL;
                         <input type="hidden" name="eventId" id="eventId">
                         <input type="hidden" name="async" value="true">
                     </form>
-                    <a href="<?= $_BaseURL ?>event/loadEmails/?async&eventId=<?= $event->getId() ?>" target="_blank">Carregar lista de e-mails</a>
+                    <a href="<?= $_BaseURL ?>event/loadEmails/?async&eventId=<?= $event->getId() ?>" target="_blank">Carregar lista de e-mails (para envio externo ao sistema)</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="enviarMensagem()">Enviar</button>

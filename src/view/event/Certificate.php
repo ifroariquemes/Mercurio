@@ -4,6 +4,7 @@ $user = $data[0];
 $reg = $data[1];
 $pag = $data[2];
 $date = $data[4];
+$livro = $data[5];
 $horas = 0;
 foreach ($user->getActivities() as $activity) {
     if ($activity->getPresent()->contains($user) && $activity->getHasCertificate()) {
@@ -178,7 +179,7 @@ foreach ($user->getActivities() as $activity) {
                         <p class="text-center"><b>REGISTRO DO CERTIFICADO</b></p>
                         <p class="text-justify">Certificado expedido pelo Departamento de Extensão do Instituto Federal de Educação, 
                             Ciência e Tecnologia de Rondônia - Campus Ariquemes, 
-                            registro sob nº <?= $reg ?>, do Livro 007, página <?= $pag ?>, em <?= $date ?>.</p>
+                            registro sob nº <?= $reg ?>, do Livro <?= str_pad($livro, 3, '0', STR_PAD_LEFT) ?>, página <?= $pag ?>, em <?= $date ?>.</p>
                     </td>
                 </tr>
             </table>        

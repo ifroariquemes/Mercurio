@@ -29,6 +29,43 @@
     </div>
 </div>
 
+<div class="modal fade" id="cert" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gerar certificados <span id="cert-speakers">(ministrantes)</span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <p>Insira os último número de registro, página e livro utilizados na emissão de certificados.</p>
+                </div>
+                <form id="FrmPrintCert">
+                    <div class="form-group">
+                        <label for="numLivro">Livro:</label>                            
+                        <input type="number" required="required" name="Livro" id="numLivro" class="form-control">                            
+                    </div>  
+                    <div class="form-group">
+                        <label for="numPagina">Última página utilizada:</label>                            
+                        <input type="number" required="required" name="Pagina" id="numPagina" class="form-control">                            
+                    </div>  
+                    <div class="form-group">
+                        <label for="numRegistro">Último registro utilizado:</label>                            
+                        <input type="number" required="required" name="Registro" id="numRegistro" class="form-control">                            
+                    </div>  
+                    <input type="hidden" name="Tipo" id="certEventType" value="">
+                    <input type="hidden" name="Id" id="certEventId" value="">
+                </form>
+                <p><small>Se estiver iniciando um novo livro, coloque o número deste livro, o último número de registro utilizado no livro
+                        anterior, e página 0 (zero).</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="evt.printCertificates()">Gerar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php if ($_User->getAccountType()->getFlag() == 'ADMINISTRATOR') : ?>
     <nav id="admin-navbar" class="navbar navbar-default navbar-fixed-bottom" role="navigation">    
         <!-- Collect the nav links, forms, and other content for toggling -->

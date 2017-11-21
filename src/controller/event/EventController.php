@@ -314,35 +314,37 @@ class EventController {
         ini_set('memory_limit', '1024M');
         ini_set('allow_url_fopen', 1);
         set_time_limit(0);
+        $eventId = filter_input(INPUT_POST, 'Id', FILTER_VALIDATE_INT);
         $event = Event::select('e')->where('e.id = ?1')
-                        ->setParameter(1, $_MyCookie->getURLVariables(2))
+                        ->setParameter(1, $eventId)
                         ->getQuery()->getOneOrNullResult();
         $users = User::select('u')->join('u.activities', 'a')
                         ->join('a.event', 'e')
                         ->where('e.id = ?1')
                         ->andWhere('a.hasCertificate = ?2')
                         ->orderBy('u.id')
-                        ->setParameter(1, $_MyCookie->getURLVariables(2))
+                        ->setParameter(1, $eventId)
                         ->setParameter(2, true)
                         ->getQuery()->getResult();
-        $reg = 5489; //O ultimo registro
-        $pag = 0; //a ultima pagina
-        $cert = 0;
-        $data = '30/08/2017';
+        $reg = filter_input(INPUT_POST, 'Registro', FILTER_VALIDATE_INT);
+        $pag = filter_input(INPUT_POST, 'Pagina', FILTER_VALIDATE_INT);
+        $livro = filter_input(INPUT_POST, 'Livro', FILTER_VALIDATE_INT);
+        $data = date('d/m/Y');
         self::createCertDir($event->getId());
         $fGen = fopen("cert/{$event->getId()}/_generated.txt", 'w+');
-        fwrite($fGen, str_pad('NOME', 50) . str_pad('REGISTRO', 10) . "PAGINA\n");
+        fwrite($fGen, str_pad('NOME', 50) . str_pad('LIVRO', 7) . str_pad('PAGINA', 8) . "REGISTRO\n");
         foreach ($users as $user) {
             if (self::checkUserActivityPresent($user)) {
                 $reg++;
-                $cert++;
-                $pag = $pag + (($cert - 1) % 3 == 0);
+                if (($reg - 1) % 3 == 0) {
+                    $pag++;
+                }
                 $dom = new \Dompdf\Dompdf();
                 $a = new \Dompdf\Options();
                 $a->setIsRemoteEnabled(true);
                 $dom->setOptions($a);
                 ob_start();
-                $_MyCookie->LoadView('event', 'Certificate', array($user, $reg, $pag, $event, $data));
+                $_MyCookie->LoadView('event', 'Certificate', array($user, $reg, $pag, $event, $data, $livro));
                 $htmlOutput = ob_get_contents();
                 $dom->load_html($htmlOutput);
                 ob_clean();
@@ -351,11 +353,10 @@ class EventController {
                 $fp = fopen("cert/{$event->getId()}/{$user->getId()}.pdf", 'w+');
                 fwrite($fp, $dom->output());
                 fclose($fp);
-                fwrite($fGen, str_pad(self::removeAccent($user->getName()), 50) . str_pad($reg, 10) . "$pag\n");
+                fwrite($fGen, str_pad(self::removeAccent($user->getName()), 50) . str_pad(str_pad($livro, 3, '0', STR_PAD_LEFT), 7) . str_pad($pag, 8) . "$reg\n");
             }
         }
         fclose($fGen);
-        echo 'Certificados gerados com sucesso!<br>';
         echo 'Último registro: ' . --$reg . '<br>';
         echo 'Última página:' . --$pag . '<br>';
     }
@@ -387,32 +388,34 @@ class EventController {
         ini_set('memory_limit', '1024M');
         ini_set('allow_url_fopen', 1);
         set_time_limit(0);
+        $eventId = filter_input(INPUT_POST, 'Id', FILTER_VALIDATE_INT);
         $event = Event::select('e')->where('e.id = ?1')
-                        ->setParameter(1, $_MyCookie->getURLVariables(2))
+                        ->setParameter(1, $eventId)
                         ->getQuery()->getOneOrNullResult();
-        $reg = 5672; //O ultimo registro
-        $pag = 61; //a ultima pagina
-        $cert = 0;
-        $data = '30/08/2017';
+        $reg = filter_input(INPUT_POST, 'Registro', FILTER_VALIDATE_INT);
+        $pag = filter_input(INPUT_POST, 'Pagina', FILTER_VALIDATE_INT);
+        $livro = filter_input(INPUT_POST, 'Livro', FILTER_VALIDATE_INT);
+        $data = date('d/m/Y');
         self::createCertDir($event->getId());
         $files = array_diff(scandir("cert/{$event->getId()}/speakers/"), array('.', '..'));
         foreach ($files as $file) {
             unlink("cert/{$event->getId()}/speakers/$file");
         }
         $fGen = fopen("cert/{$event->getId()}/speakers/_generated.txt", 'w+');
-        fwrite($fGen, str_pad('NOME', 50) . str_pad('REGISTRO', 10) . "PAGINA\n");
+        fwrite($fGen, str_pad('NOME', 50) . str_pad('LIVRO', 7) . str_pad('PAGINA', 8) . "REGISTRO\n");
         $sp = array();
         foreach ($event->getActivities() as $activity) {
             foreach ($activity->getSpeakers() as $speaker) {
                 $reg++;
-                $cert++;
-                $pag = $pag + (($cert - 1) % 3 == 0);
+                if (($reg - 1) % 3 == 0) {
+                    $pag++;
+                }
                 $dom = new \Dompdf\Dompdf();
                 $a = new \Dompdf\Options();
                 $a->setIsRemoteEnabled(true);
                 $dom->setOptions($a);
                 ob_start();
-                $_MyCookie->LoadView('event', 'CertificateSpeaker', array($speaker, $reg, $pag, $event, $data, $activity));
+                $_MyCookie->LoadView('event', 'CertificateSpeaker', array($speaker, $reg, $pag, $event, $data, $activity, $livro));
                 $htmlOutput = ob_get_contents();
                 $dom->load_html($htmlOutput);
                 ob_clean();
@@ -424,11 +427,12 @@ class EventController {
                 $fp = fopen("cert/{$event->getId()}/speakers/{$spkFname}_{$uid}.pdf", 'w+');
                 fwrite($fp, $dom->output());
                 fclose($fp);
-                fwrite($fGen, str_pad($spkFname, 50) . str_pad($reg, 10) . "$pag\n");
+                fwrite($fGen, str_pad($spkFname, 50) . str_pad(str_pad($livro, 3, '0', STR_PAD_LEFT), 7) . str_pad($pag, 8) . "$reg\n");
             }
         }
         fclose($fGen);
-        echo 'Certificados gerados com sucesso!';
+        echo 'Último registro: ' . --$reg . '<br>';
+        echo 'Última página:' . --$pag . '<br>';
     }
 
     private static function removeAccent($str) {

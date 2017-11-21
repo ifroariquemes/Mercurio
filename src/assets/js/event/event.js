@@ -100,5 +100,26 @@ function Event() {
         });
     };
 
+    this.setEventToPrint = function (id, type) {
+        $('#certEventId').val(id);
+        $('#certEventType').val(type);
+        if (type == 'normal') {
+            $('#cert-speakers').hide();
+        } else {
+            $('#cert-speakers').show();
+        }
+    }
+
+    this.printCertificates = function () {
+        MyCookieJS.showWaitMessage('Gerando certificados...');
+        eventURL = ($('#certEventType').val() == 'normal') ? 'event/printCertificates' : 'event/printSpeakerCertificates';
+        MyCookieJS.execute(eventURL, $('#FrmPrintCert').serialize(), true, function (msg) {
+            MyCookieJS.alert(msg + 'Certificados gerados com sucesso!', function () {
+                MyCookieJS.closeAllPopups();
+                MyCookieJS.closeWaitMessage();
+            });
+        });
+    }
+
 }
 var evt = new Event();
