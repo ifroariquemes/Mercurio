@@ -37,14 +37,7 @@ class AdministratorController extends Router
         if (count($account) === 0) {
             UserController::firstRun();
         }
-        $_Cache->doCache = false;
-        ob_start();
-        $_MyCookie->loadView('administrator', 'login');
-        $view = ob_get_contents();
-        ob_end_clean();
-        $_Cache->doCache($view);
-        echo $view;
-        $_SESSION[\lib\MyCookie::MESSAGE_SESSION] = '';
+        header('Location:../');
     }
 
     public function showPage($view = null, $ajax = false)
