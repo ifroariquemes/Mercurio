@@ -52,6 +52,10 @@
                         <label for="numRegistro">Último registro utilizado:</label>                            
                         <input type="number" required="required" name="Registro" id="numRegistro" class="form-control">                            
                     </div>  
+                    <div class="form-group">
+                        <label for="dtData">Data do registro:</label>                            
+                        <input type="date" required="required" name="Data" id="dtData" class="form-control" value="<?= date('Y-m-d') ?>">
+                    </div>  
                     <input type="hidden" name="Tipo" id="certEventType" value="">
                     <input type="hidden" name="Id" id="certEventId" value="">
                 </form>

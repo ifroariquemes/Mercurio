@@ -2,6 +2,8 @@
 
 namespace lib\util;
 
+use DateTime;
+
 /**
  * FUNCOES GLOBAIS :: DATA
  *
@@ -262,7 +264,7 @@ class Date
         $formato = str_replace('aa', 'y', $formato);
 
         $new_data = new DateTime();
-        $new_data->setDate(self::Ano($data) + $anos, self::Mes($data), self::Dia($data));
+        $new_data->setDate(self::Ano($data), self::Mes($data), self::Dia($data));
         return $new_data->format($formato);
     }
 

@@ -322,7 +322,7 @@ class EventController {
         $reg = filter_input(INPUT_POST, 'Registro', FILTER_VALIDATE_INT);
         $pag = filter_input(INPUT_POST, 'Pagina', FILTER_VALIDATE_INT);
         $livro = filter_input(INPUT_POST, 'Livro', FILTER_VALIDATE_INT);
-        $data = date('d/m/Y');
+        $data = \lib\util\Date::Formato('d/m/Y', filter_input(INPUT_POST, 'Data'));
         self::createCertDir($event->getId());
         $fGen = fopen("cert/{$event->getId()}/_generated.txt", 'w+');
         fwrite($fGen, str_pad('NOME', 50) . str_pad('LIVRO', 7) . str_pad('PAGINA', 8) . "REGISTRO\n");
