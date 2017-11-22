@@ -7,7 +7,7 @@ $date = $data[4];
 $livro = $data[5];
 $horas = 0;
 foreach ($user->getActivities() as $activity) {
-    if ($activity->getPresent()->contains($user) && $activity->getHasCertificate()) {
+    if ($event->getActivities()->contains($activity) && $activity->getPresent()->contains($user) && $activity->getHasCertificate()) {
         $horas += $activity->getDuration();
     }
 }
@@ -17,82 +17,13 @@ foreach ($user->getActivities() as $activity) {
     <head>
         <meta charset="utf-8">
         <style>
-            table {
-                border-spacing: 0;
-                border-collapse: collapse;
-            }
-            td,
-            th {
-                padding: 0;
-            }
-            .table td,
-            .table th {
-                background-color: #fff !important;
-            }  
-            .table {
-                border-collapse: collapse !important;
-            }
-            .table-bordered th,
-            .table-bordered td {
-                border: 1px solid #ddd !important;
-            }
             .table {
                 width: 100%;
                 max-width: 100%;
-                margin-bottom: 20px;
             }
-            .table > thead > tr > th,
-            .table > tbody > tr > th,
-            .table > tfoot > tr > th,
-            .table > thead > tr > td,
-            .table > tbody > tr > td,
-            .table > tfoot > tr > td {
-                /*padding: 8px;
-                line-height: 2.2;
-                vertical-align: top;*/
-                border-top: 1px solid #ddd;
-            }
-            .table > thead > tr > th {
-                /*vertical-align: bottom;*/
-                border-bottom: 2px solid #ddd;
-            }
-            .table > caption + thead > tr:first-child > th,
-            .table > colgroup + thead > tr:first-child > th,
-            .table > thead:first-child > tr:first-child > th,
-            .table > caption + thead > tr:first-child > td,
-            .table > colgroup + thead > tr:first-child > td,
-            .table > thead:first-child > tr:first-child > td {
-                border-top: 0;
-            }
-            .table > tbody + tbody {
-                border-top: 2px solid #ddd;
-            }
-            .table .table {
-                background-color: #fff;
-            }
-            .table-condensed > thead > tr > th,
-            .table-condensed > tbody > tr > th,
-            .table-condensed > tfoot > tr > th,
-            .table-condensed > thead > tr > td,
-            .table-condensed > tbody > tr > td,
-            .table-condensed > tfoot > tr > td {
-                padding: 5px;
-            }
-            .table-bordered {
-                border: 1px solid #ddd;
-            }
-            .table-bordered > thead > tr > th,
-            .table-bordered > tbody > tr > th,
-            .table-bordered > tfoot > tr > th,
-            .table-bordered > thead > tr > td,
-            .table-bordered > tbody > tr > td,
-            .table-bordered > tfoot > tr > td {
-                padding-bottom: 7px;
-                border: 1px solid #ddd;
-            }
-            .table-bordered > thead > tr > th,
-            .table-bordered > thead > tr > td {
-                border-bottom-width: 2px;
+            .table th,
+            .table td {
+                display: table-cell;
             }
             .text-center{text-align: center}
             .text-justify{text-align: justify}
@@ -155,19 +86,17 @@ foreach ($user->getActivities() as $activity) {
             <table width="100%">
                 <tr>
                     <td width="50%">
-                        <table class="table table-bordered">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Atividades</th>
-                                    <th>CH</th>
+                                    <th>Atividades (CH)</th>
                                 </tr>                     
                             </thead>
                             <tbody>
                                 <?php foreach ($user->getActivities() as $activity) : ?>
-                                    <?php if ($activity->getPresent()->contains($user) && $activity->getHasCertificate()) : ?>
+                                    <?php if ($event->getActivities()->contains($activity) && $activity->getPresent()->contains($user) && $activity->getHasCertificate()) : ?>
                                         <tr>
-                                            <td><?= $activity->getName() ?></td>
-                                            <td><?= $activity->getDuration() ?>h</td>
+                                            <td><?= $activity->getName() ?> (<?= $activity->getDuration() ?>h)</td>
                                         </tr>
                                     <?php endif; ?>
                                 <?php endforeach; ?>                        

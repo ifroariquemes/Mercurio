@@ -318,14 +318,7 @@ class EventController {
         $event = Event::select('e')->where('e.id = ?1')
                         ->setParameter(1, $eventId)
                         ->getQuery()->getOneOrNullResult();
-        $users = User::select('u')->join('u.activities', 'a')
-                        ->join('a.event', 'e')
-                        ->where('e.id = ?1')
-                        ->andWhere('a.hasCertificate = ?2')
-                        ->orderBy('u.id')
-                        ->setParameter(1, $eventId)
-                        ->setParameter(2, true)
-                        ->getQuery()->getResult();
+        $users = $event->getParticipants();
         $reg = filter_input(INPUT_POST, 'Registro', FILTER_VALIDATE_INT);
         $pag = filter_input(INPUT_POST, 'Pagina', FILTER_VALIDATE_INT);
         $livro = filter_input(INPUT_POST, 'Livro', FILTER_VALIDATE_INT);
@@ -357,8 +350,8 @@ class EventController {
             }
         }
         fclose($fGen);
-        echo 'Último registro: ' . --$reg . '<br>';
-        echo 'Última página:' . --$pag . '<br>';
+        echo 'Último registro: ' . $reg . '<br>';
+        echo 'Última página:' . $pag . '<br>';
     }
 
     private static function checkUserActivityPresent($user) {
