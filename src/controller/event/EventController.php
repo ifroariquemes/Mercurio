@@ -324,6 +324,12 @@ class EventController {
         $livro = filter_input(INPUT_POST, 'Livro', FILTER_VALIDATE_INT);
         $data = \lib\util\Date::Formato('d/m/Y', filter_input(INPUT_POST, 'Data'));
         self::createCertDir($event->getId());
+        $files = array_diff(scandir("cert/{$event->getId()}/"), array('.', '..'));
+        foreach ($files as $file) {
+            if (!is_dir("cert/{$event->getId()}/$file")) {
+                unlink("cert/{$event->getId()}/$file");
+            }
+        }
         $fGen = fopen("cert/{$event->getId()}/_generated.txt", 'w+');
         fwrite($fGen, str_pad('NOME', 50) . str_pad('LIVRO', 7) . str_pad('PAGINA', 8) . "REGISTRO\n");
         foreach ($users as $user) {
