@@ -6,6 +6,7 @@ global $_MyCookie;
 global $_BaseURL;
 global $_Config;
 ?>
+<script>localStorage.clear();</script>
 <div class="row">
     <div class="col-md-offset-2 col-md-4">
         <form id="FrmLogin" method="post" class="jumbotron" action="<?= "{$_BaseURL}user/login"; ?>">                    
@@ -128,6 +129,5 @@ global $_Config;
 </div>
 <script type="text/javascript">
     require(['user_user'], function (user) {
-        
     });
 </script>
