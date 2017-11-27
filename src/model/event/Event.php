@@ -61,6 +61,8 @@ class Event extends Object
     /**
      * @ManyToMany(targetEntity="model\user\User")
      * @JoinTable(name="event_participant_confirmed")
+     * @OrderBy({"id" = "ASC"})
+     * @var ArrayCollection
      */
     private $confirmed;
 

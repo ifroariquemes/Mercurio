@@ -318,7 +318,7 @@ class EventController {
         $event = Event::select('e')->where('e.id = ?1')
                         ->setParameter(1, $eventId)
                         ->getQuery()->getOneOrNullResult();
-        $users = $event->getParticipants();
+        $users = $event->getConfirmed();
         $reg = filter_input(INPUT_POST, 'Registro', FILTER_VALIDATE_INT);
         $pag = filter_input(INPUT_POST, 'Pagina', FILTER_VALIDATE_INT);
         $livro = filter_input(INPUT_POST, 'Livro', FILTER_VALIDATE_INT);
@@ -404,29 +404,31 @@ class EventController {
         fwrite($fGen, str_pad('NOME', 50) . str_pad('LIVRO', 7) . str_pad('PAGINA', 8) . "REGISTRO\n");
         $sp = array();
         foreach ($event->getActivities() as $activity) {
-            foreach ($activity->getSpeakers() as $speaker) {
-                $reg++;
-                if (($reg - 1) % 3 == 0) {
-                    $pag++;
+            if ($activity->getHasCertificate()) {
+                foreach ($activity->getSpeakers() as $speaker) {
+                    $reg++;
+                    if (($reg - 1) % 3 == 0) {
+                        $pag++;
+                    }
+                    $dom = new \Dompdf\Dompdf();
+                    $a = new \Dompdf\Options();
+                    $a->setIsRemoteEnabled(true);
+                    $dom->setOptions($a);
+                    ob_start();
+                    $_MyCookie->LoadView('event', 'CertificateSpeaker', array($speaker, $reg, $pag, $event, $data, $activity, $livro));
+                    $htmlOutput = ob_get_contents();
+                    $dom->load_html($htmlOutput);
+                    ob_clean();
+                    $dom->set_paper('A4', 'landscape');
+                    $dom->render();
+                    $spkFname = self::removeAccent($speaker);
+                    array_push($sp, $spkFname);
+                    $uid = uniqid();
+                    $fp = fopen("cert/{$event->getId()}/speakers/{$spkFname}_{$uid}.pdf", 'w+');
+                    fwrite($fp, $dom->output());
+                    fclose($fp);
+                    fwrite($fGen, str_pad($spkFname, 50) . str_pad(str_pad($livro, 3, '0', STR_PAD_LEFT), 7) . str_pad($pag, 8) . "$reg\n");
                 }
-                $dom = new \Dompdf\Dompdf();
-                $a = new \Dompdf\Options();
-                $a->setIsRemoteEnabled(true);
-                $dom->setOptions($a);
-                ob_start();
-                $_MyCookie->LoadView('event', 'CertificateSpeaker', array($speaker, $reg, $pag, $event, $data, $activity, $livro));
-                $htmlOutput = ob_get_contents();
-                $dom->load_html($htmlOutput);
-                ob_clean();
-                $dom->set_paper('A4', 'landscape');
-                $dom->render();
-                $spkFname = self::removeAccent($speaker);
-                array_push($sp, $spkFname);
-                $uid = uniqid();
-                $fp = fopen("cert/{$event->getId()}/speakers/{$spkFname}_{$uid}.pdf", 'w+');
-                fwrite($fp, $dom->output());
-                fclose($fp);
-                fwrite($fGen, str_pad($spkFname, 50) . str_pad(str_pad($livro, 3, '0', STR_PAD_LEFT), 7) . str_pad($pag, 8) . "$reg\n");
             }
         }
         fclose($fGen);
