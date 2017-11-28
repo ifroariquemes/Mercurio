@@ -323,6 +323,23 @@ class EventController {
         $pag = filter_input(INPUT_POST, 'Pagina', FILTER_VALIDATE_INT);
         $livro = filter_input(INPUT_POST, 'Livro', FILTER_VALIDATE_INT);
         $data = \lib\util\Date::Formato('d/m/Y', filter_input(INPUT_POST, 'Data'));
+        $usuarioEspecifico = filter_input(INPUT_POST, 'UsuarioEspecifico');
+        if ($usuarioEspecifico === 'true') {
+            $userSP = User::select('u')->where('u.id = ?1')
+                            ->setParameter(1, filter_input(INPUT_POST, 'Usuario'))
+                            ->getQuery()->getOneOrNullResult();
+            if ($userSP) {
+                if ($users->contains($userSP)) {
+                    $users = array($userSP);
+                } else {
+                    echo 'O usuário informado não foi credenciado no evento.';
+                    exit;
+                }
+            } else {
+                echo 'O usuário informado não exite.';
+                exit;
+            }
+        }
         self::createCertDir($event->getId());
         $files = array_diff(scandir("cert/{$event->getId()}/"), array('.', '..'));
         foreach ($files as $file) {
@@ -358,6 +375,7 @@ class EventController {
         fclose($fGen);
         echo 'Último registro: ' . $reg . '<br>';
         echo 'Última página:' . $pag . '<br>';
+        echo 'Certificados gerados com sucesso!';
     }
 
     private static function checkUserActivityPresent($user) {

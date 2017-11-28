@@ -114,7 +114,7 @@ function Event() {
         MyCookieJS.showWaitMessage('Gerando certificados...');
         eventURL = ($('#certEventType').val() == 'normal') ? 'event/printCertificates' : 'event/printSpeakerCertificates';
         MyCookieJS.execute(eventURL, $('#FrmPrintCert').serialize(), true, function (msg) {
-            MyCookieJS.alert(msg + 'Certificados gerados com sucesso!', function () {
+            MyCookieJS.alert(msg, function () {
                 MyCookieJS.closeAllPopups();
                 MyCookieJS.closeWaitMessage();
             });
